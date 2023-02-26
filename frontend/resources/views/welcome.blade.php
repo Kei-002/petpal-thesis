@@ -553,7 +553,7 @@
 
                 <h2>Pet Products</h2>
                 <p>Treat your furbaby some delicious treats and cute bowls, collars and many more!.</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                <p><a class="btn btn-primary" href="#">View products &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4">
                 <img src="{{ asset('images/services/grooming.png') }}" class="rounded" width="140" height="140"
@@ -561,7 +561,7 @@
 
                 <h2>Pet Grooming</h2>
                 <p>Get your furbaby a cute haircut and also have her take a bath!</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                <p><a class="btn btn-primary" href="#">View services &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4">
                 <img src="{{ asset('images/services/veterinary.png') }}" class="rounded" width="140" height="140"
@@ -569,7 +569,7 @@
 
                 <h2>Veterinary</h2>
                 <p>Have you furbaby checked and treated for diseases</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                <p><a class="btn btn-primary" href="#">View details &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
     </div>
