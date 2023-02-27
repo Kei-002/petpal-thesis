@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->text('role')->default('customer');
+        Schema::create('services', function (Blueprint $table) {
+
+            $table->increments('id');
+            $table->text('groom_name');
+            $table->double('price');
+            $table->text('description');
+            $table->text('img_path')->default('/storage/images/default.jpg');
         });
     }
 
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('groom_services');
     }
 };
