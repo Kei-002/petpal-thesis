@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('layouts.base');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});

@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="{{asset('images/pet-shop.png')}}" width="50" height="50" alt="petpal logo"> <strong>Pet-Pal</strong></a>
+        <a class="navbar-brand" href="#"><img src="{{ asset('images/pet-shop.png') }}" width="50" height="50"
+                alt="petpal logo"> <strong>Pet-Pal</strong></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,12 +37,23 @@
             </ul>
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-cart-shopping"></i> Cart<span class="badge bg-danger" style="margin-left: 5px"> 4</span>
-                        </a>
+                    <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-cart-shopping"></i>
+                        Cart<span class="badge bg-danger" style="margin-left: 5px"> 4</span>
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-circle-user me-1"></i>
+                <li class="nav-item dropdown">
+                    <a class="nav-link mx-2 text-uppercase dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                        role="button" aria-expanded="false"><i class="fa-solid fa-circle-user me-1 "></i>
                         Account</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
