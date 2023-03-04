@@ -76,12 +76,10 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Extn.</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                            <th></th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Joined On</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 

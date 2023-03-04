@@ -462,25 +462,24 @@ $(document).ready(function () {
         processing: true,
         info: true,
         stateSave: true,
-        data: data,
+        ajax: {
+            url: "http://127.0.0.1:8000/api/user",
+            dataSrc: "",
+        },
+        order: [0, "dec"],
+        // data: data,
         columns: [
             { data: "name" },
-            { data: "position" },
-            { data: "office" },
-            { data: "extn" },
-            { data: "start_date" },
-            { data: "salary" },
+            { data: "email" },
+            { data: "role" },
+            { data: "created_at" },
             {
                 data: "Inquiry",
                 bSearchable: false,
                 bSortable: false,
                 sWidth: "40px",
                 data: function (data) {
-                    return (
-                        '<button class="btn btn-danger" type="button">' +
-                        data.name +
-                        "Delete</button>"
-                    );
+                    return "<button class='btn btn-danger' type='button'> <i class='fa-solid fa-trash-can'></i> </button>";
                 },
             },
         ],

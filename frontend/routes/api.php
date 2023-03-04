@@ -6,7 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GroomServicesController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\EmployeeController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ use App\Http\Controllers\EmployeeController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
+Route::resource('user', UserController::class);
 Route::resource('pet', PetController::class);
 Route::resource('employee', EmployeeController::class);
 Route::resource('customer', CustomerController::class);
