@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="{{ asset('images/pet-shop.png') }}" width="50" height="50"
+        <a class="navbar-brand" href="{{url('/')}}"><img src="{{ asset('images/pet-shop.png') }}" width="50" height="50"
                 alt="petpal logo"> <strong>Pet-Pal</strong></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
                     <a class="nav-link mx-2 text-uppercase" href="#">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#">About</a>
+                    <a class="nav-link mx-2 text-uppercase" href="#">Consultations</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto ">
@@ -47,7 +47,7 @@
                         Account</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="{{url('/dashboard')}}">Dashboard</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">

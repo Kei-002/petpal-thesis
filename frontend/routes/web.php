@@ -25,3 +25,7 @@ Route::get('/home', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
+
+Route::get('/user-list', function () {
+    return view('tables.user');
+});
