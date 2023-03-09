@@ -23,9 +23,9 @@ use App\Http\Controllers\UserController;
 //     return $request->user();
 // });
 Route::resource('user', UserController::class);
-Route::resource('pet', PetController::class);
-Route::resource('employee', EmployeeController::class);
-Route::resource('customer', CustomerController::class);
-Route::resource('services', GroomServicesController::class);
+// Route::resource('pet', PetController::class);
+// Route::resource('employee', EmployeeController::class);
+// Route::resource('customer', CustomerController::class);
+// Route::resource('services', GroomServicesController::class);
 
 

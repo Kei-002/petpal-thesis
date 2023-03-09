@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade');
-            $table->text('emp_fname');
-            $table->text('emp_lname');
+            $table->text('fname');
+            $table->text('lname');
             $table->text('addressline');
             $table->text('phone');
             $table->text('img_path')->default('/storage/images/default.jpg');
