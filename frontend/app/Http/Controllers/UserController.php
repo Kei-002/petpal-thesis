@@ -71,20 +71,20 @@ class UserController extends Controller
             $account = new Employee();
         }
 
-        $account->customer_name = $input['customer_name'];
+        $account->fname = $input['fname'];
+        $account->lname = $input['lname'];
         $account->user_id = $user->id;
         $account->addressline = $input['addressline'];
         $account->phone = $input['phone'];
         $fileName = time() . $request->file('img_path')->getClientOriginalName();
         $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
-        $requestData["img_path"] = '/storage/' . $path;
-        $account->img_path = $requestData["img_path"];
+        $input["img_path"] = '/storage/' . $path;
+        $account->img_path = $input["img_path"];
 
         $account->save();
 
         // return response($message = 'User Successfully Created', $status = 200);
-        return response()->json([
-            'success' => 'User Created Successfully.',
+        return response()->json(['message' => 'User Created Successfully.',
             'user' => $user,
             'status' => 200,
         ]);
@@ -144,27 +144,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
-        // $customer = Customer::find($id);
-        // $customer->pets()->delete();
-        // $user = User::find($customer->user_id);
-        // $user->delete();
         try {
             $user = User::findOrFail($id);
             if ($user->role === 'customer') {
-                $customer = Customer::findOrFail($user->id);
+                $customer = Customer::where("user_id", $user->id)->firstOrFail();
                 $customer->pets()->delete();
             }
         } catch (\Exception $error) {
             return response($error, $status = 400);
         }
-        $user = User::find($id);
-        if ($user->role === 'customer') {
-            $customer = Customer::find($user->id);
-            $customer->pets()->delete();
-        }
 
         $user->delete();
-        return response($message = "User Successfully Deleted", $status = 200);
+        return response()->json([
+            'message' => 'User Deleted Successfully',
+            'status' => 200,
+        ]);
     }
 }

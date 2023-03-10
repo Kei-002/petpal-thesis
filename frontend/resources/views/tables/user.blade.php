@@ -8,19 +8,19 @@
         {{-- Modal START --}}
         <div class="row">
             {{-- Modal Button START --}}
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_user_modal">
                 Add New User
             </button>
             {{-- Modal Button END --}}
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="create_user_modal" tabindex="-1" aria-labelledby="create_user_modal_label" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+                            <h5 class="modal-title" id="create_user_modal_label">Add New User</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form id="" action="#" method="#" enctype="multipart/form-data">
+                        <form id="user_create_form" action="#" method="#" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="form-group" id="addCustomerForm">
                                     <div class="row">
@@ -36,18 +36,24 @@
                                         </div>
                                     </div>
 
+                                    <label for="addressline">Adress</label>
+                                    <input type="text" class="form-control" name="addressline" id="addressline">
+
+                                    <label for="lname">Phone Number</label>
+                                    <input type="text" class="form-control" name="phone" id="phone">
+
                                     <label for="lname">Email</label>
                                     <input type="email" class="form-control" name="email" id="email" required>
                                     
                                     <label for="password">Password</label>
                                     <div class="input-group mb-3" id="show_hide_password1">
-                                        <input type="password" class="form-control" name="password" id="password" aria-describedby="button-addon2">
+                                        <input type="password" class="form-control" name="password1" id="password1" aria-describedby="button-addon2">
                                         <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
                                                 class="fa fa-eye-slash" aria-hidden="true"></i></button>
                                     </div>
                                     <label for="lname">Confirm Password</label>
                                     <div class="input-group mb-3" id="show_hide_password2">
-                                        <input type="password" class="form-control" name="password" id="password" aria-describedby="button-addon2">
+                                        <input type="password" class="form-control" name="password2" id="password2" aria-describedby="button-addon2">
                                         <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
                                                 class="fa fa-eye-slash" aria-hidden="true"></i></button>
                                     </div>
@@ -60,14 +66,14 @@
 
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Image</label>
-                                        <input class="form-control" type="file" id="formFile"  accept="image/*">
+                                        <input class="form-control" type="file" id="img_path" name="img_path" accept="image/*">
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-                                    id="customer_submit">Submit</button>
+                                    id="user_create_button">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -78,7 +84,7 @@
         {{-- Modal END --}}
         <div class="row mt-3">
             <div class="col-md-12">
-                <table id="userTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+                <table id="user_table" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
                     width="100%">
                     <thead>
                         <tr>
@@ -90,6 +96,9 @@
                             <th></th>
                         </tr>
                     </thead>
+                    <tbody id="user_table_body">
+
+                    </tbody>
 
                 </table>
 
