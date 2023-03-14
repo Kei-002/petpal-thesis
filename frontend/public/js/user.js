@@ -274,7 +274,7 @@ $(document).ready(function () {
             // cache: false,
             contentType: false,
             processData: false,
-            url: "http://localhost:8000/api/user/" + id,
+            url: "http://localhost:8000/api/user-update/" + id,
             data: formData,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

@@ -132,7 +132,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+
+    public function updateUser(Request $request, $id)
     {
         // $data = $request->all();
 
@@ -162,6 +164,9 @@ class UserController extends Controller
             'user' => $user,
             // 'account' => $account,
         ]);
+    }
+    public function update(Request $request, $id)
+    {
     }
 
     /**
