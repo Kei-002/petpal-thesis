@@ -112,9 +112,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->role === "customer") {
-            $account = Customer::find($user->id);
+            $account =
+                Customer::where("user_id", $user->id)->firstOrFail();
         } else {
-            $account = Employee::find($user->id);
+            $account = Employee::where("user_id", $user->id)->firstOrFail();
         }
 
         return response()->json([
@@ -133,11 +134,34 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // $data = $request->all();
+
+        $user = User::find($id);
+
+        if ($user->role == "customer") {
+            $account = Customer::where("user_id", $id)->firstOrFail();
+        } else {
+            $account = Employee::where("user_id", $id)->firstOrFail();
+        }
+        $user->name = $request->fname . " " . $request->lname;
+        $user->save();
+        // $account->;
+
         //
         // $customer = Customer::find($id);
         // $customer = $customer->update($request->all());
         // // $customer = Customer::find($id);
         // return response()->json($customer);
+
+
+
+        return response()->json([
+            'message' => 'User Update Test',
+            // 'status' => $user,
+            'changes' => $request->all(),
+            'user' => $user,
+            // 'account' => $account,
+        ]);
     }
 
     /**

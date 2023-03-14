@@ -48,7 +48,7 @@ $(document).ready(function () {
                 data: null,
                 render: function (data, type, row) {
                     return (
-                        "<a href='#' class='user_delete' id='user_edit' data-id=" +
+                        "<a href='#' class='user_delete' id='user_delete' data-id=" +
                         data.id +
                         "><i class='fa-solid fa-trash-can' aria-hidden='true' style='font-size:24px; color:red;'></a></i>"
                     );
@@ -87,6 +87,9 @@ $(document).ready(function () {
 
     // Clear modal when close
     $("#create_user_modal").on("hidden.bs.modal", function () {
+        $(this).find("form").trigger("reset");
+    });
+    $("#update_user_modal").on("hidden.bs.modal", function () {
         $(this).find("form").trigger("reset");
     });
 
@@ -130,19 +133,22 @@ $(document).ready(function () {
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
         });
     });
 
     // User Delete
-        $("#user_table #user_table_body").on("click", "a.user_delete", function (e) {
+    $("#user_table #user_table_body").on(
+        "click",
+        "a.user_delete",
+        function (e) {
             e.preventDefault();
             var table = $("#user_table").DataTable();
             var id = $(this).data("id");
             var $row = $(this).closest("tr");
 
             console.log(id);
-            
+
             bootbox.confirm({
                 message: "Do You Want To Delete This Customer",
                 buttons: {
@@ -186,12 +192,112 @@ $(document).ready(function () {
                         });
                 },
             });
+        }
+    );
+
+    // User Edit
+    $("#user_table #user_table_body").on("click", "a.user_edit", function (e) {
+        e.preventDefault();
+        $("#update_user_modal").modal("show");
+        var id = $(this).data("id");
+        // var id = $(e.relatedTarget).attr("id");
+        console.log(id);
+
+        $.ajax({
+            type: "GET",
+            enctype: "multipart/form-data",
+            processData: false, // Important!
+            contentType: false,
+            cache: false,
+            url: "http://localhost:8000/api/user/" + id + "/edit",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            // beforeSend: function (xhr) {
+            //     xhr.setRequestHeader(
+            //         "Authorization",
+            //         "Bearer " + localStorage.getItem("token")
+            //     );
+            // },
+            dataType: "json",
+            success: function (data) {
+                // console.log(data);
+                $user = data.user;
+                $account = data.account;
+                // console.log($user);
+                // console.log($account);
+                $("#edit-customer_id").val($user.id);
+                $("#edit-fname").val($account.fname);
+                $("#edit-lname").val($account.lname);
+                $("#edit-addressline").val($account.addressline);
+                $("#edit-phone").val($account.phone);
+                $("#edit-email").val($user.email);
+
+                // $("#edit-role option").each(function () {
+                //     if ($(this).val() == $user.role) {
+                //         $(this).prop("selected", true);
+                //     }
+                // });
+
+                console.log($user.role);
+                if ($user.role == "admin") {
+                    $("#edit-role").val("employee");
+                } else {
+                    $("#edit-role").val($user.role);
+                }
+
+                // $("#img_path").html(
+                //     `<img src="${data.img_path}" width="100" class="img-fluid img-thumbnail">`);
+                // $("#dispCustomer").attr("src", data.img_path);
+                // $("#edit-role").val($user.role).change();
+            },
+            error: function (error) {
+                console.log("error");
+            },
         });
+    });
 
-
-
-
+    // User Update
+    $("#update_user_button").on("click", function (e) {
+        e.preventDefault();
+        var id = $("#edit-customer_id").val();
+        console.log(id);
+        var data = $("#update_user_form")[0];
+        console.log(data);
+        
+        let formData = new FormData(data);
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + "," + pair[1]);
+        }
+        $.ajax({
+            type: "POST",
+            // cache: false,
+            contentType: false,
+            processData: false,
+            url: "http://localhost:8000/api/user/" + id,
+            data: formData,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            // beforeSend: function (xhr) {
+            //     xhr.setRequestHeader(
+            //         "Authorization",
+            //         "Bearer " + localStorage.getItem("token")
+            //     );
+            // },
+            dataType: "json",
+            success: function (data) {
+                // console.log(data.img_path);
+                $("#update_user_modal").modal("hide");
+                $("#user_table").DataTable().ajax.reload();
+                console.log("data", data);
+                // console.log("message", data.message);
+                // console.log("request", data.request);
+                toastr.success(data.message);
+            },
+            error: function (error) {
+                console.log("error");
+            },
+        });
+    });
 }); //Document Ready END
-
-
-
