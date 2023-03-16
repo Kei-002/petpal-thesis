@@ -146,14 +146,14 @@ class UserController extends Controller
             $account = Employee::where("user_id", $id)->firstOrFail();
         }
         $user->name = $request->fname . " " . $request->lname;
+        $user->email = $request->email;
         $user->save();
         // $account->;
 
-        //
-        // $customer = Customer::find($id);
-        // $customer = $customer->update($request->all());
-        // // $customer = Customer::find($id);
-        // return response()->json($customer);
+        $account->fname = $request->fname;
+        $account->lname = $request->lname;
+        $account->addressline = $request->addressline;
+        $account->phone = $request->phone;
 
 
 
@@ -162,7 +162,7 @@ class UserController extends Controller
             // 'status' => $user,
             'changes' => $request->all(),
             'user' => $user,
-            // 'account' => $account,
+            'account' => $account,
         ]);
     }
     public function update(Request $request, $id)

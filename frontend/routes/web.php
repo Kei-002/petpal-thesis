@@ -22,10 +22,13 @@ Route::get('/home', function () {
     return view('layouts.base');
 });
 
+// Dashboard links
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
-
 Route::get('/user-list', function () {
     return view('tables.user');
+});
+Route::get('/customer-list', function () {
+    return view('tables.customer');
 });
