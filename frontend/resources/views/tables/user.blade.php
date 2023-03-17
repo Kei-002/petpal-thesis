@@ -99,7 +99,7 @@
                         </div>
                         <form id="update_user_form" action="#" method="#" enctype="multipart/form-data">
                             <div class="modal-body">
-                                <input type="hidden" class="form-control" name="customer_id" id="edit-customer_id">
+                                <input type="hidden" class="form-control" name="user_id" id="edit-user_id">
                                 <div class="form-group" id="update_customer_form">
                                     <div class="row">
                                         <div class="col-6">

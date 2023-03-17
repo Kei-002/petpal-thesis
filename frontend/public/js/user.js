@@ -226,7 +226,7 @@ $(document).ready(function () {
                 $account = data.account;
                 // console.log($user);
                 // console.log($account);
-                $("#edit-customer_id").val($user.id);
+                $("#edit-user_id").val($user.id);
                 $("#edit-fname").val($account.fname);
                 $("#edit-lname").val($account.lname);
                 $("#edit-addressline").val($account.addressline);
@@ -260,11 +260,11 @@ $(document).ready(function () {
     // User Update
     $("#update_user_button").on("click", function (e) {
         e.preventDefault();
-        var id = $("#edit-customer_id").val();
+        var id = $("#edit-user_id").val();
         console.log(id);
         var data = $("#update_user_form")[0];
         console.log(data);
-        
+
         let formData = new FormData(data);
         for (var pair of formData.entries()) {
             console.log(pair[0] + "," + pair[1]);
