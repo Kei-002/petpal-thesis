@@ -17,6 +17,7 @@ use App\Imports\CustomerImport;
 use Excel;
 use Validator;
 
+
 class CustomerController extends Controller
 {
     /**
@@ -27,6 +28,9 @@ class CustomerController extends Controller
     public function index()
     {
         //
+        $data = Customer::all();
+        // return response($data, $status = 200);
+        return response()->json($data);
     }
 
     /**
@@ -36,7 +40,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -58,37 +62,47 @@ class CustomerController extends Controller
         ]);
 
         $input = $request->all();
-        // Encrypt Password
-        $input['password'] = bcrypt($request->password);
+        // dd($request->album_id);
 
 
-        // Create User first
+        // Check if password and confirmPassword field match
+        if ($input['password1'] !== $input['password2']) {
+            return response($message = 'Passwords does not match');
+        }
+
+        // Encrypt password
+        $input['password1'] = bcrypt($request->password1);
+
         $user = new User();
-        $user->name = $input['customer_name'];
+        $user->name = $input['fname'] . ' ' . $input['lname'];
         $user->email = $input['email'];
-        $user->password = $input['password'];
+        $user->password = $input['password1'];
         $user->role = 'customer';
-
         $user->save();
-        // Send email when user is created
-        Event::dispatch(new SendMail($user));
+        // Send email after user is created
+        // Event::dispatch(new SendMail($user));
 
-        $requestData = $request->all();
-        // Create Customer next
-        $customer = new Customer();
-        $customer->customer_name = $input['customer_name'];
-        $customer->user_id = $user->id;
-        $customer->addressline = $input['addressline'];
-        $customer->phone = $input['phone'];
+        // Check the role of user
+        $account = new Customer();
+
+        $account->fname = $input['fname'];
+        $account->lname = $input['lname'];
+        $account->user_id = $user->id;
+        $account->addressline = $input['addressline'];
+        $account->phone = $input['phone'];
         $fileName = time() . $request->file('img_path')->getClientOriginalName();
         $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
-        $requestData["img_path"] = '/storage/' . $path;
-        $customer->img_path = $requestData["img_path"];
+        $input["img_path"] = '/storage/' . $path;
+        $account->img_path = $input["img_path"];
 
-        $customer->save();
+        $account->save();
 
-
-        return Redirect::route('getCustomer')->with('success', 'Customer successfully created!');
+        // return response($message = 'User Successfully Created', $status = 200);
+        return response()->json([
+            'message' => 'User Created Successfully.',
+            'user' => $user,
+            'status' => 200,
+        ]);
     }
 
     /**
@@ -110,7 +124,13 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $account = Customer::where("user_id", $user->id)->firstOrFail();
+        return response()->json([
+            'user' => $user,
+            'account' => $account,
+            'status' => 200,
+        ]);
     }
 
     /**
@@ -125,6 +145,37 @@ class CustomerController extends Controller
         //
     }
 
+    public function updateCustomer(Request $request, $id)
+    {
+        // $data = $request->all();
+
+
+        $user = User::find($id);
+        $account = Customer::where("user_id", $id)->firstOrFail();
+
+        $user->name = $request->fname . " " . $request->lname;
+        $user->email = $request->email;
+        $user->save();
+        // $account->;
+
+        $account->fname = $request->fname;
+        $account->lname = $request->lname;
+        $account->addressline = $request->addressline;
+        $account->phone = $request->phone;
+
+
+
+
+        return response()->json([
+            'message' => 'Customer updated successfully',
+            // 'status' => $user,
+            'changes' => $request->all(),
+            'user' => $user,
+            'account' => $account,
+        ]);
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -133,6 +184,20 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+            if ($user->role === 'customer') {
+                $customer = Customer::where("user_id", $user->id)->firstOrFail();
+                $customer->pets()->delete();
+            }
+        } catch (\Exception $error) {
+            return response($error, $status = 400);
+        }
+
+        $user->delete();
+        return response()->json([
+            'message' => 'Customer Deleted Successfully',
+            'status' => 200,
+        ]);
     }
 }

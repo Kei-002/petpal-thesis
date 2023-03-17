@@ -156,11 +156,10 @@ class UserController extends Controller
         $account->save();
         // $account->;
 
-        //
-        // $customer = Customer::find($id);
-        // $customer = $customer->update($request->all());
-        // // $customer = Customer::find($id);
-        // return response()->json($customer);
+        $account->fname = $request->fname;
+        $account->lname = $request->lname;
+        $account->addressline = $request->addressline;
+        $account->phone = $request->phone;
 
 
 
