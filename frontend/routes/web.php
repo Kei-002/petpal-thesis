@@ -32,3 +32,6 @@ Route::get('/user-list', function () {
 Route::get('/customer-list', function () {
     return view('tables.customer');
 });
+Route::get('/employee-list', function () {
+    return view('tables.employee');
+});

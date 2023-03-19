@@ -26,6 +26,9 @@ Route::resource('user', UserController::class);
 Route::post('/user-update/{user}', [UserController::class, 'updateUser']);
 Route::resource('customer', CustomerController::class);
 Route::post('/customer-update/{customer}', [CustomerController::class, 'updateCustomer']);
+Route::resource('employee', EmployeeController::class);
+Route::post('/employee-update/{employee}', [EmployeeController::class, 'updateEmployee']);
+
 // Route::resource('pet', PetController::class);
-// Route::resource('employee', EmployeeController::class);
+
 // Route::resource('services', GroomServicesController::class);
