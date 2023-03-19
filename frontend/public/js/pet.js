@@ -28,20 +28,35 @@ $(document).ready(function () {
     };
 
     // Fill datatable
-    $("#user_table").DataTable({
+    $("#pet_table").DataTable({
         processing: true,
         info: true,
         stateSave: true,
         ajax: {
-            url: "http://127.0.0.1:8000/api/user",
+            url: "http://127.0.0.1:8000/api/pet",
             dataSrc: "",
         },
         order: [0, "dec"],
         // data: data,
         columns: [
-            { data: "name" },
-            { data: "email" },
-            { data: "role" },
+            {
+                data: null,
+                render: function (data, type, JsonResultRow, row) {
+                    return (
+                        '<img src="' +
+                        data.img_path +
+                        '" class="rounded-circle"height="100px" width="100px">'
+                    );
+                },
+            },
+            { data: "pet_name" },
+            { data: "age" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.customer.fname + " " + data.customer.lname;
+                },
+            },
             // { data: "created_at" },
             {
                 data: null,
@@ -54,7 +69,7 @@ $(document).ready(function () {
                 data: null,
                 render: function (data, type, row) {
                     return (
-                        "<a href=#'' class='user_edit' id='user_edit' data-id=" +
+                        "<a href=#'' class='pet_edit' id='pet_edit' data-id=" +
                         data.id +
                         "><i class='fa-solid fa-pen' aria-hidden='true' style='font-size:24px' ></i></a>"
                     );
@@ -64,7 +79,7 @@ $(document).ready(function () {
                 data: null,
                 render: function (data, type, row) {
                     return (
-                        "<a href='#' class='user_delete' id='user_delete' data-id=" +
+                        "<a href='#' class='pet_delete' id='pet_delete' data-id=" +
                         data.id +
                         "><i class='fa-solid fa-trash-can' aria-hidden='true' style='font-size:24px; color:red;'></a></i>"
                     );

@@ -17,6 +17,15 @@ $(document).ready(function () {
         hideMethod: "slideUp",
     };
 
+    var date_options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    };
+
     $("#employee_table").DataTable({
         processing: true,
         info: true,
@@ -42,7 +51,14 @@ $(document).ready(function () {
             { data: "fname" },
             { data: "addressline" },
             { data: "phone" },
-            { data: "created_at" },
+            // { data: "created_at" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    var d = new Date(data.created_at);
+                    return d.toLocaleDateString("en-US", date_options);
+                },
+            },
             {
                 data: null,
                 render: function (data, type, row) {
