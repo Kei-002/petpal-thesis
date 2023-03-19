@@ -58,6 +58,8 @@ $(document).ready(function () {
                 },
             },
             // { data: "created_at" },
+
+            // Format created_at to {weekday}, {year}, {month}, {day}, {hour}, {minute}
             {
                 data: null,
                 render: function (data, type, row) {
@@ -88,46 +90,54 @@ $(document).ready(function () {
         ],
     });
 
-    // Show/Hide Password
-    $("#show_hide_password1 button").on("click", function (event) {
-        console.log("test");
-        event.preventDefault();
-        if ($("#show_hide_password1 input").attr("type") == "text") {
-            $("#show_hide_password1 input").attr("type", "password");
-            $("#show_hide_password1 i").addClass("fa-eye-slash");
-            $("#show_hide_password1 i").removeClass("fa-eye");
-        } else if ($("#show_hide_password1 input").attr("type") == "password") {
-            $("#show_hide_password1 input").attr("type", "text");
-            $("#show_hide_password1 i").removeClass("fa-eye-slash");
-            $("#show_hide_password1 i").addClass("fa-eye");
-        }
-    });
-    $("#show_hide_password2 button").on("click", function (event) {
-        // console.log("test");
-        event.preventDefault();
-        if ($("#show_hide_password2 input").attr("type") == "text") {
-            $("#show_hide_password2 input").attr("type", "password");
-            $("#show_hide_password2 i").addClass("fa-eye-slash");
-            $("#show_hide_password2 i").removeClass("fa-eye");
-        } else if ($("#show_hide_password2 input").attr("type") == "password") {
-            $("#show_hide_password2 input").attr("type", "text");
-            $("#show_hide_password2 i").removeClass("fa-eye-slash");
-            $("#show_hide_password2 i").addClass("fa-eye");
-        }
-    });
-
     // Clear modal when close
-    $("#create_user_modal").on("hidden.bs.modal", function () {
+    $("#create_pet_modal").on("hidden.bs.modal", function () {
         $(this).find("form").trigger("reset");
     });
-    $("#update_user_modal").on("hidden.bs.modal", function () {
+    $("#update_pet_modal").on("hidden.bs.modal", function () {
         $(this).find("form").trigger("reset");
     });
 
-    // User Submit
-    $("#user_create_button").on("click", function (e) {
+    // Load customer to select options input
+    $.ajax({
+        url: "http://localhost:8000/api/customer",
+        type: "GET",
+        processData: false, // Important!
+        contentType: false,
+        dataType: "json",
+        success: function (data) {
+            $owner_list = $("#owner");
+            $edit_owner_list = $("#edit-owner");
+            $.each(data, function (key, value) {
+                // console.log(key, value);
+                $owner_list.append(
+                    `<option value="${value.id}">${value.fname} ${value.lname}</option>`
+                );
+                $edit_owner_list.append(
+                    `<option value="${value.id}">${value.fname} ${value.lname}</option>`
+                );
+            });
+        },
+    });
+
+    // Set select option to select2
+    // $(".owner-select").select2();
+    $(".owner-select").select2({
+        dropdownParent: $("#create_pet_modal"),
+        placeholder: "Select pet owner",
+        theme: "bootstrap-5",
+    });
+
+    $(".edit-owner-select").select2({
+        dropdownParent: $("#update_pet_modal"),
+        placeholder: "Select pet owner",
+        theme: "bootstrap-5",
+    });
+
+    // Pet Submit
+    $("#create_pet_button").on("click", function (e) {
         e.preventDefault();
-        var data = $("#user_create_form")[0];
+        var data = $("#create_pet_form")[0];
         console.log(data);
         let formData = new FormData(data);
         console.log(formData);
@@ -139,7 +149,7 @@ $(document).ready(function () {
         // console.log(data);
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/api/user",
+            url: "http://localhost:8000/api/pet",
             data: formData,
             contentType: false,
             processData: false,
@@ -157,10 +167,10 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                $("#create_user_modal").modal("hide");
+                $("#create_pet_modal").modal("hide");
                 toastr.success(data.message);
-                // var $tableData = $("#userTable").DataTable();
-                $("#user_table").DataTable().ajax.reload();
+                // var $tableData = $("#petTable").DataTable();
+                $("#pet_table").DataTable().ajax.reload();
             },
             error: function (error) {
                 console.log(error);
@@ -168,68 +178,64 @@ $(document).ready(function () {
         });
     });
 
-    // User Delete
-    $("#user_table #user_table_body").on(
-        "click",
-        "a.user_delete",
-        function (e) {
-            e.preventDefault();
-            var table = $("#user_table").DataTable();
-            var id = $(this).data("id");
-            var $row = $(this).closest("tr");
-
-            console.log(id);
-
-            bootbox.confirm({
-                message: "Do You Want To Delete This Customer",
-                buttons: {
-                    confirm: {
-                        label: "Yes",
-                        className: "btn-success",
-                    },
-                    cancel: {
-                        label: "No",
-                        className: "btn-danger",
-                    },
-                },
-                callback: function (result) {
-                    console.log(result);
-                    if (result)
-                        $.ajax({
-                            type: "DELETE",
-                            url: "http://localhost:8000/api/user/" + id,
-                            headers: {
-                                "X-CSRF-TOKEN": $(
-                                    'meta[name="csrf-token"]'
-                                ).attr("content"),
-
-                                // Authorization:
-                                //     "Bearer " + localStorage.getItem("token"),
-                            },
-
-                            dataType: "json",
-                            contentType: "application/json",
-                            success: function (data) {
-                                console.log(data);
-                                // bootbox.alert('success');
-                                $row.fadeOut(2000, function () {
-                                    table.row($row).remove().draw(false);
-                                });
-                                toastr.success(data.message);
-                            },
-                            error: function (error) {
-                                console.log(error);
-                            },
-                        });
-                },
-            });
-        }
-    );
-
-    // User Edit
-    $("#user_table #user_table_body").on("click", "a.user_edit", function (e) {
+    // Pet Delete
+    $("#pet_table #pet_table_body").on("click", "a.pet_delete", function (e) {
         e.preventDefault();
-        $("#update_user_modal").modal("show");
+        var table = $("#pet_table").DataTable();
+        var id = $(this).data("id");
+        var $row = $(this).closest("tr");
+
+        console.log(id);
+
+        bootbox.confirm({
+            message: "Do You Want To Delete This Pet?",
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success",
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger",
+                },
+            },
+            callback: function (result) {
+                console.log(result);
+                if (result)
+                    $.ajax({
+                        type: "DELETE",
+                        url: "http://localhost:8000/api/pet/" + id,
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+
+                            // Authorization:
+                            //     "Bearer " + localStorage.getItem("token"),
+                        },
+
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log(data);
+                            // bootbox.alert('success');
+                            $row.fadeOut(2000, function () {
+                                table.row($row).remove().draw(false);
+                            });
+                            toastr.success(data.message);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        },
+                    });
+            },
+        });
+    });
+
+    // Pet Edit
+    $("#pet_table #pet_table_body").on("click", "a.pet_edit", function (e) {
+        e.preventDefault();
+        //
         var id = $(this).data("id");
         // var id = $(e.relatedTarget).attr("id");
         console.log(id);
@@ -240,7 +246,7 @@ $(document).ready(function () {
             processData: false, // Important!
             contentType: false,
             cache: false,
-            url: "http://localhost:8000/api/user/" + id + "/edit",
+            url: "http://localhost:8000/api/pet/" + id + "/edit",
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
@@ -252,48 +258,26 @@ $(document).ready(function () {
             // },
             dataType: "json",
             success: function (data) {
-                // console.log(data);
-                $user = data.user;
-                $account = data.account;
-                // console.log($user);
-                // console.log($account);
-                $("#edit-user_id").val($user.id);
-                $("#edit-fname").val($account.fname);
-                $("#edit-lname").val($account.lname);
-                $("#edit-addressline").val($account.addressline);
-                $("#edit-phone").val($account.phone);
-                $("#edit-email").val($user.email);
-
-                // $("#edit-role option").each(function () {
-                //     if ($(this).val() == $user.role) {
-                //         $(this).prop("selected", true);
-                //     }
-                // });
-
-                console.log($user.role);
-                if ($user.role == "admin") {
-                    $("#edit-role").val("employee");
-                } else {
-                    $("#edit-role").val($user.role);
-                }
-
-                // $("#img_path").html(
-                //     `<img src="${data.img_path}" width="100" class="img-fluid img-thumbnail">`);
-                // $("#dispCustomer").attr("src", data.img_path);
-                // $("#edit-role").val($user.role).change();
+                $("#update_pet_modal").modal("show");
+                $pet = data.pet;
+                $("#edit-pet_id").val($pet.id);
+                $("#edit-pet_name").val($pet.pet_name);
+                $("#edit-age").val($pet.age);
+                // Set current owner in select option
+                $(".edit-owner-select").val($pet.customer_id).trigger("change");
             },
             error: function (error) {
                 console.log("error");
             },
-        });
+        }); 
     });
 
-    // User Update
-    $("#update_user_button").on("click", function (e) {
+    // Pet Update
+    $("#update_pet_button").on("click", function (e) {
         e.preventDefault();
-        var id = $("#edit-user_id").val();
+        var id = $("#edit-pet_id").val();
         console.log(id);
-        var data = $("#update_user_form")[0];
+        var data = $("#update_pet_form")[0];
         console.log(data);
 
         let formData = new FormData(data);
@@ -305,7 +289,7 @@ $(document).ready(function () {
             // cache: false,
             contentType: false,
             processData: false,
-            url: "http://localhost:8000/api/user-update/" + id,
+            url: "http://localhost:8000/api/pet-update/" + id,
             data: formData,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -319,15 +303,15 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 // console.log(data.img_path);
-                $("#update_user_modal").modal("hide");
-                $("#user_table").DataTable().ajax.reload();
+                $("#update_pet_modal").modal("hide");
+                $("#pet_table").DataTable().ajax.reload();
                 console.log("data", data);
                 // console.log("message", data.message);
                 // console.log("request", data.request);
                 toastr.success(data.message);
             },
             error: function (error) {
-                console.log("error");
+                console.log("error", error);
             },
         });
     });

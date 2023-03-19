@@ -35,3 +35,7 @@ Route::get('/customer-list', function () {
 Route::get('/employee-list', function () {
     return view('tables.employee');
 });
+
+Route::get('/pet-list', function () {
+    return view('tables.pet');
+});

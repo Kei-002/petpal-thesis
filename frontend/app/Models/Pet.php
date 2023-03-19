@@ -13,7 +13,7 @@ class Pet extends Model
 //  implements Searchable
 {
     use HasFactory;
-    use softDeletes;
+    // use softDeletes;
     // public $table = "pet";5 
     protected $guarded = ['id'];
     public static $rules = [
@@ -28,15 +28,15 @@ class Pet extends Model
         return $this->belongsTo('App\Models\Customer');
     }
 
-    public function consults()
-    {
-        return $this->hasMany('App\Models\Consultation');
-    }
+    // public function consults()
+    // {
+    //     return $this->hasMany('App\Models\Consultation');
+    // }
 
-    public function orderlines()
-    {
-        return $this->hasMany(Orderline::class);
-    }
+    // public function orderlines()
+    // {
+    //     return $this->hasMany(Orderline::class);
+    // }
 
     // public function getSearchResult(): SearchResult
     // {
