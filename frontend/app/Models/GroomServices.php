@@ -13,7 +13,7 @@ class GroomServices extends Model
 {
     use HasFactory;
 
-    use HasFactory;
+    protected $table = 'services';
     protected $fillable = [
         'groom_name',
         'price',
@@ -29,8 +29,8 @@ class GroomServices extends Model
     // {
     //     return $this->hasMany(Gscomments::class);
     // }
-    public function orderlines()
-    {
-        return $this->hasMany(Orderline::class);
-    }
+    // public function orderlines()
+    // {
+    //     return $this->hasMany(Orderline::class);
+    // }
 }
