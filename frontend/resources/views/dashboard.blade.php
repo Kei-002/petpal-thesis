@@ -37,7 +37,7 @@
                                             Accounts</span></a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link px-0"> <span
+                                    <a href="{{url('customer-list')}}" class="nav-link px-0"> <span
                                             class="d-none d-sm-inline">Customers</span></a>
                                 </li>
                                 <li>

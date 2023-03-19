@@ -52,15 +52,6 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
 
-
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-            'lname' => 'required|min:3',
-            'fname' => 'required|min:3',
-            'address' => 'required',
-        ]);
-
         $input = $request->all();
         // dd($request->album_id);
 
@@ -98,8 +89,7 @@ class CustomerController extends Controller
         $account->save();
 
         // return response($message = 'User Successfully Created', $status = 200);
-        return response()->json([
-            'message' => 'User Created Successfully.',
+        return response()->json(['message' => 'Customer Created Successfully.',
             'user' => $user,
             'status' => 200,
         ]);
@@ -124,8 +114,11 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $account = Customer::where("user_id", $user->id)->firstOrFail();
+        // $user = User::findOrFail($id);
+        $account = Customer::findOrFail($id);
+        $user = $account->user;
+        // $user = User::where("id", $account->user_id)->firstOrFail();
+        // $account = Customer::where("user_id", $user->id)->firstOrFail();
         return response()->json([
             'user' => $user,
             'account' => $account,
@@ -148,10 +141,12 @@ class CustomerController extends Controller
     public function updateCustomer(Request $request, $id)
     {
         // $data = $request->all();
+        // dd($request);
+        $account = Customer::findOrFail($id);
+        $user = User::where("id", $account->user_id)->firstOrFail();
 
-
-        $user = User::find($id);
-        $account = Customer::where("user_id", $id)->firstOrFail();
+        // $user = User::find($id);
+        // $account = Customer::where("user_id", $id)->firstOrFail();
 
         $user->name = $request->fname . " " . $request->lname;
         $user->email = $request->email;
@@ -162,9 +157,7 @@ class CustomerController extends Controller
         $account->lname = $request->lname;
         $account->addressline = $request->addressline;
         $account->phone = $request->phone;
-
-
-
+        $account->save();
 
         return response()->json([
             'message' => 'Customer updated successfully',
@@ -184,17 +177,17 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
+
         try {
-            $user = User::findOrFail($id);
-            if ($user->role === 'customer') {
-                $customer = Customer::where("user_id", $user->id)->firstOrFail();
-                $customer->pets()->delete();
-            }
+            $customer = Customer::findOrFail($id);
+            $customer->pets()->delete();
+
+            $user = User::where("id", $customer->user_id)->firstOrFail();
+            $user->delete();
         } catch (\Exception $error) {
             return response($error, $status = 400);
         }
-
-        $user->delete();
+        
         return response()->json([
             'message' => 'Customer Deleted Successfully',
             'status' => 200,

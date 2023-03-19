@@ -124,7 +124,8 @@
                                     <input type="email" class="form-control" name="email" id="edit-email" required>
 
                                     <label for="role">Account Role</label>
-                                    <select class="form-select" aria-label="role-select" name="role" id="edit-role" disabled>
+                                    <select class="form-select" aria-label="role-select" name="role" id="edit-role"
+                                        disabled>
                                         <option value="customer">Customer</option>
                                         <option value="employee">Employee</option>
                                     </select>
@@ -159,7 +160,7 @@
                             <th>Role</th>
                             <th>Joined On</th>
                             <th colspan="2">Actions</th>
-                            <th></th>
+                            <th style="display:none;"></th>
                         </tr>
                     </thead>
                     <tbody id="user_table_body">

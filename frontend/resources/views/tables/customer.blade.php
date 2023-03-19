@@ -12,13 +12,13 @@
                 Add New Customer
             </button>
             {{-- Modal Button END --}}
-            <!-- Modal Create User Body-->
+            <!-- Modal Create customer Body-->
             <div class="modal fade" id="create_customer_modal" tabindex="-1" aria-labelledby="create_customer_modal_label"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="create_customer_modal_label">Add New User</h5>
+                            <h5 class="modal-title" id="create_customer_modal_label">Add New Customer</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form id="create_customer_form" action="#" method="#" enctype="multipart/form-data">
@@ -71,7 +71,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-                                    id="user_create_button">Submit</button>
+                                    id="create_customer_button">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -117,7 +117,6 @@
                                     <label for="lname">Email</label>
                                     <input type="email" class="form-control" name="email" id="edit-email" required>
 
-
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Image</label>
                                         <input class="form-control" type="file" id="img_path" name="img_path"
@@ -128,7 +127,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-                                    id="update_user_button">Submit</button>
+                                    id="update_customer_button">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -144,13 +143,13 @@
                     <thead>
                         <tr>
                             <th>Profile Picture</th>
-                            <th>Name</th>
-                            <th>Email</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
                             <th>Address</th>
                             <th>Phone</th>
                             <th>Joined On</th>
                             <th colspan="2">Actions</th>
-                            <th></th>
+                            <th style="display:none;"></th>
                         </tr>
                     </thead>
                     <tbody id="customer_table_body">
