@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\GroomServicesController;
+use App\Http\Controllers\GroomServiceController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
@@ -31,4 +31,5 @@ Route::post('/employee-update/{employee}', [EmployeeController::class, 'updateEm
 Route::resource('pet', PetController::class);
 Route::post('/pet-update/{pet}', [PetController::class, 'updatePet']);
 
-// Route::resource('services', GroomServicesController::class);
+Route::resource('service', GroomServiceController::class);
+Route::post('/service-update/{service}', [GroomServiceController::class, 'updateService']);

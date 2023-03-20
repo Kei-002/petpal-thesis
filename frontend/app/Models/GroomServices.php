@@ -12,6 +12,7 @@ use App\Models\Orderline;
 class GroomServices extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $table = 'services';
     protected $fillable = [

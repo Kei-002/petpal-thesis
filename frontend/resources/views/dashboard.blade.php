@@ -24,7 +24,7 @@
                                 <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products</span></a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link px-0 align-middle">
+                            <a href="{{url('service-list')}}" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-box2-heart"></i> <span class="ms-1 d-none d-sm-inline">Grooming
                                     Services</span> </a>
                         </li>

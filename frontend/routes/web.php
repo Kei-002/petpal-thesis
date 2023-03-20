@@ -39,3 +39,7 @@ Route::get('/employee-list', function () {
 Route::get('/pet-list', function () {
     return view('tables.pet');
 });
+
+Route::get('/service-list', function () {
+    return view('tables.service');
+});
