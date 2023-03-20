@@ -9,6 +9,9 @@
 <link
     href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400&family=Titan+One&family=Varela+Round&display=swap"
     rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet"> 
+
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 {{-- Fonts END --}}
 
@@ -36,13 +39,13 @@
 {{-- Datatables END --}}
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
-{{-- Moment CDN --}}
+{{-- Moment CDN (Time Formatter) [Not used?] --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"
     integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-{{-- Toastr CDN --}}
+{{-- Toastr CDN (Notifications) --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
     integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -51,21 +54,28 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-{{-- Bootbox CDN --}}
+{{-- Bootbox CDN (Confirmation Box)--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js"
     integrity="sha512-oVbWSv2O4y1UzvExJMHaHcaib4wsBMS5tEP3/YkMP6GmkwRJAa79Jwsv+Y/w7w2Vb/98/Xhvck10LyJweB8Jsw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-{{-- Select2 CDN --}}
+{{-- Select2 CDN (Searchable Select Input)--}}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-{{-- Old Select2 --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
-    integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+
+
+{{-- Animate.css --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+{{-- Animsition (Animated Page Transitions) --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animsition/3.2.1/css/animsition.min.css"
+    integrity="sha512-/T8xGJ7rJUbE4bn2PW9wvEAF53I9piLzo+MbB+UNQ7h2PDhe0GfLP6dKSoGciFkhcKvvefRkoH3IwLwzm14xgg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animsition/3.2.1/js/animsition.min.js"
+    integrity="sha512-A6ariLe+TnwXgF0FtGuOAZB4MuNxxS1W+NvJZxN3fcXYtcrxHu7Z8yJ2MBk7MwnZuG70ksTGdAUyUEbbXW6Imw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
-    integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+
+

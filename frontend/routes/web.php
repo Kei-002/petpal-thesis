@@ -43,3 +43,6 @@ Route::get('/pet-list', function () {
 Route::get('/service-list', function () {
     return view('tables.service');
 });
+
+
+Route::view('/login', 'auth.login');
