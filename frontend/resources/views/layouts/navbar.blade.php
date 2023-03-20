@@ -35,6 +35,17 @@
                     <a class="nav-link mx-2 text-uppercase" href="#">Consultations</a>
                 </li>
             </ul>
+
+            @if (Auth::guest())
+             <ul class="navbar-nav ms-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 text-uppercase" href="{{url('login')}}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2 text-uppercase" href="#">Register</a>
+                </li>
+            </ul>
+            @else
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
                     <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-cart-shopping"></i>
@@ -47,7 +58,9 @@
                         Account</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
+                        @if(Auth::user()->role != 'customer')                
                         <li><a class="dropdown-item" href="{{url('/dashboard')}}">Dashboard</a></li>
+                        @endif
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -56,6 +69,7 @@
                     </ul>
                 </li>
             </ul>
+            @endif
         </div>
     </div>
 </nav>
