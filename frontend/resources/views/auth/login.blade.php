@@ -48,11 +48,11 @@
 						</button>
 					</div>
 					
-					<div class="text-center p-t-46 p-b-20">
+					{{-- <div class="text-center p-t-46 p-b-20">
 						<span class="txt2">
 							or sign up using
 						</span>
-					</div>
+					</div> --}}
 
 				</form>
 
