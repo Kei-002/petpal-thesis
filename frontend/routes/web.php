@@ -17,10 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/home', function () {
-    return view('layouts.base');
+    return view('welcome');
 });
+
+
+// Route::get('/home', function () {
+//     return view('layouts.base');
+// });
 
 // Dashboard links
 Route::get('/dashboard', function () {

@@ -58,9 +58,13 @@
 
 				<div class="login100-more" style="background-image: url('{{ asset('images/loginHero.jpg') }}');">
 				</div>
+                
 			</div>
 		</div>
+        
 	</div>
+
+    
 	
 	
 	<script src="{{ asset('js/loginPage.js') }}"></script>

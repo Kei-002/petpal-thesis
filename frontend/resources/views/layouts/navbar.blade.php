@@ -36,8 +36,9 @@
                 </li>
             </ul>
 
-            @if (Auth::guest())
-             <ul class="navbar-nav ms-auto ">
+            {{-- {{Auth::user()->all()}} --}}
+           
+             <ul class="navbar-nav ms-auto" id="guestLinks">
                 <li class="nav-item">
                     <a class="nav-link mx-2 text-uppercase" href="{{url('login')}}">Login</a>
                 </li>
@@ -45,8 +46,8 @@
                     <a class="nav-link mx-2 text-uppercase" href="#">Register</a>
                 </li>
             </ul>
-            @else
-            <ul class="navbar-nav ms-auto ">
+            
+            <ul class="navbar-nav ms-auto " id="userLinks">
                 <li class="nav-item">
                     <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-cart-shopping"></i>
                         Cart<span class="badge bg-danger" style="margin-left: 5px"> 4</span>
@@ -58,18 +59,19 @@
                         Account</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
-                        @if(Auth::user()->role != 'customer')                
-                        <li><a class="dropdown-item" href="{{url('/dashboard')}}">Dashboard</a></li>
-                        @endif
+                                    
+                        <li><a class="dropdown-item" href="{{url('/dashboard')}}" id="adminLink">Dashboard</a></li>
+                       
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" href="#" id="logoutButton">Logout</a></li>
                     </ul>
                 </li>
             </ul>
-            @endif
+            
         </div>
     </div>
+    <script type="text/javascript" charset="utf8" src="{{ asset('js/navbar.js') }}"></script>
 </nav>

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\HttpResponses;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CheckRole
@@ -38,11 +39,13 @@ class CheckRole
 
         // Get User Information
         $user = User::where('id', $token_info->tokenable_id)->first();
-
+        
+       
         // Iterate through roles that are passed to the middleware
         foreach ($roles as $role) {
             // If current role matches given role, return request
             if ($user->role === $role) {
+                Auth::login($user);
                 return $next($request);
             }
         }

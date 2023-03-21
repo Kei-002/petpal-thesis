@@ -33,6 +33,12 @@ $(document).ready(function () {
         ajax: {
             url: "http://127.0.0.1:8000/api/customer",
             dataSrc: "",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
         },
         order: [0, "dec"],
         // data: data,
@@ -144,12 +150,12 @@ $(document).ready(function () {
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            // beforeSend: function (xhr) {
-            //     xhr.setRequestHeader(
-            //         "Authorization",
-            //         "Bearer " + localStorage.getItem("token")
-            //     );
-            // },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
 
             dataType: "json",
             success: function (data) {
