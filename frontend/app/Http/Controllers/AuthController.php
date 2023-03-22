@@ -8,7 +8,7 @@ use App\Models\Customer;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -30,10 +30,6 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
         $role = $user->role;
-        // if ($role !== 'customer') {
-        //     return redirect()->route('dashboard');;
-        // }
-
         $test = Auth::user()->name;
         return $this->success([
             'user' => $user,
@@ -70,10 +66,10 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::user()->currentAccessToken()->delete();
-
-        return $this->success([
-            'message' => "User successfully logged out."
+        $user = User::find(Auth::id());
+        $user->tokens()->delete();
+        auth()->guard('web')->logout();
+        return $this->success(['message' => "User successfully logged out.",
         ]);
     }
 }

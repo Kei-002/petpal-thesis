@@ -11,7 +11,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/api/login",
+            url: "http://localhost:8000/login",
             data: formData,
             contentType: false,
             processData: false,
@@ -19,14 +19,14 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             dataType: "json",
-            success: function (data) {
-                console.log(data);
+            success: function (response) {
+                console.log(response);
                 // console.log(data.data.token);
-                localStorage.setItem("token", data.data.token);
+                localStorage.setItem("token", response.data.token);
                 toastr.success("User successfully logged in!");
-                if (data.data.role != "customer") {
+                if (response.data.role != "customer") {
                     location.href = "http://localhost:8000/dashboard";
-                    console.log(data.data.role);
+                    console.log(response.data.role);
                 } else {
                     location.href = "http://localhost:8000";
                 }

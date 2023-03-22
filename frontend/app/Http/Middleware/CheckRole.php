@@ -6,12 +6,11 @@ use App\Models\User;
 use App\Traits\HttpResponses;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Illuminate\Support\Facades\DB;
 
 class CheckRole
 {
-
     use HttpResponses;
     /**
      * Handle an incoming request.
@@ -22,7 +21,6 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
-
         $token = $request->bearerToken();
         // 8|wUsOAP9UMTY2AxUcyXZXDnVCYhMIppPT43dc2eKN to [8, wUsOAP9UMTY2AxUcyXZXDnVCYhMIppPT43dc2eKN]
         $bearer_token = explode('|', $token);
@@ -52,4 +50,7 @@ class CheckRole
 
         return $this->error('', 'Access Forbidden/Denied', 403);
     }
+
+    
+
 }

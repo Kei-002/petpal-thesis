@@ -8,6 +8,7 @@ use App\Http\Controllers\GroomServiceController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,15 +25,17 @@ use App\Http\Controllers\UserController;
 //     return $request->user();
 // });
 
-// Authentication routes // Public Routes
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
 
-// Protected Routes
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    // Route::resource('user', UserController::class);
-    Route::post('/logout', [AuthController::class, 'logout']);
-});
+
+// Authentication routes // Public Routes
+// Route::post('/login', [AuthController::class, 'login']);
+// Route::post('/register', [AuthController::class, 'register']);
+
+// // Protected Routes
+
+//     // Route::resource('user', UserController::class);
+// Route::post('/logout', [AuthController::class, 'logout']);
+
 
 Route::group(['middleware' => ['check_role:employee,admin']], function () {
     Route::resource('user', UserController::class);

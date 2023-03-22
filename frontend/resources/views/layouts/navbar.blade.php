@@ -36,8 +36,9 @@
                 </li>
             </ul>
 
-            {{-- {{Auth::user()->all()}} --}}
-           
+            
+            
+            @guest
              <ul class="navbar-nav ms-auto" id="guestLinks">
                 <li class="nav-item">
                     <a class="nav-link mx-2 text-uppercase" href="{{url('login')}}">Login</a>
@@ -46,7 +47,8 @@
                     <a class="nav-link mx-2 text-uppercase" href="#">Register</a>
                 </li>
             </ul>
-            
+            @endguest
+            @auth
             <ul class="navbar-nav ms-auto " id="userLinks">
                 <li class="nav-item">
                     <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-cart-shopping"></i>
@@ -56,7 +58,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link mx-2 text-uppercase dropdown-toggle" data-bs-toggle="dropdown" href="#"
                         role="button" aria-expanded="false"><i class="fa-solid fa-circle-user me-1 "></i>
-                        Account</a>
+                        {{Auth::user()->name}}</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
                                     
@@ -70,6 +72,7 @@
                     </ul>
                 </li>
             </ul>
+            @endauth
             
         </div>
     </div>

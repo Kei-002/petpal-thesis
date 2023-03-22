@@ -11,21 +11,13 @@ $(document).ready(function () {
 
     $("#logoutButton").on("click", function (e) {
         e.preventDefault();
-        // var data = $("#loginForm")[0];
-        // console.log(data);
-        // let formData = new FormData(data);
-        // console.log(formData);
-        // for (var pair of formData.entries()) {
-        //     console.log(pair[0] + "," + pair[1]);
-        // }
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/api/logout",
+            url: "http://localhost:8000/logout",
             data: null,
             contentType: false,
             processData: false,
-
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
@@ -37,7 +29,6 @@ $(document).ready(function () {
                 // xhr.setRequestHeader("Content-Type", "application/json");
                 // xhr.setRequestHeader("Accept", "text/json");
             },
-
             dataType: "json",
             success: function (data) {
                 console.log(data);
