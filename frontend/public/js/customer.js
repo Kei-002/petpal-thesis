@@ -205,9 +205,12 @@ $(document).ready(function () {
                                 "X-CSRF-TOKEN": $(
                                     'meta[name="csrf-token"]'
                                 ).attr("content"),
-
-                                // Authorization:
-                                //     "Bearer " + localStorage.getItem("token"),
+                            },
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader(
+                                    "Authorization",
+                                    "Bearer " + localStorage.getItem("token")
+                                );
                             },
 
                             dataType: "json",
@@ -252,12 +255,12 @@ $(document).ready(function () {
                         "content"
                     ),
                 },
-                // beforeSend: function (xhr) {
-                //     xhr.setRequestHeader(
-                //         "Authorization",
-                //         "Bearer " + localStorage.getItem("token")
-                //     );
-                // },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(
+                        "Authorization",
+                        "Bearer " + localStorage.getItem("token")
+                    );
+                },
                 dataType: "json",
                 success: function (data) {
                     console.log(data);

@@ -35,6 +35,12 @@ $(document).ready(function () {
         ajax: {
             url: "http://127.0.0.1:8000/api/pet",
             dataSrc: "",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
         },
         order: [0, "dec"],
         // data: data,
@@ -105,6 +111,12 @@ $(document).ready(function () {
         processData: false, // Important!
         contentType: false,
         dataType: "json",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(
+                "Authorization",
+                "Bearer " + localStorage.getItem("token")
+            );
+        },
         success: function (data) {
             $owner_list = $("#owner");
             $edit_owner_list = $("#edit-owner");
@@ -157,12 +169,12 @@ $(document).ready(function () {
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            // beforeSend: function (xhr) {
-            //     xhr.setRequestHeader(
-            //         "Authorization",
-            //         "Bearer " + localStorage.getItem("token")
-            //     );
-            // },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
 
             dataType: "json",
             success: function (data) {
@@ -213,6 +225,12 @@ $(document).ready(function () {
                             // Authorization:
                             //     "Bearer " + localStorage.getItem("token"),
                         },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader(
+                                "Authorization",
+                                "Bearer " + localStorage.getItem("token")
+                            );
+                        },
 
                         dataType: "json",
                         contentType: "application/json",
@@ -250,12 +268,12 @@ $(document).ready(function () {
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            // beforeSend: function (xhr) {
-            //     xhr.setRequestHeader(
-            //         "Authorization",
-            //         "Bearer " + localStorage.getItem("token")
-            //     );
-            // },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
             dataType: "json",
             success: function (data) {
                 $("#update_pet_modal").modal("show");
@@ -269,7 +287,7 @@ $(document).ready(function () {
             error: function (error) {
                 console.log("error");
             },
-        }); 
+        });
     });
 
     // Pet Update
@@ -294,12 +312,12 @@ $(document).ready(function () {
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            // beforeSend: function (xhr) {
-            //     xhr.setRequestHeader(
-            //         "Authorization",
-            //         "Bearer " + localStorage.getItem("token")
-            //     );
-            // },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
             dataType: "json",
             success: function (data) {
                 // console.log(data.img_path);

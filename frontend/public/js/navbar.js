@@ -1,13 +1,13 @@
 $(document).ready(function () {
-    $("#userLinks").hide();
-    $("#guestLinks").show();
-    if (
-        localStorage.getItem("token") !== "null" &&
-        localStorage.getItem("token")
-    ) {
-        $("#guestLinks").hide();
-        $("#userLinks").show();
-    }
+    // $("#userLinks").hide();
+    // $("#guestLinks").show();
+    // if (
+    //     localStorage.getItem("token") !== "null" &&
+    //     localStorage.getItem("token")
+    // ) {
+    //     $("#guestLinks").hide();
+    //     $("#userLinks").show();
+    // }
 
     $("#logoutButton").on("click", function (e) {
         e.preventDefault();
