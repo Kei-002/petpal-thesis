@@ -15,11 +15,6 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:sanctum');
-    // }
-
     public function login(LoginUserRequest $request)
     {
         $request->validated($request->all());
@@ -30,10 +25,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
         $role = $user->role;
-        $test = Auth::user()->name;
-        return $this->success([
-            'user' => $user,
-            'test' => $test,
+        return $this->success(['user' => $user,
             'role' => $role,
             'token' => $user->createToken('API Token of ' . $user->name)->plainTextToken
         ]);

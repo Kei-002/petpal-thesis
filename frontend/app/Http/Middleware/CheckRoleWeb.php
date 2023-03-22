@@ -19,8 +19,19 @@ class CheckRoleWeb
     public function handle(Request $request, Closure $next, ...$roles)
     {
         // $user = User::where('id', Auth::id())->first();
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
 
-        $user = Auth::user();
-        return $next($request);
+        $user_role = Auth::user()->role;
+        // dd($user_role);
+        foreach ($roles as $role) {
+            // If current role matches given role, return request
+            if ($user_role === $role) {
+                return $next($request);
+            }
+        }
+
+        abort(403);
     }
 }
