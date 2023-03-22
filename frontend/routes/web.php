@@ -29,25 +29,28 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 
 // Dashboard links
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
-Route::get('/user-list', function () {
-    return view('tables.user');
-});
-Route::get('/customer-list', function () {
-    return view('tables.customer');
-});
-Route::get('/employee-list', function () {
-    return view('tables.employee');
-});
 
-Route::get('/pet-list', function () {
-    return view('tables.pet');
-});
+Route::group(['middleware' => ['check_role_web:employee,admin']], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+    Route::get('/user-list', function () {
+        return view('tables.user');
+    });
+    Route::get('/customer-list', function () {
+        return view('tables.customer');
+    });
+    Route::get('/employee-list', function () {
+        return view('tables.employee');
+    });
 
-Route::get('/service-list', function () {
-    return view('tables.service');
+    Route::get('/pet-list', function () {
+        return view('tables.pet');
+    });
+
+    Route::get('/service-list', function () {
+        return view('tables.service');
+    });
 });
 
 
