@@ -138,7 +138,7 @@ $(document).ready(function () {
         // console.log(data);
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/api/employee",
+            url: "/api/employee",
             data: formData,
             contentType: false,
             processData: false,
@@ -196,7 +196,7 @@ $(document).ready(function () {
                     if (result)
                         $.ajax({
                             type: "DELETE",
-                            url: "http://localhost:8000/api/employee/" + id,
+                            url: "/api/employee/" + id,
                             headers: {
                                 "X-CSRF-TOKEN": $(
                                     'meta[name="csrf-token"]'
@@ -245,7 +245,7 @@ $(document).ready(function () {
                 processData: false, // Important!
                 contentType: false,
                 cache: false,
-                url: "http://localhost:8000/api/employee/" + id + "/edit",
+                url: "/api/employee/" + id + "/edit",
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
                         "content"
@@ -300,7 +300,7 @@ $(document).ready(function () {
             // cache: false,
             contentType: false,
             processData: false,
-            url: "http://localhost:8000/api/employee-update/" + id,
+            url: "/api/employee-update/" + id,
             data: formData,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

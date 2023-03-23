@@ -14,7 +14,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/logout",
+            url: "/logout",
             data: null,
             contentType: false,
             processData: false,
@@ -35,7 +35,7 @@ $(document).ready(function () {
                 // console.log(data.data.token);
                 localStorage.removeItem("token");
                 toastr.success("User successfully logged out!");
-                location.href = "http://localhost:8000/home";
+                location.href = "/";
             },
             error: function (error) {
                 console.log(error);

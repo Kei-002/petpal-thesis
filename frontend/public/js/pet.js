@@ -106,7 +106,7 @@ $(document).ready(function () {
 
     // Load customer to select options input
     $.ajax({
-        url: "http://localhost:8000/api/customer",
+        url: "/api/customer",
         type: "GET",
         processData: false, // Important!
         contentType: false,
@@ -161,7 +161,7 @@ $(document).ready(function () {
         // console.log(data);
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/api/pet",
+            url: "/api/pet",
             data: formData,
             contentType: false,
             processData: false,
@@ -216,7 +216,7 @@ $(document).ready(function () {
                 if (result)
                     $.ajax({
                         type: "DELETE",
-                        url: "http://localhost:8000/api/pet/" + id,
+                        url: "/api/pet/" + id,
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
                                 "content"
@@ -264,7 +264,7 @@ $(document).ready(function () {
             processData: false, // Important!
             contentType: false,
             cache: false,
-            url: "http://localhost:8000/api/pet/" + id + "/edit",
+            url: "/api/pet/" + id + "/edit",
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
@@ -307,7 +307,7 @@ $(document).ready(function () {
             // cache: false,
             contentType: false,
             processData: false,
-            url: "http://localhost:8000/api/pet-update/" + id,
+            url: "/api/pet-update/" + id,
             data: formData,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

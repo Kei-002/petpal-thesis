@@ -11,7 +11,8 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/login",
+            // url: "http://localhost:8000/login",
+            url: "/login",
             data: formData,
             contentType: false,
             processData: false,
@@ -25,10 +26,10 @@ $(document).ready(function () {
                 localStorage.setItem("token", response.data.token);
                 toastr.success("User successfully logged in!");
                 if (response.data.role != "customer") {
-                    location.href = "http://localhost:8000/dashboard";
+                    location.href = "/dashboard";
                     console.log(response.data.role);
                 } else {
-                    location.href = "http://localhost:8000";
+                    location.href = "/";
                 }
             },
             error: function (error) {
