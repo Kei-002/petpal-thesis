@@ -26,13 +26,13 @@
             </div>
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#">Products</a>
+                    <a class="nav-link mx-2 text-uppercase" href="{{url('product')}}">Products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mx-2 text-uppercase" href="#">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#">Consultations</a>
+                    <a class="nav-link mx-2 text-uppercase" href="#">Consultations</a> 
                 </li>
             </ul>
 

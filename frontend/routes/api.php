@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GroomServiceController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,5 +50,9 @@ Route::group(['middleware' => ['check_role:employee,admin']], function () {
     Route::post('/pet-update/{pet}', [PetController::class, 'updatePet']);
     Route::resource('service', GroomServiceController::class);
     Route::post('/service-update/{service}', [GroomServiceController::class, 'updateService']);
+    Route::resource('product', ProductController::class);
+    Route::post('/product-update/{product}', [ProductController::class, 'updateProduct']);
 });
+
+Route::resource('category', CategoryController::class);
 

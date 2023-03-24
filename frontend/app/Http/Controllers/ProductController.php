@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Models\Customer;
-use App\Models\Pet;
 
-class PetController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class PetController extends Controller
     public function index()
     {
         //
-        $data = Pet::with('customer')->get();
+        $data = Product::with('category')->get();
         // return response($data, $status = 200);
         return response()->json($data);
     }
@@ -39,24 +39,29 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $input = $request->all();
 
-        $pet = new Pet();
+        $product = new Product();
 
-        $pet->pet_name = $input['pet_name'];
-        $pet->age = $input['age'];
-        $pet->customer_id = $request->owner;
+        $product->product_name = $input['product_name'];
+        $product->cost_price = $input['cost_price'];
+        $product->sell_price = $input['sell_price'];
+        $product->description = $request->description;
+
+        $product->category_id = $request->category;
+
         $fileName = time() . $request->file('img_path')->getClientOriginalName();
         $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
         $input["img_path"] = '/storage/' . $path;
-        $pet->img_path = $input["img_path"];
+        $product->img_path = $input["img_path"];
 
-        $pet->save();
+        $product->save();
 
         // return response($message = 'User Successfully Created', $status = 200);
         return response()->json([
-            'message' => 'Pet Created Successfully.',
-            'pet' => $pet,
+            'message' => 'Product Created Successfully.',
+            'product' => $product,
             'status' => 200,
         ]);
     }
@@ -64,10 +69,10 @@ class PetController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
         //
     }
@@ -75,18 +80,19 @@ class PetController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $pet = Pet::findOrFail($id);
-        $owners = Customer::all();
+        $product = Product::findOrFail($id);
+        // $owners = Customer::all();
+        $category = Category::all();
         // $user = User::where("id", $account->user_id)->firstOrFail();
         // $account = Customer::where("user_id", $user->id)->firstOrFail();
         return response()->json([
-            'pet' => $pet,
-            'owners' => $owners,
+            'product' => $product,
+            'category' => $category,
             'status' => 200,
         ]);
     }
@@ -95,49 +101,53 @@ class PetController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
         //
     }
 
-    public function updatePet(Request $request, $id)
+    public function updateProduct(Request $request, $id)
     {
-        $pet = Pet::findOrFail($id);
-        $owner = Customer::where("id", $request->owner)->first();
-        $pet->pet_name = $request->pet_name;
-        $pet->age = $request->age;
-        $pet->customer()->associate($owner);
-        $pet->save();
+        // $data = $request->all();
+        // dd($request);
+        $product = Product::findOrFail($id);
+        $category = Category::where("id", $request->category)->first();
+        $product->product_name = $request->product_name;
+        $product->cost_price = $request->cost_price;
+        $product->sell_price = $request->sell_price;
+        $product->description = $request->description;
+        $product->category()->associate($category);
+        $product->save();
         return response()->json([
-            'message' => 'Pet updated successfully',
+            'message' => 'Product updated successfully',
             // 'status' => $user,
             'changes' => $request->all(),
-            'pet' => $pet,
-            'owner' => $owner,
+            'product' => $product,
+            'category' => $category,
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try {
-            $pet = Pet::findOrFail($id);
-            $pet->customer()->dissociate();
-            $pet->delete();
+            $product = Product::findOrFail($id);
+            $product->category()->dissociate();
+            $product->delete();
         } catch (\Exception $error) {
             return response($error, $status = 400);
         }
 
         return response()->json([
-            'message' => 'Pet Deleted Successfully',
+            'message' => 'Product Deleted Successfully',
             'status' => 200,
         ]);
     }
