@@ -309,12 +309,12 @@ $(document).ready(function () {
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            // beforeSend: function (xhr) {
-            //     xhr.setRequestHeader(
-            //         "Authorization",
-            //         "Bearer " + localStorage.getItem("token")
-            //     );
-            // },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
             dataType: "json",
             success: function (data) {
                 // console.log(data.img_path);
