@@ -22,6 +22,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form id="create_customer_form" action="#" method="#" enctype="multipart/form-data">
+                            @csrf
                             <div class="modal-body">
                                 <div class="form-group" id="addCustomerForm">
                                     <div class="row">
@@ -92,6 +93,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <form id="update_customer_form" action="#" method="#" enctype="multipart/form-data">
+                            @csrf
                             <div class="modal-body">
                                 <input type="hidden" class="form-control" name="customer_id" id="edit-customer_id">
                                 <div class="form-group" id="update_customer_form">
