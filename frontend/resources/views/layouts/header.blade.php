@@ -78,4 +78,7 @@
     integrity="sha512-A6ariLe+TnwXgF0FtGuOAZB4MuNxxS1W+NvJZxN3fcXYtcrxHu7Z8yJ2MBk7MwnZuG70ksTGdAUyUEbbXW6Imw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+{{-- Cart Class --}}
+<script src="{{ asset('js/cart.js') }}"></script>   
+
 
