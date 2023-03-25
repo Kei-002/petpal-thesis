@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GroomServiceController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -55,4 +56,4 @@ Route::group(['middleware' => ['check_role:employee,admin']], function () {
 });
 
 Route::resource('category', CategoryController::class);
-
+Route::get('/get-all-products', [OrderController::class, 'getProductPageDetails']);
