@@ -26,7 +26,7 @@
             </div>
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="{{url('product')}}">Products</a>
+                    <a class="nav-link mx-2 text-uppercase" href="{{url('products')}}">Products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mx-2 text-uppercase" href="#">Services</a>
