@@ -21,15 +21,15 @@ class AdminSeeder extends Seeder
         User::create([
             'name' => 'Admin Account',
             'email' => 'admin@admin.com',
-            'password' => bcrypt("admin123"),
+            'password' => bcrypt("password"),
             'role' => 'admin',
             'is_admin' => 1
         ]);
 
         Employee::create([
             'user_id' => 1,
-            'emp_fname' => 'Admin',
-            'emp_lname' => 'Account',
+            'fname' => 'Admin',
+            'lname' => 'Account',
             'phone' => $faker->phoneNumber(),
             'addressline' => $faker->address()
         ]);
