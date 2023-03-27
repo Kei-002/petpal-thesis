@@ -51,8 +51,8 @@
             @auth
             <ul class="navbar-nav ms-auto " id="userLinks">
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-cart-shopping"></i>
-                        Cart<span class="badge bg-danger" style="margin-left: 5px"> 4</span>
+                    <a class="nav-link mx-2 text-uppercase" id="cartHtml" href="{{url('/cart')}}"><i class="fa-solid fa-cart-shopping"></i>
+                        Cart<span class="badge bg-danger" id="cartQuantity" style="margin-left: 5px"> 0</span>
                     </a>
                 </li>
                 <li class="nav-item dropdown">

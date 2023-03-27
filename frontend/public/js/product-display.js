@@ -18,10 +18,10 @@ $(document).ready(function () {
     };
 
     // Get cart from localStorage
-    cartObj = JSON.parse(localStorage.getItem("cart"));
+    cartObj = JSON.parse(localStorage.getItem("cart")) || [];
     // console.log();
     let cart;
-    // If cart is not empty, load the items in cartObj to new Cart instance
+    // If cart is not empty, load the items in cartObj to a new Cart instance
     if (cartObj != null) {
         cart = new Cart(
             cartObj.items,
@@ -95,6 +95,7 @@ $(document).ready(function () {
                                         data-id="${product.id}" 
                                         data-name="${product.product_name}"
                                         data-price="${product.sell_price}"
+                                        data-image="${product.img_path}"
                                         >Add to cart</button>
                                     </div>
                                 </div>
@@ -109,11 +110,13 @@ $(document).ready(function () {
     $(".product-list").on("click", "button#add-to-cart", function (e) {
         e.preventDefault();
         var name = $(this).data("name");
+        var image = $(this).data("image");
         var price = Number($(this).data("price"));
         var id = Number($(this).data("id"));
         cart.add({
             id: id,
             name: name,
+            image: image,
             price: price,
             quantity: 1,
         });

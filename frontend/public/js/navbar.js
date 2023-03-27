@@ -1,4 +1,14 @@
 $(document).ready(function () {
+    var cartObj = JSON.parse(localStorage.getItem("cart")) || [];
+
+    console.log(cartObj.totalQuantity);
+    var totalQuantity = 0;
+    if (cartObj) {
+        totalQuantity = cartObj.totalQuantity;
+    }
+
+    $("#cartHtml span").text(totalQuantity);
+
     $("#logoutButton").on("click", function (e) {
         e.preventDefault();
 
@@ -24,6 +34,7 @@ $(document).ready(function () {
                 console.log(data);
                 // console.log(data.data.token);
                 localStorage.removeItem("token");
+                localStorage.removeItem("cart");
                 toastr.success("User successfully logged out!");
                 location.href = "/";
             },

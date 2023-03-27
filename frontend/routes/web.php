@@ -60,3 +60,5 @@ Route::group(['middleware' => ['check_role_web:employee,admin']], function () {
 // Route::view('/product', 'items.product');
 Route::view('/products', 'items.products');
 Route::view('/login', 'auth.login');
+
+Route::view('/cart', 'items.cart');
