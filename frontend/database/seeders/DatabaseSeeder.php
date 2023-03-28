@@ -9,6 +9,7 @@ use Database\Seeders\AdminSeeder;
 use Database\Seeders\PetSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ServiceSeeder;
+use Database\Seeders\ProductSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PetSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(ServiceSeeder::class);
+        $this->call(ProductSeeder::class);
     }
 }
