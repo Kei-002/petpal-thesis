@@ -62,3 +62,4 @@ Route::view('/products', 'items.products');
 Route::view('/login', 'auth.login');
 
 Route::view('/cart', 'items.cart');
+Route::view('/receipt', 'items.receipt');
