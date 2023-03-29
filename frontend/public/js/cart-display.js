@@ -1,5 +1,6 @@
 $(document).ready(function () {
     // Get cart from localStorage
+    $("#receipt-section").hide();
     var cartObj = JSON.parse(localStorage.getItem("cart")) || [];
     let cart;
     // If cart is not empty, load the items in cartObj to a new Cart instance
@@ -112,7 +113,10 @@ $(document).ready(function () {
                 // // var $tableData = $("#userTable").DataTable();
                 // $("#customer_table").DataTable().ajax.reload();
                 // cart.clear();
-                location.href = "/receipt";
+                // location.href = "/receipt";
+                $("#cart-section").hide("slow");
+                $("#receipt-section").show("slow");
+                // $("#cart-section").hide("slow");
             },
             error: function (error) {
                 console.log(error);
