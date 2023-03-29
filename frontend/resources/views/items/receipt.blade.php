@@ -313,14 +313,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row my-2">
+                                    {{-- <div class="row my-2">
                                         <div class="col-7 text-right">
                                             Tax (10%)
                                         </div>
                                         <div class="col-5">
                                             <span class="text-110 text-secondary-d1">$225</span>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row my-2 align-items-center bgc-primary-l3 p-2">
                                         <div class="col-7 text-right">
@@ -337,7 +337,7 @@
 
                             <div>
                                 <span class="text-secondary-d1 text-105">Thank you for your business</span>
-                                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Pay Now</a>
+                                {{-- <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Pay Now</a> --}}
                             </div>
                         </div>
                     </div>
@@ -345,4 +345,6 @@
             </div>
         </div>
     </div>
+
+    {{-- <script src="{{ asset('js/receipt.js') }}"></script> --}}
 @endsection

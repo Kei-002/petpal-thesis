@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Orderline;
 use App\Models\Product;
@@ -68,19 +69,37 @@ class OrderController extends Controller
         }
         DB::commit();
         // $testing = Order::find($order->id)->with('orderlines');
-        // $pdf = PDF::loadView('trans_pdf', [
-        //     'customer' => Auth::user()->fname . " " . Auth::user()->lname,
-        //     'trans' => $done
-        // ]);
-        // file_put_contents('storage/bills/transaction_no_' . $transaction->id . '.pdf', $pdf->output());
+        $pdf = PDF::loadView('items.receipt', [
+            'customer' => Auth::user()->fname . " " . Auth::user()->lname,
+            'cart' => $request->all(),
+        ]);
+        file_put_contents('storage/bills/transaction_no_' . $order->id . '.pdf', $pdf->output());
 
-        // $pdf->stream('Reciept.pdf');
+        $pdf->stream('Reciept.pdf');
         // return response(['pdf' => 'storage/bills/transaction_no_' . $transaction->id . '.pdf']);
 
 
         return response()->json([
             'message' => "Order Placed",
-            // 'user_id' => Auth::id()
+            'pdf' => 'storage/bills/transaction_no_' . $order->id . '.pdf'
+            // 'cart' => $request->all(),
+            // 'categories' => $categories,
+            // 'category_count' => $category_count,
+            // 'test' => $test2,
+        ]);
+    }
+
+    public function getReceipt(Request $request)
+    {
+        $data = $request->all();
+        $order = Order::find($request->order_id);
+        $customer = Customer::find(Auth::id())->orders;
+
+        return response()->json([
+            'request' => $data['order_id'],
+            'user' => Auth::user(),
+            'customer' => $customer,
+            'order' => $order
             // 'categories' => $categories,
             // 'category_count' => $category_count,
             // 'test' => $test2,

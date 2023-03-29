@@ -106,7 +106,7 @@ $(document).ready(function () {
                 );
             },
             success: function (data) {
-                console.log(data.message);
+                console.log(data);
                 // $("#create_customer_modal").modal("hide");
                 toastr.success(data.message);
                 // // var $tableData = $("#userTable").DataTable();
