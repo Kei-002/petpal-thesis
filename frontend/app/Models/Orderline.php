@@ -31,6 +31,6 @@ class Orderline extends Model
 
     public function orders()
     {
-        return $this->belongsTo('App\Models\Order');
+        return $this->belongsTo('App\Models\Order', "orderinfo_id");
     }
 }

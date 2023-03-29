@@ -234,7 +234,7 @@
                                 <div class="col-2">Amount</div>
                             </div>
 
-                            <div class="text-95 text-secondary-d3">
+                            <div class="text-95 text-secondary-d3" id="product-table">
                                 <div class="row mb-2 mb-sm-0 py-25">
                                     <div class="d-none d-sm-block col-1">1</div>
                                     <div class="col-9 col-sm-5">Domain registration</div>
@@ -304,14 +304,14 @@
                                 </div>
 
                                 <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
-                                    <div class="row my-2">
+                                    {{-- <div class="row my-2">
                                         <div class="col-7 text-right">
                                             SubTotal
                                         </div>
                                         <div class="col-5">
                                             <span class="text-120 text-secondary-d1">$2,250</span>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="row my-2">
                                         <div class="col-7 text-right">
@@ -327,7 +327,7 @@
                                             Total Amount
                                         </div>
                                         <div class="col-5">
-                                            <span class="text-150 text-success-d3 opacity-2">$2,475</span>
+                                            <span class="text-150 text-success-d3 opacity-2" id="totalAmount">$0</span>
                                         </div>
                                     </div>
                                 </div>
@@ -346,5 +346,5 @@
         </div>
     </div>
 
-    {{-- <script src="{{ asset('js/receipt.js') }}"></script> --}}
+    <script src="{{ asset('js/receipt.js') }}"></script>
 @endsection

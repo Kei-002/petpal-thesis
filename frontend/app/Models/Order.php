@@ -10,7 +10,8 @@ class Order extends Model
     use HasFactory;
 
     protected $table = 'orderinfos';
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
+    protected $guarded = ['id'];
     // public $timestamps = false;
     protected $fillable = ['customer_id', "total_purchase"];
 
@@ -28,6 +29,6 @@ class Order extends Model
 
     public function orderlines()
     {
-        return $this->hasMany('App\Models\Orderline');
+        return $this->hasMany('App\Models\Orderline', "orderinfo_id");
     }
 }

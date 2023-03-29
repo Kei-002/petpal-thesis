@@ -111,6 +111,8 @@ $(document).ready(function () {
                 toastr.success(data.message);
                 // // var $tableData = $("#userTable").DataTable();
                 // $("#customer_table").DataTable().ajax.reload();
+                // cart.clear();
+                location.href = "/receipt";
             },
             error: function (error) {
                 console.log(error);

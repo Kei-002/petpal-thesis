@@ -107,6 +107,7 @@ class Cart {
     clear() {
         this.items = [];
         this.services = [];
+        this.totalQuantity = 0;
         this.totalAmount = 0;
         this.saveToLocalStorage();
     }

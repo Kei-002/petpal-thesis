@@ -69,19 +69,19 @@ class OrderController extends Controller
         }
         DB::commit();
         // $testing = Order::find($order->id)->with('orderlines');
-        $pdf = PDF::loadView('items.receipt', [
-            'customer' => Auth::user()->fname . " " . Auth::user()->lname,
-            'cart' => $request->all(),
-        ]);
-        file_put_contents('storage/bills/transaction_no_' . $order->id . '.pdf', $pdf->output());
+        // $pdf = PDF::loadView('items.receipt', [
+        //     'customer' => Auth::user()->fname . " " . Auth::user()->lname,
+        //     'cart' => $request->all(),
+        // ]);
+        // file_put_contents('storage/bills/order' . $order->id . '.pdf', $pdf->output());
 
-        $pdf->stream('Reciept.pdf');
+        // $pdf->stream('Reciept.pdf');
         // return response(['pdf' => 'storage/bills/transaction_no_' . $transaction->id . '.pdf']);
 
 
         return response()->json([
             'message' => "Order Placed",
-            'pdf' => 'storage/bills/transaction_no_' . $order->id . '.pdf'
+            // 'pdf' => 'storage/bills/transaction_no_' . $order->id . '.pdf'
             // 'cart' => $request->all(),
             // 'categories' => $categories,
             // 'category_count' => $category_count,
@@ -89,17 +89,17 @@ class OrderController extends Controller
         ]);
     }
 
-    public function getReceipt(Request $request)
+    public function getReceipt($id)
     {
-        $data = $request->all();
-        $order = Order::find($request->order_id);
-        $customer = Customer::find(Auth::id())->orders;
+        // $data = $request->all();
+        $order = Order::where('id', "=",  $id)->with('orderlines')->get();
+        // $customer = Customer::find(Auth::id())->orders;
 
         return response()->json([
-            'request' => $data['order_id'],
-            'user' => Auth::user(),
-            'customer' => $customer,
-            'order' => $order
+            'request' => $order,
+            // 'user' => Auth::user(),
+            // 'customer' => $customer,
+            'order' => $id
             // 'categories' => $categories,
             // 'category_count' => $category_count,
             // 'test' => $test2,
