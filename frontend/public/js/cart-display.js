@@ -82,4 +82,40 @@ $(document).ready(function () {
 
         location.reload();
     });
+
+    $("#checkoutButton").on("click", function (e) {
+        // console.log($(this).data("id"), $("#cart-list #itemQuantity").val());
+        // itemID = Number($(this).data("id"));
+        // itemQuantity = Number($("#cart-list #itemQuantity").val());
+        // cart.remove(itemID);
+        // console.log(cart);
+        $.ajax({
+            url: "/api/checkout",
+            type: "POST",
+            data: JSON.stringify(cart),
+            processData: false,
+            contentType: "application/json; charset=UTF-8",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+            success: function (data) {
+                console.log(data.message);
+                // $("#create_customer_modal").modal("hide");
+                toastr.success(data.message);
+                // // var $tableData = $("#userTable").DataTable();
+                // $("#customer_table").DataTable().ajax.reload();
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+        // location.reload();
+    });
 });

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')
                 ->onDelete('cascade');
             $table->double('total_purchase');
-            $table->text('status')->default("Order Placed");
+            $table->text('payment_status')->default("Processing");
             $table->timestamps();
         });
         Schema::create('orderlines', function (Blueprint $table) {
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')
                 ->onDelete('cascade');
+            $table->text('shipping_status')->default("Order Placed");
             $table->integer('quantity');
         });
     }

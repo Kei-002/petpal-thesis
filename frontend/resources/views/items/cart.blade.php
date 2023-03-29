@@ -112,7 +112,7 @@
             </div>
             <div class="row mt-4 d-flex align-items-center">
                 <div class="col-sm-6 order-md-2 text-right float-right">
-                    <a href="catalog.html" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
+                    <a href="#" class="btn btn-primary mb-4 btn-lg pl-5 pr-5" id="checkoutButton">Checkout</a>
                 </div>
                 <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
                     <a href="{{url("/")}}">
