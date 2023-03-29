@@ -9,16 +9,16 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $table = 'transactioninfo';
+    protected $table = 'orderinfos';
     protected $primaryKey = 'id';
     // public $timestamps = false;
-    // protected $fillable = ['customer_id','transaction_placed','status'];
+    protected $fillable = ['customer_id', "total_purchase"];
 
     // const CREATED_AT = 'transaction_placed';
     // const UPDATED_AT = 'transaction_paid';
 
     // protected $fillable = ['customer_id','transaction_placed','status'];
-    protected $fillable = ['customer_id', 'status'];
+    // protected $fillable = ['customer_id', 'status'];
 
 
     public function customer()
@@ -28,6 +28,6 @@ class Order extends Model
 
     public function orderlines()
     {
-        return $this->belongsToMany('App\Models\Orderline', $table = 'transactioninfo_transactionline');
+        return $this->hasMany('App\Models\Orderline');
     }
 }
