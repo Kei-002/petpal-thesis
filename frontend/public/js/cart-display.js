@@ -1,6 +1,7 @@
 $(document).ready(function () {
-    // Get cart from localStorage
     $("#receipt-section").hide();
+    $("#product-table").empty();
+    // Get cart from localStorage
     var cartObj = JSON.parse(localStorage.getItem("cart")) || [];
     let cart;
     // If cart is not empty, load the items in cartObj to a new Cart instance
@@ -107,15 +108,114 @@ $(document).ready(function () {
                 );
             },
             success: function (data) {
-                console.log(data);
+                console.log(data.order);
                 // $("#create_customer_modal").modal("hide");
                 toastr.success(data.message);
                 // // var $tableData = $("#userTable").DataTable();
                 // $("#customer_table").DataTable().ajax.reload();
-                // cart.clear();
+                cart.clear();
                 // location.href = "/receipt";
-                $("#cart-section").hide("slow");
-                $("#receipt-section").show("slow");
+
+                $.ajax({
+                    url: "/api/receipt-info/" + data.order.id,
+                    type: "GET",
+                    processData: false, // Important!
+                    contentType: false,
+                    // dataType: "json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(
+                            "Authorization",
+                            "Bearer " + localStorage.getItem("token")
+                        );
+                    },
+                    success: function (response) {
+                        var orderlines = response.orderlines;
+                        console.log(response, orderlines);
+                        $.each(orderlines, function (key, orderline) {
+                            console.log(key, orderline);
+                            var orderDate = new Date(data.order.created_at);
+
+                            // Append order data to receipt
+                            $(
+                                "#orderID"
+                            ).html(`<i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
+                                                class="text-600 text-90">ID:</span> ${data.order.id}`);
+                            $(
+                                "#orderDate"
+                            ).html(`<i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
+                                                class="text-600     text-90">Issue Date:</span>${orderDate.toLocaleDateString(
+                                                    "en-US"
+                                                )}`);
+                            $("#orderStatus").text(data.order.status);
+                            $(
+                                "#totalAmount span"
+                            ).html(`<span class="text-150 text-success-d3 opacity-2"
+                                                    >$${data.order.total_purchase}</span>`);
+
+                            // Append customer data to receipt
+                            $("#userAddress").text(
+                                response.customer.addressline
+                            );
+                            $("#userPhone").text(response.customer.phone);
+                            $("#product-table").append(`
+                                    <div class="row mb-2 mb-sm-0 py-25">
+                                        <div class="d-none d-sm-block col-1">${
+                                            key + 1
+                                        }</div>
+                                        <div class="col-9 col-sm-5">${
+                                            orderline.products[0].product_name
+                                        }</div>
+                                        <div class="d-none d-sm-block col-2">${
+                                            orderline.quantity
+                                        }</div>
+                                        <div class="d-none d-sm-block col-2 text-95">$${
+                                            orderline.products[0].sell_price
+                                        }</div>
+                                        <div class="col-2 text-secondary-d2">$${
+                                            orderline.products[0].sell_price *
+                                            orderline.quantity
+                                        }</div>
+                                    </div>`);
+                        });
+
+                        //     $("#product-table").append(`
+                        //         <div class="row mb-2 mb-sm-0 py-25">
+                        //             <div class="d-none d-sm-block col-1">${
+                        //                 key + 1
+                        //             }</div>
+                        //             <div class="col-9 col-sm-5">${
+                        //                 item.name
+                        //             }</div>
+                        //             <div class="d-none d-sm-block col-2">${
+                        //                 item.quantity
+                        //             }</div>
+                        //             <div class="d-none d-sm-block col-2 text-95">$${
+                        //                 item.price
+                        //             }</div>
+                        //             <div class="col-2 text-secondary-d2">$${
+                        //                 item.price * item.quantity
+                        //             }</div>
+                        //         </div>`);
+                        // });
+                        // $category_list = $("#category");
+                        // $edit_category_list = $("#edit-category");
+                        // $.each(data, function (key, value) {
+                        //     // console.log(key, value);
+                        //     $category_list.append(
+                        //         `<option value="${value.id}">${value.category_name}</option>`
+                        //     );
+                        //     $edit_category_list.append(
+                        //         `<option value="${value.id}">${value.category_name}</option>`
+                        //     );
+                        // });
+                        $("#cart-section").hide("slow");
+                        $("#receipt-section").show("slow");
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    },
+                });
+
                 // $("#cart-section").hide("slow");
             },
             error: function (error) {

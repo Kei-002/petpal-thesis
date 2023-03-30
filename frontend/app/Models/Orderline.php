@@ -26,10 +26,10 @@ class Orderline extends Model
 
     public function products()
     {
-        return $this->hasMany('App\Models\Products', 'id', 'product_id');
+        return $this->hasMany('App\Models\Product', 'id', 'product_id');
     }
 
-    public function orders()
+    public function order()
     {
         return $this->belongsTo('App\Models\Order', "orderinfo_id");
     }

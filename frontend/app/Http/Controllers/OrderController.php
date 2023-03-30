@@ -83,7 +83,7 @@ class OrderController extends Controller
             'message' => "Order Placed",
             // 'pdf' => 'storage/bills/transaction_no_' . $order->id . '.pdf'
             // 'cart' => $request->all(),
-            // 'categories' => $categories,
+            'order' => $order,
             // 'category_count' => $category_count,
             // 'test' => $test2,
         ]);
@@ -92,14 +92,14 @@ class OrderController extends Controller
     public function getReceipt($id)
     {
         // $data = $request->all();
-        $order = Order::where('id', "=",  $id)->with('orderlines')->get();
-        // $customer = Customer::find(Auth::id())->orders;
+        $orderlines = Orderline::where('orderinfo_id', "=",  $id)->with('products')->get();
+        $customer = Customer::find(Auth::id())->first();
 
         return response()->json([
-            'request' => $order,
+            // 'request' => $order,
             // 'user' => Auth::user(),
-            // 'customer' => $customer,
-            'order' => $id
+            'customer' => $customer,
+            'orderlines' => $orderlines
             // 'categories' => $categories,
             // 'category_count' => $category_count,
             // 'test' => $test2,
