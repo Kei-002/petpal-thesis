@@ -434,7 +434,7 @@
 
                                 <div>
                                     <span class="text-secondary-d1 text-105">Thank you for choosing Pet-Pal!</span>
-                                    {{-- <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Pay Now</a> --}}
+                                    <a href="{{url('/products')}}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Continue shopping</a>
                                 </div>
                             </div>
                         </div>

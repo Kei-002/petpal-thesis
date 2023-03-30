@@ -77,7 +77,7 @@ $(document).ready(function () {
                 // console.log(category.category_name);
                 $(
                     ".product-list"
-                ).append(`<div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 mb-3">
+                ).append(`<div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 mb-3" id="product" data-id="${product.id}">
                             <div class="card"> <img class="card-img-top product-img mx-auto"
                                     src="${product.img_path}">
                                 <div class="card-body">
@@ -123,9 +123,8 @@ $(document).ready(function () {
         toastr.success("Product " + name + " added to cart");
     });
 
-    // Clear items
-    $(".clear-cart").click(function () {
-        shoppingCart.clearCart();
-        displayCart();
+    $(".product-list").on("click", "div#product", function () {
+        var id = $(this).data("id");
+        console.log(id);
     });
 });

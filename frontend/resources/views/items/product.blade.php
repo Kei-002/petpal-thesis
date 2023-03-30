@@ -1,339 +1,522 @@
 @extends('layouts.base')
 @section('body')
     <style>
-        /********************* Shopping Demo-4 **********************/
-        .product-container {
-            text-decoration: none !important;
+        .product-body {
+            margin-top: 20px;
+            background: #eee;
         }
-        .product-grid4,
-        .product-grid4 .product-image4 {
+
+        .product-content {
+            border: 1px solid #dfe5e9;
+            margin-bottom: 20px;
+            margin-top: 12px;
+            background: #fff
+        }
+
+        .product-content .carousel-control.left {
+            margin-left: 0
+        }
+
+        .product-content .product-image {
+            background-color: #fff;
+            display: block;
+            min-height: 238px;
+            overflow: hidden;
             position: relative
         }
 
-        .product-grid4 {
-            font-family: Poppins, sans-serif;
-            text-align: center;
-            border-radius: 5px;
-            overflow: hidden;
-            z-index: 1;
-            transition: all .3s ease 0s
+        .product-content .product-deatil {
+            border-bottom: 1px solid #dfe5e9;
+            padding-bottom: 17px;
+            padding-left: 16px;
+            padding-top: 16px;
+            position: relative;
+            background: #fff
         }
 
-        .product-grid4:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-        }
-
-        .product-grid4 .product-image4 a {
-            display: block
-        }
-
-        .product-grid4 .product-image4 img {
-            width: 100%;
-            height: auto
-        }
-
-        .product-grid4 .pic-1 {
-            opacity: 1;
-            transition: all .5s ease-out 0s
-        }
-
-        .product-grid4:hover .pic-1 {
-            opacity: 0
-        }
-
-        .product-grid4 .pic-2 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: all .5s ease-out 0s
-        }
-
-        .product-grid4:hover .pic-2 {
-            opacity: 1
-        }
-
-        .product-grid4 .social {
-            width: 180px;
-            padding: 0;
-            margin: 0 auto;
-            list-style: none;
-            position: absolute;
-            right: 0;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            transition: all .3s ease 0s
-        }
-
-        .product-grid4 .social li {
-            display: inline-block;
-            opacity: 0;
-            transition: all .7s
-        }
-
-        .product-grid4 .social li:nth-child(1) {
-            transition-delay: .15s
-        }
-
-        .product-grid4 .social li:nth-child(2) {
-            transition-delay: .3s
-        }
-
-        .product-grid4 .social li:nth-child(3) {
-            transition-delay: .45s
-        }
-
-        .product-grid4:hover .social li {
-            opacity: 1
-        }
-
-        .product-grid4 .social li a {
-            color: #222;
-            background: #fff;
-            font-size: 17px;
-            line-height: 36px;
-            width: 40px;
-            height: 36px;
-            border-radius: 2px;
-            margin: 0 5px;
-            display: block;
-            transition: all .3s ease 0s
-        }
-
-        .product-grid4 .social li a:hover {
-            color: #fff;
-            background: #16a085
-        }
-
-        .product-grid4 .social li a:after,
-        .product-grid4 .social li a:before {
-            content: attr(data-tip);
-            color: #fff;
-            background-color: #000;
-            font-size: 12px;
-            line-height: 20px;
-            border-radius: 3px;
-            padding: 0 5px;
-            white-space: nowrap;
-            opacity: 0;
-            transform: translateX(-50%);
-            position: absolute;
-            left: 50%;
-            top: -30px
-        }
-
-        .product-grid4 .social li a:after {
-            content: '';
-            height: 15px;
-            width: 15px;
-            border-radius: 0;
-            transform: translateX(-50%) rotate(45deg);
-            top: -22px;
-            z-index: -1
-        }
-
-        .product-grid4 .social li a:hover:after,
-        .product-grid4 .social li a:hover:before {
-            opacity: 1
-        }
-
-        .product-grid4 .product-discount-label,
-        .product-grid4 .product-new-label {
-            color: #fff;
-            background-color: #16a085;
-            font-size: 13px;
-            font-weight: 800;
-            text-transform: uppercase;
-            line-height: 45px;
-            height: 45px;
-            width: 45px;
-            border-radius: 50%;
-            position: absolute;
-            left: 10px;
-            top: 15px;
-            transition: all .3s
-        }
-
-        .product-grid4 .product-discount-label {
-            left: auto;
-            right: 10px;
-            background-color: #d7292a
-        }
-
-        .product-grid4:hover .product-new-label {
-            opacity: 0
-        }
-
-        .product-grid4 .product-content {
-            padding: 25px
-        }
-
-        .product-grid4 .title {
+        .product-content .product-deatil h5 a {
+            color: #2f383d;
             font-size: 15px;
-            font-weight: 400;
-            text-transform: capitalize;
-            margin: 0 0 7px;
-            transition: all .3s ease 0s
+            line-height: 19px;
+            text-decoration: none;
+            padding-left: 0;
+            margin-left: 0
         }
 
-        .product-grid4 .title a {
-            color: #222
+        .product-content .product-deatil h5 a span {
+            color: #9aa7af;
+            display: block;
+            font-size: 13px
         }
 
-        .product-grid4 .title a:hover {
-            color: #16a085
+        .product-content .product-deatil span.tag1 {
+            border-radius: 50%;
+            color: #fff;
+            font-size: 15px;
+            height: 50px;
+            padding: 13px 0;
+            position: absolute;
+            right: 10px;
+            text-align: center;
+            top: 10px;
+            width: 50px
         }
 
-        .product-grid4 .price {
-            color: #16a085;
-            font-size: 17px;
+        .product-content .product-deatil span.sale {
+            background-color: #21c2f8
+        }
+
+        .product-content .product-deatil span.discount {
+            background-color: #71e134
+        }
+
+        .product-content .product-deatil span.hot {
+            background-color: #fa9442
+        }
+
+        .product-content .description {
+            font-size: 12.5px;
+            line-height: 20px;
+            padding: 10px 14px 16px 19px;
+            background: #fff
+        }
+
+        .product-content .product-info {
+            padding: 11px 19px 10px 20px
+        }
+
+        .product-content .product-info a.add-to-cart {
+            color: #2f383d;
+            font-size: 13px;
+            padding-left: 16px
+        }
+
+        .product-content name.a {
+            padding: 5px 10px;
+            margin-left: 16px
+        }
+
+        .product-info.smart-form .btn {
+            padding: 6px 12px;
+            margin-left: 12px;
+            margin-top: -10px
+        }
+
+        .product-entry .product-deatil {
+            border-bottom: 1px solid #dfe5e9;
+            padding-bottom: 17px;
+            padding-left: 16px;
+            padding-top: 16px;
+            position: relative
+        }
+
+        .product-entry .product-deatil h5 a {
+            color: #2f383d;
+            font-size: 15px;
+            line-height: 19px;
+            text-decoration: none
+        }
+
+        .product-entry .product-deatil h5 a span {
+            color: #9aa7af;
+            display: block;
+            font-size: 13px
+        }
+
+        .load-more-btn {
+            background-color: #21c2f8;
+            border-bottom: 2px solid #037ca5;
+            border-radius: 2px;
+            border-top: 2px solid #0cf;
+            margin-top: 20px;
+            padding: 9px 0;
+            width: 100%
+        }
+
+        .product-block .product-deatil p.price-container span,
+        .product-content .product-deatil p.price-container span,
+        .product-entry .product-deatil p.price-container span,
+        .shipping table tbody tr td p.price-container span,
+        .shopping-items table tbody tr td p.price-container span {
+            color: #21c2f8;
+            font-family: Lato, sans-serif;
+            font-size: 24px;
+            line-height: 20px
+        }
+
+        .product-info.smart-form .rating label {
+            margin-top: 0
+        }
+
+        .product-wrap .product-image span.tag2 {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            padding: 10px 0;
+            color: #fff;
+            font-size: 11px;
+            text-align: center
+        }
+
+        .product-wrap .product-image span.sale {
+            background-color: #57889c
+        }
+
+        .product-wrap .product-image span.hot {
+            background-color: #a90329
+        }
+
+        .shop-btn {
+            position: relative
+        }
+
+        .shop-btn>span {
+            background: #a90329;
+            display: inline-block;
+            font-size: 10px;
+            box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0 rgba(0, 0, 0, .07);
             font-weight: 700;
-            margin: 0 2px 15px 0;
+            border-radius: 50%;
+            padding: 2px 4px 3px !important;
+            text-align: center;
+            line-height: normal;
+            width: 19px;
+            top: -7px;
+            left: -7px
+        }
+
+        .description-tabs {
+            padding: 30px 0 5px !important
+        }
+
+        .description-tabs .tab-content {
+            padding: 10px 0
+        }
+
+        .product-deatil {
+            padding: 30px 30px 50px
+        }
+
+        .product-deatil hr+.description-tabs {
+            padding: 0 0 5px !important
+        }
+
+        .product-deatil .carousel-control.left,
+        .product-deatil .carousel-control.right {
+            background: none !important
+        }
+
+        .product-deatil .glyphicon {
+            color: #3276b1
+        }
+
+        .product-deatil .product-image {
+            border-right: none !important
+        }
+
+        .product-deatil .name {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        .product-deatil .name small {
             display: block
         }
 
-        .product-grid4 .price span {
-            color: #909090;
-            font-size: 13px;
-            font-weight: 400;
-            letter-spacing: 0;
-            text-decoration: line-through;
-            text-align: left;
-            vertical-align: middle;
-            display: inline-block
+        .product-deatil .name a {
+            margin-left: 0
         }
 
-        .product-grid4 .add-to-cart {
-            border: 1px solid #e5e5e5;
+        .product-deatil .price-container {
+            font-size: 24px;
+            margin: 0;
+            font-weight: 300
+        }
+
+        .product-deatil .price-container small {
+            font-size: 12px
+        }
+
+        .product-deatil .fa-2x {
+            font-size: 16px !important
+        }
+
+        .product-deatil .fa-2x>h5 {
+            font-size: 12px;
+            margin: 0
+        }
+
+        .product-deatil .fa-2x+a,
+        .product-deatil .fa-2x+a+a {
+            font-size: 13px
+        }
+
+        .profile-message ul {
+            list-style: none;
+        }
+
+        .product-deatil .certified {
+            margin-top: 10px
+        }
+
+        .product-deatil .certified ul {
+            padding-left: 0
+        }
+
+        .product-deatil .certified ul li:not(first-child) {
+            margin-left: -3px
+        }
+
+        .product-deatil .certified ul li {
             display: inline-block;
-            padding: 10px 20px;
-            color: #888;
-            font-weight: 600;
-            font-size: 14px;
-            border-radius: 4px;
-            transition: all .3s
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 13px 19px
         }
 
-        .product-grid4:hover .add-to-cart {
-            border: 1px solid transparent;
-            background: #16a085;
-            color: #fff
+        .product-deatil .certified ul li:first-child {
+            border-right: none
         }
 
-        .product-grid4 .add-to-cart:hover {
-            background-color: #505050;
-            box-shadow: 0 0 10px rgba(0, 0, 0, .5)
+        .product-deatil .certified ul li a {
+            text-align: left;
+            font-size: 12px;
+            color: #6d7a83;
+            line-height: 16px;
+            text-decoration: none
         }
 
-        @media only screen and (max-width:990px) {
-            .product-grid4 {
-                margin-bottom: 30px
+        .product-deatil .certified ul li a span {
+            display: block;
+            color: #21c2f8;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center
+        }
+
+        .product-deatil .message-text {
+            width: calc(100% - 70px)
+        }
+
+        @media only screen and (min-width:1024px) {
+            .product-content div[class*=col-md-4] {
+                padding-right: 0
             }
+
+            .product-content div[class*=col-md-8] {
+                padding: 0 13px 0 0
+            }
+
+            .product-wrap div[class*=col-md-5] {
+                padding-right: 0
+            }
+
+            .product-wrap div[class*=col-md-7] {
+                padding: 0 13px 0 0
+            }
+
+            .product-content .product-image {
+                border-right: 1px solid #dfe5e9
+            }
+
+            .product-content .product-info {
+                position: relative
+            }
+        }
+
+        .message img.online {
+            width: 40px;
+            height: 40px;
         }
     </style>
 
-    <div class="container product-container">
-        <h3 class="h3">shopping Demo-4 </h3>
-        <div class="row">
-            <div class="col-md-3 col-sm-6">
-                <div class="product-grid4">
-                    <div class="product-image4">
-                        <a href="#">
-                            <img class="pic-1" src="https://picsum.photos/1000">
-                            <img class="pic-2" src="https://picsum.photos/1000">
-                        </a>
-                        <ul class="social">
-                            <li><a href="#" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-                            <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
-                            <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                        <span class="product-new-label">New</span>
-                        <span class="product-discount-label">-10%</span>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title"><a href="#" style="text-decoration: none;">Women's Black Top</a></h3>
-                        <div class="price">
-                            $14.40
-                            <span>$16.00</span>
-                        </div>
-                        <a class="add-to-cart" href="" style="text-decoration: none;">ADD TO CART</a>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <div class="container product-body">
+        <!-- product -->
+        <div class="product-content product-wrap clearfix product-deatil">
+            <div class="row">
+                <div class="col-md-5 col-sm-12 col-xs-12">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/650/500" alt="" id="product_img">
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="product-grid4">
-                    <div class="product-image4">
-                        <a href="#">
-                            <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-3.jpg">
-                            <img class="pic-2" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-4.jpg">
-                        </a>
-                        <ul class="social">
-                            <li><a href="#" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-                            <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+
+                <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
+                    <h2 class="name" id = "product_name">
+                        Product Name Title Here
+                        <small>Product by <a href="javascript:void(0);">Adeline</a></small>
+                        <i class="fa fa-star fa-2x text-warning"></i>
+                        <i class="fa fa-star fa-2x text-warning"></i>
+                        <i class="fa fa-star fa-2x text-warning"></i>
+                        <i class="fa fa-star fa-2x text-warning"></i>
+                        <i class="fa fa-star fa-2x text-muted"></i>
+                        <span class="fa fa-2x">
+                            <h5>(109) Votes</h5>
+                        </span>
+                        <a href="javascript:void(0);">109 customer reviews</a>
+                    </h2>
+                    <hr />
+                    <h3 class="price-container">
+                        $129.54
+                    </h3>
+                    {{-- <div class="certified">
+                        <ul>
+                            <li>
+                                <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
+                            </li>
                         </ul>
-                        <span class="product-discount-label">-12%</span>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title"><a href="#">Men's Blue Shirt</a></h3>
-                        <div class="price">
-                            $17.60
-                            <span>$20.00</span>
-                        </div>
-                        <a class="add-to-cart" href="">ADD TO CART</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="product-grid4">
-                    <div class="product-image4">
-                        <a href="#">
-                            <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-5.jpg">
-                            <img class="pic-2" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-6.jpg">
-                        </a>
-                        <ul class="social">
-                            <li><a href="#" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-                            <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
-                            <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                    </div> --}}
+                    <hr />
+                    <div class="description description-tabs">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                    data-bs-target="#more-information" type="button" role="tab"
+                                    aria-controls="more-information" aria-selected="true">Product
+                                    Description</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews"
+                                    aria-selected="false">Reviews</button>
+                            </li>
+                            {{-- <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-contact" type="button" role="tab"
+                                    aria-controls="pills-contact" aria-selected="false">Contact</button>
+                            </li> --}}
                         </ul>
-                        <span class="product-new-label">New</span>
-                        <span class="product-discount-label">-10%</span>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title"><a href="#">Women's Black Top</a></h3>
-                        <div class="price">
-                            $14.40
-                            <span>$16.00</span>
+                        {{-- <ul id="myTab" class="nav nav-pills" role="tablist">
+                            <li class="nav-item active"><a href="#more-information" data-toggle="tab" class="no-margin">Product
+                                    Description </a></li>
+                            <li class="nav-item"><a href="#specifications" data-toggle="tab">Specifications</a></li>
+                            <li class="nav-item"><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                        </ul> --}}
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade show active" id="more-information">
+                                <br />
+                                <strong>Description Title</strong>
+                                <p>
+                                    Integer egestas, orci id condimentum eleifend, nibh nisi pulvinar eros, vitae ornare
+                                    massa neque ut orci. Nam aliquet lectus sed odio eleifend, at iaculis dolor egestas.
+                                    Nunc elementum pellentesque augue
+                                    sodales porta. Etiam aliquet rutrum turpis, feugiat sodales ipsum consectetur nec.
+                                </p>
+                            </div>
+                            <div class="tab-pane fade" id="reviews">
+                                <br />
+                                <form method="post" class="well padding-bottom-10" onsubmit="return false;">
+                                    <textarea rows="2" class="form-control" placeholder="Write a review"></textarea>
+                                    <div class="margin-top-10">
+                                        <button type="submit" class="btn btn-sm btn-primary pull-right">
+                                            Submit Review
+                                        </button>
+                                        <a href="javascript:void(0);" class="btn btn-link profile-link-btn" rel="tooltip"
+                                            data-placement="bottom" title="" data-original-title="Add Location"><i
+                                                class="fa fa-location-arrow"></i></a>
+                                        <a href="javascript:void(0);" class="btn btn-link profile-link-btn" rel="tooltip"
+                                            data-placement="bottom" title="" data-original-title="Add Voice"><i
+                                                class="fa fa-microphone"></i></a>
+                                        <a href="javascript:void(0);" class="btn btn-link profile-link-btn" rel="tooltip"
+                                            data-placement="bottom" title="" data-original-title="Add Photo"><i
+                                                class="fa fa-camera"></i></a>
+                                        <a href="javascript:void(0);" class="btn btn-link profile-link-btn" rel="tooltip"
+                                            data-placement="bottom" title="" data-original-title="Add File"><i
+                                                class="fa fa-file"></i></a>
+                                    </div>
+                                </form>
+
+                                <div class="chat-body no-padding profile-message">
+                                    <ul>
+                                        <li class="message">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="online" />
+                                            <span class="message-text">
+                                                <a href="javascript:void(0);" class="username">
+                                                    Alisha Molly
+                                                    <span class="badge">Purchase Verified</span>
+                                                    <span class="pull-right">
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                        <i class="fa fa-star fa-2x text-muted"></i>
+                                                    </span>
+                                                </a>
+                                                Can't divide were divide fish forth fish to. Was can't form the, living life
+                                                grass darkness very image let unto fowl isn't in blessed fill life yielding
+                                                above all moved
+                                            </span>
+                                            <ul class="list-inline font-xs">
+                                                <li>
+                                                    <a href="javascript:void(0);" class="text-info"><i
+                                                            class="fa fa-thumbs-up"></i> This was helpful (22)</a>
+                                                </li>
+                                                <li class="pull-right">
+                                                    <small class="text-muted pull-right ultra-light"> Posted 1 year ago
+                                                    </small>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="message">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                                                class="online" />
+                                            <span class="message-text">
+                                                <a href="javascript:void(0);" class="username">
+                                                    Aragon Zarko
+                                                    <span class="badge">Purchase Verified</span>
+                                                    <span class="pull-right">
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                        <i class="fa fa-star fa-2x text-primary"></i>
+                                                    </span>
+                                                </a>
+                                                Excellent product, love it!
+                                            </span>
+                                            <ul class="list-inline font-xs">
+                                                <li>
+                                                    <a href="javascript:void(0);" class="text-info"><i
+                                                            class="fa fa-thumbs-up"></i> This was helpful (22)</a>
+                                                </li>
+                                                <li class="pull-right">
+                                                    <small class="text-muted pull-right ultra-light"> Posted 1 year ago
+                                                    </small>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <a class="add-to-cart" href="">ADD TO CART</a>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="product-grid4">
-                    <div class="product-image4">
-                        <a href="#">
-                            <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-7.jpg">
-                            <img class="pic-2" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-8.jpg">
-                        </a>
-                        <ul class="social">
-                            <li><a href="#" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-                            <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
-                            <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                        <span class="product-new-label">New</span>
-                        <span class="product-discount-label">-10%</span>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title"><a href="#">Women's Black Top</a></h3>
-                        <div class="price">
-                            $14.40
-                            <span>$16.00</span>
+                    <hr />
+                    <div class="row  flex-row-reverse">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <a href="javascript:void(0);" class="btn btn-success btn-lg">Add to cart ($129.54)</a>
                         </div>
-                        <a class="add-to-cart" href="">ADD TO CART</a>
+                        {{-- <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="btn-group pull-right">
+                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to
+                                    wishlist</button>
+                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact
+                                    Seller</button>
+                            </div>
+                        </div> --}}
                     </div>
+
                 </div>
             </div>
         </div>
+        <!-- end product -->
     </div>
+
+        <script src="{{ asset('js/product-with-review.js') }}"></script>
+
 @endsection

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function getProductPageDetails()
+    public function getAllProducts()
     {
         $products = Product::with('category')->get();
         $products1 = Product::all();
@@ -105,4 +105,38 @@ class OrderController extends Controller
             // 'test' => $test2,
         ]);
     }
+
+    public function getProductDetails($id)
+    {
+        // $data = $request->all();
+        $product = Product::where('id', "=",  $id)->with('category')->first();
+        // $customer = Customer::find(Auth::id())->first();
+
+        return response()->json([
+            // 'request' => $order,
+            // 'user' => Auth::user(),
+            'product' => $product,
+            'category' => $product->category->category_name
+            // 'categories' => $categories,
+            // 'category_count' => $category_count,
+            // 'test' => $test2,
+        ]);
+    }
+
+    // public function printReceipt($id)
+    // {
+    //     // $data = $request->all();
+    //     $orderlines = Orderline::where('orderinfo_id', "=",  $id)->with('products')->get();
+    //     $customer = Customer::find(Auth::id())->first();
+
+    //     return response()->json([
+    //         // 'request' => $order,
+    //         // 'user' => Auth::user(),
+    //         'customer' => $customer,
+    //         'orderlines' => $orderlines
+    //         // 'categories' => $categories,
+    //         // 'category_count' => $category_count,
+    //         // 'test' => $test2,
+    //     ]);
+    // }
 }

@@ -56,7 +56,8 @@ Route::group(['middleware' => ['check_role:employee,admin']], function () {
 });
 
 Route::resource('category', CategoryController::class);
-Route::get('/get-all-products', [OrderController::class, 'getProductPageDetails']);
+Route::get('/get-all-products', [OrderController::class, 'getAllProducts']);
+Route::get('/get-product/{product}', [OrderController::class, 'getProductDetails']);
 Route::get('/receipt-info/{order}', [OrderController::class, 'getReceipt']);
 
 Route::group(['middleware' => ['check_role:customer']], function () {
