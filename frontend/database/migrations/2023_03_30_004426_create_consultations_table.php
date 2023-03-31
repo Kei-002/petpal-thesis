@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('disease_id')->unsigned();
             $table->foreign('disease_id')->references('id')->on('diseases')
                 ->onDelete('cascade');
-            $table->text('payment_status')->default("Processing");
+            $table->text('payment_status')->default("Unpaid");
             $table->text('consultation_status')->default("Not Reviewed");
             $table->date('appointment_date')->default(Carbon::now());
             $table->longText('description');
