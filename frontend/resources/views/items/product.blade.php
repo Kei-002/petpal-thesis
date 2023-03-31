@@ -497,10 +497,10 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="row  flex-row-reverse">
-                        <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="row  flex-row-reverse" id="add-to-cart">
+                        {{-- <div class="col-sm-12 col-md-6 col-lg-6">
                             <a href="javascript:void(0);" class="btn btn-success btn-lg">Add to cart ($129.54)</a>
-                        </div>
+                        </div> --}}
                         {{-- <div class="col-sm-12 col-md-6 col-lg-6">
                             <div class="btn-group pull-right">
                                 <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to

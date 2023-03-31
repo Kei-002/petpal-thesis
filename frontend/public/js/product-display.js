@@ -125,6 +125,7 @@ $(document).ready(function () {
 
     $(".product-list").on("click", "div#product", function () {
         var id = $(this).data("id");
-        console.log(id);
+        // console.log(id);
+        location.href = "/product?id=" + id;
     });
 });
