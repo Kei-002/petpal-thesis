@@ -213,7 +213,7 @@
                 <p class="lead text-secondary">Let us treat your pet like our own family with best service and special
                     package.</p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Shop now!</button>
+                    <a href="{{url("/products")}}" type="button" class="btn btn-primary btn-lg px-4 me-md-2">Shop now!</a>
                     <button type="button" class="btn btn-outline-warning btn-lg px-4">Schedule an Appointment</button>
                 </div>
             </div>

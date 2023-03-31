@@ -2,6 +2,8 @@ $(document).ready(function () {
     const myUrl = new URL(window.location.toLocaleString());
     var product_id = myUrl.searchParams.get("id");
     // console.log(test);
+    $(".product-body").hide();
+    $("#loading-spinner").show();
 
     // Get cart from localStorage
     cartObj = JSON.parse(localStorage.getItem("cart")) || [];
@@ -53,6 +55,10 @@ $(document).ready(function () {
                                         data-image="${$product.img_path}">Add to cart ($${$product.sell_price})</button>
                         </div>`
             );
+
+            $("#loading-spinner").addClass("d-none");
+            // $(".loading-spinner").hide();
+            $(".product-body").show();
         },
     });
 
