@@ -334,6 +334,11 @@
     </style>
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <div class="d-flex mt-5 justify-content-center" id="loading-spinner">
+        <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+            {{-- <span class="sr-only">Loading...</span> --}}
+        </div>
+    </div>
     <div class="container product-body">
         <!-- product -->
         <div class="product-content product-wrap clearfix product-deatil">
@@ -345,7 +350,7 @@
                 </div>
 
                 <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
-                    <h2 class="name" id = "product_name">
+                    <h2 class="name" id="product_name">
                         Product Name Title Here
                         <small>Product by <a href="javascript:void(0);">Adeline</a></small>
                         <i class="fa fa-star fa-2x text-warning"></i>
@@ -517,6 +522,5 @@
         <!-- end product -->
     </div>
 
-        <script src="{{ asset('js/product-with-review.js') }}"></script>
-
+    <script src="{{ asset('js/product-with-review.js') }}"></script>
 @endsection
