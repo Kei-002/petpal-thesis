@@ -8,17 +8,18 @@
                     <p class="mb-5 text-center">
                         <i class="text-info font-weight-bold" id="totalQuantity">0</i> items in your cart
                     </p>
-                    <table id="shoppingCart" class="table table-condensed table-responsive">
+                    <!-- Products in Cart-->
+                    <table id="product-cart" class="table table-condensed table-responsive">
                         <thead>
                             <tr>
                                 <th style="width:60%">Product</th>
-                                <th style="width:12%">Price x Quantity</th>
                                 <th style="width:10%">Quantity</th>
+                                <th style="width:12%">Price x Quantity</th>
                                 <th style="width:16%"></th>
                             </tr>
                         </thead>
                         <tbody id="cart-list">
-                            <tr>
+                            {{-- <tr>
                                 <td data-th="Product">
                                     <div class="row">
                                         <div class="col-md-3 text-center">
@@ -101,7 +102,22 @@
                                         </button>
                                     </div>
                                 </td>
+                            </tr> --}}
+                        </tbody>
+                    </table>
+                    <!-- Services in Cart-->
+                    <table id="service-cart" class="table table-condensed table-responsive">
+                        <thead>
+                            <tr>
+                                <th style="width:60%">Service</th>
+                                <th style="width:12%">Price</th>
+                                {{-- <th style="width:10%">Quantity</th> --}}
+                                <th style="width:10%">Pet to Service</th>
+                                <th style="width:16%"></th>
                             </tr>
+                        </thead>
+                        <tbody id="service-list">
+                           
                         </tbody>
                     </table>
                     <div class="float-right text-right" id="subtotal">
@@ -122,9 +138,9 @@
         </div>
     </section>
 
+    {{-- Receipt --}}
     <section id="receipt-section">
-        {{-- @extends('layouts.base')
-@section('body') --}}
+
 
         <style>
             .body-receipt {
@@ -271,8 +287,8 @@
         </style>
         <div class="body-receipt">
             <div class="page-content container">
-                <div class="page-header text-blue-d2">
-                    <h1 class="page-title text-secondary-d1">
+                <div class="page-header text-blue-d2" >
+                    <h1 class="page-title text-secondary-d1" id="page-order-id">
                         Invoice
                         <small class="page-info">
                             <i class="fa fa-angle-double-right text-80"></i>
@@ -282,10 +298,10 @@
 
                     <div class="page-tools">
                         <div class="action-buttons">
-                            <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
+                            {{-- <a class="btn bg-white btn-light mx-1px text-95"  href="javascript:void(0);" onclick="window.print()" data-title="Print">
                                 <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
                                 Print
-                            </a>
+                            </a> --}}
                             <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
                                 <i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
                                 Export
@@ -315,7 +331,8 @@
                                 <div class="col-sm-6">
                                     <div>
                                         <span class="text-sm text-grey-m2 align-middle">To:</span>
-                                        <span class="text-600 text-110 text-blue align-middle">{{Auth::user()->name}}</span>
+                                        <span
+                                            class="text-600 text-110 text-blue align-middle">{{ Auth::user()->name }}</span>
                                     </div>
                                     <div class="text-grey-m2">
                                         <div class="my-1" id="userAddress">
@@ -325,7 +342,8 @@
                                             State, Country
                                         </div> --}}
                                         <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i>
-                                            <b class="text-600" id="userPhone">111-111-111</b></div>
+                                            <b class="text-600" id="userPhone">111-111-111</b>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.col -->
@@ -337,22 +355,26 @@
                                             Invoice
                                         </div>
 
-                                        <div class="my-2" id="orderID"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
+                                        <div class="my-2" id="orderID"><i
+                                                class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
                                                 class="text-600 text-90">ID:</span> #111-222</div>
 
-                                        <div class="my-2" id="orderDate"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
+                                        <div class="my-2" id="orderDate"><i
+                                                class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
                                                 class="text-600 text-90">Issue Date:</span> Oct 12, 2019</div>
 
                                         <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
                                                 class="text-600 text-90">Status:</span> <span
-                                                class="badge badge-warning badge-pill px-25" id="orderStatus">Unpaid</span></div>
+                                                class="badge badge-warning badge-pill px-25"
+                                                id="orderStatus">Unpaid</span></div>
                                     </div>
                                 </div>
                                 <!-- /.col -->
                             </div>
 
                             <div class="mt-4">
-                                <div class="row text-600 text-white bgc-default-tp1 py-25">
+
+                                <div class="row text-600 text-white bgc-default-tp1 py-25" id="product-table-headers">
                                     <div class="d-none d-sm-block col-1">#</div>
                                     <div class="col-9 col-sm-5">Product</div>
                                     <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
@@ -364,67 +386,32 @@
                                     {{-- Products bought go here --}}
                                 </div>
 
+                                <div class="row text-600 text-white bgc-default-tp1 py-25" id="service-table-headers">
+                                    <div class="d-none d-sm-block col-1">#</div>
+                                    <div class="col-9 col-sm-5">Service</div>
+                                    <div class="d-none d-sm-block col-4 col-sm-2"></div>
+                                    <div class="d-none d-sm-block col-sm-2">Pet Serviced</div>
+                                    <div class="col-2">Price</div>
+                                </div>
+
+                                <div class="text-95 text-secondary-d3" id="service-table">
+                                    {{-- Services bought go here --}}
+                                </div>
+
                                 <div class="row border-b-2 brc-default-l2"></div>
 
-                                <!-- or use a table instead -->
-                                <!--
-                            <div class="table-responsive">
-                                <table class="table table-striped table-borderless border-0 border-b-2 brc-default-l1">
-                                    <thead class="bg-none bgc-default-tp1">
-                                        <tr class="text-white">
-                                            <th class="opacity-2">#</th>
-                                            <th>Description</th>
-                                            <th>Qty</th>
-                                            <th>Unit Price</th>
-                                            <th width="140">Amount</th>
-                                        </tr>
-                                    </thead>
 
-                                    <tbody class="text-95 text-secondary-d3">
-                                        <tr></tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Domain registration</td>
-                                            <td>2</td>
-                                            <td class="text-95">$10</td>
-                                            <td class="text-secondary-d2">$20</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            -->
 
                                 <div class="row mt-3">
-                                    {{-- <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                                        Extra note such as company or payment information...
-                                    </div> --}}
 
                                     <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
-                                        {{-- <div class="row my-2">
-                                        <div class="col-7 text-right">
-                                            SubTotal
-                                        </div>
-                                        <div class="col-5">
-                                            <span class="text-120 text-secondary-d1">$2,250</span>
-                                        </div>
-                                    </div> --}}
-
-                                        {{-- <div class="row my-2">
-                                        <div class="col-7 text-right">
-                                            Tax (10%)
-                                        </div>
-                                        <div class="col-5">
-                                            <span class="text-110 text-secondary-d1">$225</span>
-                                        </div>
-                                    </div> --}}
 
                                         <div class="row my-2 align-items-center bgc-primary-l3 p-2">
                                             <div class="col-7 text-right">
                                                 Total Amount
                                             </div>
                                             <div class="col-5" id="totalAmount">
-                                                <span class="text-150 text-success-d3 opacity-2"
-                                                    >$0</span>
+                                                <span class="text-150 text-success-d3 opacity-2">$0</span>
                                             </div>
                                         </div>
                                     </div>
@@ -434,7 +421,8 @@
 
                                 <div>
                                     <span class="text-secondary-d1 text-105">Thank you for choosing Pet-Pal!</span>
-                                    <a href="{{url('/products')}}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Continue shopping</a>
+                                    <a href="{{ url('/products') }}"
+                                        class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Continue shopping</a>
                                 </div>
                             </div>
                         </div>

@@ -83,8 +83,8 @@
         </div>
         {{-- Modal Edit Customer Body --}}
         <div class="row">
-            <div class="modal fade" id="update_customer_modal" tabindex="-1" aria-labelledby="update_customer_modal_label"
-                aria-hidden="true">
+            <div class="modal fade" id="update_customer_modal" tabindex="-1"
+                aria-labelledby="update_customer_modal_label" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -140,14 +140,15 @@
         {{-- Modal END --}}
         <div class="row mt-3">
             <div class="col-md-12">
-                <table id="customer_table" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
-                    width="100%">
+                <table id="customer_table" class="table table-striped table-bordered dt-responsive nowrap"
+                    cellspacing="0" style="table-layout:fixed;
+                    width:100%;">
                     <thead>
                         <tr>
                             <th>Profile Picture</th>
                             <th>Last Name</th>
                             <th>First Name</th>
-                            <th>Address</th>
+                            <th style="word-wrap: break-word">Address</th>
                             <th>Phone</th>
                             <th>Joined On</th>
                             <th colspan="2">Actions</th>

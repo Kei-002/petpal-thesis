@@ -9,7 +9,9 @@
 <link
     href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400&family=Titan+One&family=Varela+Round&display=swap"
     rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet"> 
+<link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:ital,wght@0,500;0,700;1,400&display=swap"
+    rel="stylesheet">
 
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -54,12 +56,12 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-{{-- Bootbox CDN (Confirmation Box)--}}
+{{-- Bootbox CDN (Confirmation Box) --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js"
     integrity="sha512-oVbWSv2O4y1UzvExJMHaHcaib4wsBMS5tEP3/YkMP6GmkwRJAa79Jwsv+Y/w7w2Vb/98/Xhvck10LyJweB8Jsw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-{{-- Select2 CDN (Searchable Select Input)--}}
+{{-- Select2 CDN (Searchable Select Input) --}}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
@@ -78,7 +80,28 @@
     integrity="sha512-A6ariLe+TnwXgF0FtGuOAZB4MuNxxS1W+NvJZxN3fcXYtcrxHu7Z8yJ2MBk7MwnZuG70ksTGdAUyUEbbXW6Imw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
+{{-- bootstrap-datepipcker --}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+    integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
+    integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+{{-- PDF JS --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf_viewer.min.css"
+    integrity="sha512-5cOE2Zw/F4SlIUHR/xLTyFLSAR0ezXsra+8azx47gJyQCilATjazEE2hLQmMY7xeAv/RxxZhs8w8zEL7dTsvnA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"
+    integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 {{-- Cart Class --}}
-<script src="{{ asset('js/cart.js') }}"></script>   
-
-
+<script src="{{ asset('js/cart.js') }}"></script>

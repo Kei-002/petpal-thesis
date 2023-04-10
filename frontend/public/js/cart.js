@@ -86,19 +86,10 @@ class Cart {
         this.saveToLocalStorage();
     }
 
-    updateService(itemId, quantity) {
+    updateService(itemId, petID) {
         const itemToUpdate = this.services.find((item) => item.id === itemId);
-        var oldTotal = this.totalAmount;
-        var oldTotalQuantity = this.totalQuantity;
-        oldTotal = oldTotal - itemToUpdate.price * itemToUpdate.quantity;
-        oldTotalQuantity -= itemToUpdate.quantity;
         if (itemToUpdate) {
-            itemToUpdate.quantity = quantity;
-
-            oldTotal += itemToUpdate.price * itemToUpdate.quantity;
-            oldTotalQuantity += itemToUpdate.quantity;
-            this.totalAmount = oldTotal;
-            this.totalQuantity = oldTotalQuantity;
+            itemToUpdate.pet_id = petID;
         }
         this.saveToLocalStorage();
     }

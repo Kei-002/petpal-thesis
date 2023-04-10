@@ -13,7 +13,7 @@ class Order extends Model
     // protected $primaryKey = 'id';
     protected $guarded = ['id'];
     // public $timestamps = false;
-    protected $fillable = ['customer_id', "total_purchase"];
+    protected $fillable = ['customer_id'];
 
     // const CREATED_AT = 'transaction_placed';
     // const UPDATED_AT = 'transaction_paid';
@@ -25,6 +25,11 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo('App\Models\Customer');
+    }
+
+    public function receipt()
+    {
+        return $this->belongsTo('App\Models\Receipt');
     }
 
     public function orderlines()

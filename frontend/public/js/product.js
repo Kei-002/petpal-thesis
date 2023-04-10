@@ -68,7 +68,12 @@ $(document).ready(function () {
             },
             { data: "cost_price" },
             { data: "sell_price" },
-            { data: "description" },
+            {
+                data: "description",
+                render: function (data, type, row) {
+                    return "<div class='text-wrap'>" + data + "</div>";
+                },
+            },
             // { data: "created_at" },
 
             // Format created_at to {weekday}, {year}, {month}, {day}, {hour}, {minute}

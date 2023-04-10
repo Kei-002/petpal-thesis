@@ -109,6 +109,7 @@ $(document).ready(function () {
 
     $(".product-list").on("click", "button#add-to-cart", function (e) {
         e.preventDefault();
+
         var name = $(this).data("name");
         var image = $(this).data("image");
         var price = Number($(this).data("price"));
@@ -120,6 +121,7 @@ $(document).ready(function () {
             price: price,
             quantity: 1,
         });
+        addQuantityText();
         toastr.success("Product " + name + " added to cart");
     });
 
@@ -128,4 +130,11 @@ $(document).ready(function () {
         // console.log(id);
         location.href = "/product?id=" + id;
     });
+
+    function addQuantityText() {
+        var old_quantity = $("#cartHtml span").text();
+        var new_quantity = Number(old_quantity) + 1;
+        $("#cartHtml span").text(new_quantity);
+        // console.log(new_quantity);
+    }
 });

@@ -44,6 +44,7 @@ $(document).ready(function () {
         // data: data,
 
         columns: [
+            // { width: "20%" },
             {
                 data: null,
                 render: function (data, type, JsonResultRow, row) {
@@ -56,14 +57,23 @@ $(document).ready(function () {
             },
             { data: "lname" },
             { data: "fname" },
-            { data: "addressline" },
+            {
+                data: "addressline",
+                render: function (data, type, row) {
+                    return "<div class='text-wrap'>" + data + "</div>";
+                },
+            },
             { data: "phone" },
             // { data: "created_at" },
             {
                 data: null,
                 render: function (data, type, row) {
                     var d = new Date(data.created_at);
-                    return d.toLocaleDateString("en-US", date_options);
+                    return (
+                        "<div class='text-wrap'>" +
+                        d.toLocaleDateString("en-US", date_options) +
+                        "</div>"
+                    );
                 },
             },
             {

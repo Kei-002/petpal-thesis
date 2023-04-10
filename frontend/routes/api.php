@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConsultationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
@@ -24,21 +25,21 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
+// Private routes for employee and admin
+// Route::group(['middleware' => ['check_role:employee']], function () {
+//     Route::resource('user', UserController::class)->except('delete');
+//     Route::post('/user-update/{user}', [UserController::class, 'updateUser']);
+//     Route::resource('customer', CustomerController::class)->except('delete');
+//     Route::post('/customer-update/{customer}', [CustomerController::class, 'updateCustomer']);
+//     Route::resource('employee', EmployeeController::class)->except('delete');
+//     Route::post('/employee-update/{employee}', [EmployeeController::class, 'updateEmployee']);
+//     Route::resource('pet', PetController::class)->except('delete');
+//     Route::post('/pet-update/{pet}', [PetController::class, 'updatePet']);
+//     Route::resource('service', GroomServiceController::class)->except('delete');
+//     Route::post('/service-update/{service}', [GroomServiceController::class, 'updateService']);
+//     Route::resource('product', ProductController::class)->except('delete');
+//     Route::post('/product-update/{product}', [ProductController::class, 'updateProduct']);
 // });
-
-
-
-// Authentication routes // Public Routes
-// Route::post('/login', [AuthController::class, 'login']);
-// Route::post('/register', [AuthController::class, 'register']);
-
-// // Protected Routes
-
-//     // Route::resource('user', UserController::class);
-// Route::post('/logout', [AuthController::class, 'logout']);
-
 
 Route::group(['middleware' => ['check_role:employee,admin']], function () {
     Route::resource('user', UserController::class);
@@ -55,11 +56,20 @@ Route::group(['middleware' => ['check_role:employee,admin']], function () {
     Route::post('/product-update/{product}', [ProductController::class, 'updateProduct']);
 });
 
+Route::get('/all-orders', [OrderController::class, 'getAllOrders']);
+Route::get('/all-transactions', [OrderController::class, 'getAllTransactions']);
+Route::post('/update-order-status/{order}', [OrderController::class, 'updateOrderStatus']);
+// Public Routes
 Route::resource('category', CategoryController::class);
 Route::get('/get-all-products', [OrderController::class, 'getAllProducts']);
+Route::get('/get-all-services', [OrderController::class, 'getAllServices']);
+Route::get('/get-all-services', [OrderController::class, 'getAllServices']);
 Route::get('/get-product/{product}', [OrderController::class, 'getProductDetails']);
 Route::get('/receipt-info/{order}', [OrderController::class, 'getReceipt']);
 
+// Routes for customers only
 Route::group(['middleware' => ['check_role:customer']], function () {
     Route::post('/checkout', [OrderController::class, 'checkout']);
+    Route::get('/get-owned-pets', [OrderController::class, 'getOwnedPets']);
+    Route::resource('consultation', ConsultationController::class);
 });

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers')
                 ->onDelete('cascade');
-            $table->double('total_purchase');
+            // $table->double('total_purchase');
             $table->text('payment_status')->default("Processing");
             $table->timestamps();
         });

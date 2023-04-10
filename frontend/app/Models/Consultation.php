@@ -19,10 +19,15 @@ class Consultation extends Model
         return $this->belongsToMany('App\Models\Pet', $table = 'consultations', 'id', 'pet_id')->withTimestamps();
     }
 
-    public function disease()
+    public function appointments()
     {
-        return $this->hasOne('App\Models\Disease', 'id', 'disease_id');
+        return $this->hasMany('App\Models\Appointment');
     }
+
+    // public function disease()
+    // {
+    //     return $this->hasOne('App\Models\Disease', 'id', 'disease_id');
+    // }
 
     // public function getSearchResult(): SearchResult
     // {

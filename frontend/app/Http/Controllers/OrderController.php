@@ -4,13 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\GroomServices;
 use App\Models\Order;
 use App\Models\Orderline;
+use App\Models\Pet;
 use App\Models\Product;
+use App\Models\Receipt;
+use App\Models\Receiptline;
+use App\Models\Transaction;
+use App\Models\Transactionline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -36,56 +43,123 @@ class OrderController extends Controller
         ]);
     }
 
+    public function getAllServices()
+    {
+        $services = GroomServices::all();
+        return response()->json([
+            'services' => $services
+        ]);
+    }
+
+    public function getOwnedPets()
+    {
+        // $services = GroomServices::all();
+        $customer = Customer::where('user_id', '=', Auth::id())->first();
+        $pets = Pet::where('customer_id', '=', $customer->id)->get();
+        if (count($pets) <= 0) {
+            return response()->json([
+                'pets' => null,
+                'message' => 'No pets found'
+            ]);
+        }
+        return response()->json([
+            'pets' => $pets,
+            'customer' => $customer
+        ]);
+    }
+
     public function checkout(Request $request)
     {
         try {
-            $test_cart = array();
+            $item_cart = array();
+            $service_cart = array();
             DB::beginTransaction();
-            // $order = Order::create(['c_id' => auth()->user()->id]);
-            $order = Order::create(['customer_id' => Auth::id(), "total_purchase" => $request->totalAmount]);
 
-            foreach ($request->get('items') as $key => $item) {
-                $orderline = new Orderline();
 
-                $orderline->orderinfo_id = $order->id;
-                $orderline->product_id = $item['id'];
-                $orderline->quantity = $item['quantity'];
-                // $fileName = time() . $request->file('img_path')->getClientOriginalName();
-                // $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
-                // $input["img_path"] = '/storage/' . $path;
-                // $service->img_path = $input["img_path"];
+            // Get customer 
+            $customer = Customer::where('user_id', Auth::id())->first();
 
-                $orderline->save();
-                // Orderline::create([
-                //     'orderinfo_id' => $order->id,
-                //     'product_id' => (int) $item->id,
-                //     'quantity' => (int) $item->quantity,
-                // ]);
-                $test_cart[] = $item;
+            // Store receipt informatin to database
+            $receipt = Receipt::create(['total_purchase' => $request->totalAmount, "receipt_path" => "/storage/receipts/default.pdf"]);
+
+            // Create receipt path
+            $receipt_path = 'storage/receipt/(' . time() . ')receipt_no-' . $receipt->id . '.pdf';
+
+            // Check if item object is not empty
+            if ($request->get('items') != []) {
+                $order = Order::create(['customer_id' => Auth::id()]);
+
+                $receiptline = new Receiptline();
+                $receiptline->receipt_id = $receipt->id;
+                $receiptline->item_id = $order->id;
+                $receiptline->is_order = true;
+                $receiptline->save();
+
+                foreach ($request->get('items') as $key => $item) {
+                    $orderline = new Orderline();
+                    $orderline->orderinfo_id = $order->id;
+                    $orderline->product_id = $item['id'];
+                    $orderline->quantity = $item['quantity'];
+                    $orderline->save();
+
+                    $item_cart[] = $item;
+                }
             }
+
+            if ($request->get('services') != []) {
+                $transaction = Transaction::create(['customer_id' => Auth::id()]);
+
+                $receiptline = new Receiptline();
+                $receiptline->receipt_id = $receipt->id;
+                $receiptline->item_id = $transaction->id;
+                $receiptline->is_order = false;
+                $receiptline->save();
+
+                foreach ($request->get('services') as $key => $service) {
+                    $pet = Pet::where("id", $service['pet_id'])->first();
+                    $transactionline = new Transactionline();
+                    $transactionline->transactioninfo_id = $transaction->id;
+                    // $transactionline->pet_id = $service['pet_id'];
+                    $transactionline->pet_id = $service['pet_id'];
+                    $transactionline->service_id = $service['id'];
+                    $transactionline->save();
+                    $service['pet_name'] = $pet->pet_name;
+                    $service_cart[] = $service;
+                }
+            }
+
+            // create pdf object with order/transaction information
+            $pdf = PDF::loadView('items.receipt', [
+                'customer' => $customer,
+                'items' => $request->get('items'),
+                'services' => $service_cart,
+                'receipt' => $receipt,
+            ]);
+            $content = $pdf->download()->getOriginalContent();
+
+            // store the receipt in public path
+            Storage::put($receipt_path, $content);
+
+            // Update receipt path information in database
+            Receipt::where('id', $receipt->id)->update(['receipt_path' => $receipt_path]);
+
+
+            // $test_order = $order;
         } catch (\Exception $e) {
             DB::rollback();
-            return response(['error' => $e->getMessage(), "order" => $order, "test_cart" => $test_cart]);
+            return response(['error' => $e->getMessage()]);
         }
         DB::commit();
-        // $testing = Order::find($order->id)->with('orderlines');
-        // $pdf = PDF::loadView('items.receipt', [
-        //     'customer' => Auth::user()->fname . " " . Auth::user()->lname,
-        //     'cart' => $request->all(),
-        // ]);
-        // file_put_contents('storage/bills/order' . $order->id . '.pdf', $pdf->output());
-
-        // $pdf->stream('Reciept.pdf');
-        // return response(['pdf' => 'storage/bills/transaction_no_' . $transaction->id . '.pdf']);
-
-
+        
         return response()->json([
             'message' => "Order Placed",
+            'total' => $request->totalAmount,
             // 'pdf' => 'storage/bills/transaction_no_' . $order->id . '.pdf'
-            // 'cart' => $request->all(),
-            'order' => $order,
-            // 'category_count' => $category_count,
-            // 'test' => $test2,
+            'customer' => $customer,
+            'orderlines' => $item_cart,
+            'transactions' => $service_cart,
+            'receipt' => $receipt,
+            'test' => $request->all(),
         ]);
     }
 
@@ -139,4 +213,58 @@ class OrderController extends Controller
     //         // 'test' => $test2,
     //     ]);
     // }
+
+
+
+    public function getAllOrders()
+    {
+        $orders = Order::with('orderlines')->get();
+        // return response($data, $status = 200);
+
+        // $receipts = Receipt::where('is_order', true)->get();
+        $receipts = DB::table('receiptinfos')
+        ->join('receiptlines', 'receiptlines.receipt_id', '=', 'receiptinfos.id')
+        ->join('orderinfos', 'receiptlines.item_id', '=', 'orderinfos.id')
+        ->join('customers', 'orderinfos.customer_id', '=', 'customers.id')
+        ->select('receiptinfos.id', 'total_purchase', 'receipt_path', 'receiptlines.item_id', 'orderinfos.payment_status', 'customers.fname', 'customers.lname', 'customers.addressline')
+        ->where('receiptlines.is_order', '=', true)
+            ->get();
+        return response()->json([
+            'orders' => $orders,
+            'receipts' => $receipts,
+        ]);
+    }
+
+    public function getAllTransactions()
+    {
+        $transactions = Transaction::with('transactionlines')->get();
+        // return response($data, $status = 200);
+
+        // $receipts = Receipt::where('is_order', true)->get();
+        $receipts = DB::table('receiptinfos')
+        ->join('receiptlines', 'receiptlines.receipt_id', '=', 'receiptinfos.id')
+        ->join('transactioninfos', 'receiptlines.item_id', '=', 'transactioninfos.id')
+        ->join('customers', 'transactioninfos.customer_id', '=', 'customers.id')
+        ->select('receiptinfos.id', 'receiptinfos.*', 'receiptlines.item_id', 'transactioninfos.payment_status', 'customers.fname', 'customers.lname', 'customers.addressline')
+        ->where('receiptlines.is_order', '=', false)
+            ->get();
+        return response()->json([
+            'transactions' => $transactions,
+            'receipts' => $receipts,
+        ]);
+    }
+
+
+    public function updateOrderStatus($id)
+    {
+        // $orders = Order::with('orderlines')->get();
+        $order = Order::findOrFail($id);
+        $order->payment_status = "Paid";
+        $order->save();
+        return response()->json([
+            'message' => 'Pet updated successfully',
+            // 'status' => $user,
+            'order' => $order,
+        ]);
+    }
 }

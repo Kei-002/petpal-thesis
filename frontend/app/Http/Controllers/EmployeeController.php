@@ -62,7 +62,7 @@ class EmployeeController extends Controller
         $user->name = $input['fname'] . ' ' . $input['lname'];
         $user->email = $input['email'];
         $user->password = $input['password1'];
-        $user->role = 'customer';
+        $user->role = 'employee';
         $user->save();
         // Send email after user is created
         // Event::dispatch(new SendMail($user));

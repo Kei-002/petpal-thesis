@@ -29,10 +29,10 @@
                     <a class="nav-link mx-2 text-uppercase" href="{{url('products')}}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#">Services</a>
+                    <a class="nav-link mx-2 text-uppercase" href="{{url('services')}}">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#">Consultations</a> 
+                    <a class="nav-link mx-2 text-uppercase" href="{{url("consultation")}}">Consultations</a> 
                 </li>
             </ul>
 

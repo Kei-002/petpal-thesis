@@ -2,7 +2,7 @@ $(document).ready(function () {
     const myUrl = new URL(window.location.toLocaleString());
     var product_id = myUrl.searchParams.get("id");
     // console.log(test);
-    $(".product-body").hide();
+
     $("#loading-spinner").show();
 
     // Get cart from localStorage
@@ -58,7 +58,8 @@ $(document).ready(function () {
 
             $("#loading-spinner").addClass("d-none");
             // $(".loading-spinner").hide();
-            $(".product-body").show();
+            $(".product-body").removeAttr("hidden");
+            // $(".product-body").show();
         },
     });
 

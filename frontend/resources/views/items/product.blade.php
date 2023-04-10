@@ -339,7 +339,7 @@
             {{-- <span class="sr-only">Loading...</span> --}}
         </div>
     </div>
-    <div class="container product-body">
+    <div class="container product-body" hidden>
         <!-- product -->
         <div class="product-content product-wrap clearfix product-deatil">
             <div class="row">
@@ -367,16 +367,7 @@
                     <h3 class="price-container">
                         $129.54
                     </h3>
-                    {{-- <div class="certified">
-                        <ul>
-                            <li>
-                                <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
-                            </li>
-                        </ul>
-                    </div> --}}
+                    
                     <hr />
                     <div class="description description-tabs">
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">

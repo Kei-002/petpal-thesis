@@ -43,4 +43,9 @@ $(document).ready(function () {
             },
         });
     });
+
+    // function addQuantityText() {
+    //     var test = $("#cartHtml span").text(totalQuantity);
+    //     console.log(test);
+    // }
 });

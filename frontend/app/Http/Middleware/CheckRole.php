@@ -43,7 +43,7 @@ class CheckRole
         foreach ($roles as $role) {
             // If current role matches given role, return request
             if ($user->role === $role) {
-                Auth::login($user);
+                // Auth::login($user);
                 return $next($request);
             }
         }
