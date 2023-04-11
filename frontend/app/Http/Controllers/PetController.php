@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Pet;
+use Illuminate\Support\Facades\Auth;
 
 class PetController extends Controller
 {
@@ -138,6 +139,32 @@ class PetController extends Controller
 
         return response()->json([
             'message' => 'Pet Deleted Successfully',
+            'status' => 200,
+        ]);
+    }
+
+
+    public function customerAddPet(Request $request)
+    {
+        $input = $request->all();
+
+        $pet = new Pet();
+
+        $customer = Customer::where('user_id', Auth::id())->first();
+        $pet->pet_name = $input['pet_name'];
+        $pet->age = $input['age'];
+        $pet->customer_id = $customer->id;
+        $fileName = time() . $request->file('img_path')->getClientOriginalName();
+        $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
+        $input["img_path"] = '/storage/' . $path;
+        $pet->img_path = $input["img_path"];
+
+        $pet->save();
+
+        // return response($message = 'User Successfully Created', $status = 200);
+        return response()->json([
+            'message' => 'Pet Added Successfully.',
+            'pet' => $pet,
             'status' => 200,
         ]);
     }
