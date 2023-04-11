@@ -115,6 +115,9 @@ $(document).ready(() => {
             $("#user_image").attr("src", customer.img_path);
             $("#phone").text(customer.phone);
             $("#address").text(customer.addressline);
+            $("#edit-btn-div")
+                .html(`<button type="button" class="btn btn-outline-secondary float-right rounded-pill" id="edit-profile-btn" data-id="${customer.id}"
+                            style="margin-top: 10px;">Edit Profile</button>`);
         },
     });
 
@@ -298,6 +301,112 @@ $(document).ready(() => {
                             console.log(error);
                         },
                     });
+            },
+        });
+    });
+
+    $("#edit-btn-div").on("click", "button#edit-profile-btn", function (e) {
+        e.preventDefault();
+
+        var id = $(this).data("id");
+        // var id = $(e.relatedTarget).attr("id");
+        console.log(id);
+
+        $.ajax({
+            type: "GET",
+            enctype: "multipart/form-data",
+            processData: false, // Important!
+            contentType: false,
+            cache: false,
+            url: "/api/profile",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $user = data.user;
+                $account = data.customer;
+                // // console.log($user);
+                // // console.log($account);
+                $("#edit-user_id").val($user.id);
+                $("#edit-fname").val($account.fname);
+                $("#edit-lname").val($account.lname);
+                $("#edit-addressline").val($account.addressline);
+                $("#edit-phone").val($account.phone);
+                $("#edit-email").val($user.email);
+
+                // // $("#edit-role option").each(function () {
+                // //     if ($(this).val() == $user.role) {
+                // //         $(this).prop("selected", true);
+                // //     }
+                // // });
+
+                // console.log($user.role);
+                // if ($user.role == "admin") {
+                //     $("#edit-role").val("employee");
+                // } else {
+                //     $("#edit-role").val($user.role);
+                // }
+
+                // $("#img_path").html(
+                //     `<img src="${data.img_path}" width="100" class="img-fluid img-thumbnail">`);
+                // $("#dispCustomer").attr("src", data.img_path);
+                // $("#edit-role").val($user.role).change();
+                $("#update_user_modal").modal("show");
+            },
+            error: function (error) {
+                console.log("error", error);
+            },
+        });
+    });
+
+    $("#update_user_button").on("click", function (e) {
+        e.preventDefault();
+        var id = $("#edit-user_id").val();
+        console.log(id);
+        var data = $("#update_user_form")[0];
+        console.log(data);
+
+        let formData = new FormData(data);
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + "," + pair[1]);
+        }
+        $.ajax({
+            type: "POST",
+            // cache: false,
+            contentType: false,
+            processData: false,
+            url: "/api/profile-update/" + id,
+            data: formData,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+            dataType: "json",
+            success: function (data) {
+                // console.log(data.img_path);
+                // $("#update_user_modal").modal("hide");
+                // $("#user_table").DataTable().ajax.reload();
+                console.log("data", data);
+                // console.log("message", data.message);
+                // console.log("request", data.request);
+                location.reload();
+                toastr.success(data.message);
+            },
+            error: function (error) {
+                console.log("error");
             },
         });
     });

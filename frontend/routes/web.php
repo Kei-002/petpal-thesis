@@ -32,7 +32,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::group(['middleware' => ['check_role_web:employee,admin']], function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('tables.main_dashboard');
     });
     Route::get('/user-list', function () {
         return view('tables.user');

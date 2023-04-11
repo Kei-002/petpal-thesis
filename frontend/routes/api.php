@@ -6,11 +6,13 @@ use App\Http\Controllers\ConsultationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GroomServiceController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,8 +56,11 @@ Route::group(['middleware' => ['check_role:employee,admin']], function () {
     Route::post('/service-update/{service}', [GroomServiceController::class, 'updateService']);
     Route::resource('product', ProductController::class);
     Route::post('/product-update/{product}', [ProductController::class, 'updateProduct']);
+    Route::get('/get-counter-info', [DashboardController::class, 'getCounterInfo']);
 });
 
+Route::get('/get-counter-info', [DashboardController::class, 'getCounterInfo']);
+Route::get('/get-chart-info', [DashboardController::class, 'getChartInfo']);
 Route::get('/all-orders', [OrderController::class, 'getAllOrders']);
 Route::get('/all-transactions', [OrderController::class, 'getAllTransactions']);
 Route::post('/update-order-status/{order}', [OrderController::class, 'updateOrderStatus']);
@@ -71,6 +76,8 @@ Route::get('/receipt-info/{order}', [OrderController::class, 'getReceipt']);
 // Routes for customers only
 Route::group(['middleware' => ['check_role:customer']], function () {
     Route::post('/checkout', [OrderController::class, 'checkout']);
+    Route::get('/profile', [ProfileController::class, 'getProfile']);
+    Route::post('/profile-update/{user}', [ProfileController::class, 'updateProfile']);
     Route::get('/get-owned-pets', [OrderController::class, 'getOwnedPets']);
     Route::resource('consultation', ConsultationController::class);
     Route::post('/owner-add-pet', [PetController::class, 'customerAddPet']);

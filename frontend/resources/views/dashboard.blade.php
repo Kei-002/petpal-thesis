@@ -10,16 +10,16 @@
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
-                        <li>
-                            <a href="#" class="nav-link px-0 align-middle">
+                        <li> 
+                            <a href="{{url('dashboard')}}" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-speedometer2"></i> <span
                                     class="ms-1 d-none d-sm-inline">Dashboard</span></a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{url('product-list')}}" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-calendar-week"></i> <span
                                     class="ms-1 d-none d-sm-inline">Appointments</span> </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a href="{{url('order-list')}}" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Orders</span></a>
@@ -37,18 +37,21 @@
                             <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Accounts</span> </a>
                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="{{url('user-list')}}" class="nav-link px-0"> <span class="d-none d-sm-inline">User
-                                            Accounts</span></a>
-                                </li>
+                               
                                 <li>
                                     <a href="{{url('customer-list')}}" class="nav-link px-0"> <span
                                             class="d-none d-sm-inline">Customers</span></a>
+                                </li>
+                                @if(Auth::user()->is_admin)
+                                 <li class="w-100">
+                                    <a href="{{url('user-list')}}" class="nav-link px-0"> <span class="d-none d-sm-inline">User
+                                            Accounts</span></a>
                                 </li>
                                 <li>
                                     <a href="{{url('employee-list')}}" class="nav-link px-0"> <span
                                             class="d-none d-sm-inline">Employees</span></a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
                         <li>

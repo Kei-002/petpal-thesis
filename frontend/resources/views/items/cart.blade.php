@@ -110,9 +110,10 @@
                         <thead>
                             <tr>
                                 <th style="width:60%">Service</th>
-                                <th style="width:12%">Price</th>
-                                {{-- <th style="width:10%">Quantity</th> --}}
                                 <th style="width:10%">Pet to Service</th>
+                                
+                                {{-- <th style="width:10%">Quantity</th> --}}
+                                <th style="width:12%">Price</th>
                                 <th style="width:16%"></th>
                             </tr>
                         </thead>

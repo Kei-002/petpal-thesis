@@ -121,8 +121,6 @@
             font-weight: 600;
             color: #0062cc;
         }
-
-       
     </style>
 
     {{-- @if (session('status'))
@@ -166,13 +164,13 @@
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                     aria-controls="home" aria-selected="true">About</a>
                             </li>
                             @if (Auth::user()->role == 'customer')
-                                <li class="nav-item">
-                                    <a class="nav-link" id="pet-tab" data-toggle="tab" href="#petTab" role="tab"
-                                        aria-controls="petTab" aria-selected="false">Pets</a>
+                                <li class="nav-item ">
+                                    <a class="nav-link active" id="pet-tab" data-toggle="tab" href="#petTab"
+                                        role="tab" aria-controls="petTab" aria-selected="false">Pets</a>
                                 </li>
                             @endif
                         </ul>
@@ -180,12 +178,12 @@
                 </div>
                 <div class="col-md-2" style="margin-top: 6%;">
                     {{-- <a href="{{ route('editProfile', $customer->id) }}" class="profile-edit-btn" name="btnAddMore"></a> --}}
-                    <div>
-                        {{-- <a href="{{ route('editProfile', $customer->id) }}" class="btn btn-outline-secondary float-right rounded-pill" style="margin-top: 10px;">Edit Profile</a> --}}
-
+                    <div id="edit-btn-div">
+                        {{-- <button type="button" class="btn btn-outline-secondary float-right rounded-pill" id="edit-profile-btn"
+                            style="margin-top: 10px;">Edit Profile</button> --}}
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-danger float-right rounded-pill mt-1"
+                        <button type="button" class="btn btn-outline-primary float-right rounded-pill mt-1"
                             id="create_pet_modal_button"data-bs-toggle="modal" data-bs-target="#create_pet_modal">
                             Add pet
                         </button>
@@ -196,7 +194,7 @@
             </div>
             <div>
                 <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Name: </label>
@@ -229,7 +227,7 @@
                         </div>
                     </div>
                     {{-- Pet Tab Contents --}}
-                    <div class="tab-pane fade" id="petTab" role="tabpanel" aria-labelledby="pet-tab">
+                    <div class="tab-pane fade show active" id="petTab" role="tabpanel" aria-labelledby="pet-tab">
                         <div class="row mt-3">
                             <div class="row mt-3 align-items-stretch" id="pet-row">
                                 {{-- Pet Cards go gere --}}
@@ -256,12 +254,6 @@
 
     {{-- Modal START --}}
     <div class="row">
-        {{-- Modal Button START --}}
-        <button type="button" class="btn btn-primary" id="create_pet_modal_button"data-bs-toggle="modal"
-            data-bs-target="#create_pet_modal">
-            Add New Pet
-        </button>
-        {{-- Modal Button END --}}
         <!-- Modal Create Pet Body-->
         <div class="modal fade" id="create_pet_modal" tabindex="-1" aria-labelledby="create_pet_modal_label"
             aria-hidden="true">
@@ -362,6 +354,62 @@
     {{-- Modal END --}}
     {{-- </form>            --}}
     </div>
+
+    {{-- Modal Edit User Body --}}
+    <div class="row">
+        <div class="modal fade" id="update_user_modal" tabindex="-1" aria-labelledby="update_user_modal_label"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="update_user_modal_label">Update User Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="update_user_form" action="#" method="#" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <input type="hidden" class="form-control" name="user_id" id="edit-user_id">
+                            <div class="form-group" id="update_customer_form">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="fname">First Name</label>
+                                        <input type="text" class="form-control" name="fname" id="edit-fname"
+                                            required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="lname">Last Name</label>
+                                        <input type="text" class="form-control" name="lname" id="edit-lname"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <label for="addressline">Adress</label>
+                                <input type="text" class="form-control" name="addressline" id="edit-addressline">
+
+                                <label for="lname">Phone Number</label>
+                                <input type="text" class="form-control" name="phone" id="edit-phone">
+
+                                <label for="lname">Email</label>
+                                <input type="email" class="form-control" name="email" id="edit-email" required>
+
+
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Image</label>
+                                    <input class="form-control" type="file" id="img_path" name="img_path"
+                                        accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                                id="update_user_button">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal Edit User Body END --}}
 
     <script src="{{ asset('js/profile.js') }}"></script>
 @endsection
