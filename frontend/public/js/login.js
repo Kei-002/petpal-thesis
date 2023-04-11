@@ -37,4 +37,21 @@ $(document).ready(function () {
             },
         });
     });
+
+    $.ajax({
+        url: "/api/consultation",
+        type: "GET",
+        processData: false, // Important!
+        contentType: false,
+        dataType: "json",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(
+                "Authorization",
+                "Bearer " + localStorage.getItem("token")
+            );
+        },
+        success: function (data) {
+            console.log(data);
+        },
+    });
 });

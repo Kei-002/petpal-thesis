@@ -16,7 +16,7 @@ class Appointment extends Model
         return $this->belongsTo('App\Models\Customer');
     }
 
-    public function consultations()
+    public function consultation()
     {
         return $this->belongsTo('App\Models\Consultation');
     }

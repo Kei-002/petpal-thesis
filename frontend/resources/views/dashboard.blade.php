@@ -15,11 +15,11 @@
                                 <i class="fs-4 bi-speedometer2"></i> <span
                                     class="ms-1 d-none d-sm-inline">Dashboard</span></a>
                         </li>
-                        {{-- <li>
-                            <a href="{{url('product-list')}}" class="nav-link px-0 align-middle">
+                        <li>
+                            <a href="{{url('appointment-list')}}" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-calendar-week"></i> <span
                                     class="ms-1 d-none d-sm-inline">Appointments</span> </a>
-                        </li> --}}
+                        </li>
                         <li>
                             <a href="{{url('order-list')}}" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Orders</span></a>

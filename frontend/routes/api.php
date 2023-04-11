@@ -74,12 +74,14 @@ Route::get('/get-product/{product}', [OrderController::class, 'getProductDetails
 Route::get('/receipt-info/{order}', [OrderController::class, 'getReceipt']);
 
 // Routes for customers only
+Route::resource('consultation', ConsultationController::class);
+Route::post('/appointment-confirm/{appointment}', [ConsultationController::class, 'confirmAppointment']);
 Route::group(['middleware' => ['check_role:customer']], function () {
     Route::post('/checkout', [OrderController::class, 'checkout']);
     Route::get('/profile', [ProfileController::class, 'getProfile']);
     Route::post('/profile-update/{user}', [ProfileController::class, 'updateProfile']);
     Route::get('/get-owned-pets', [OrderController::class, 'getOwnedPets']);
-    Route::resource('consultation', ConsultationController::class);
+    // Route::resource('consultation', ConsultationController::class);
     Route::post('/owner-add-pet', [PetController::class, 'customerAddPet']);
     Route::get('/owner-edit-pet/{pet}', [PetController::class, 'customerEditPet']);
     Route::post('/owner-update-pet/{pet}', [PetController::class, 'customerUpdatePet']);
