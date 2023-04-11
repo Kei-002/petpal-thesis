@@ -31,6 +31,7 @@ $(document).ready(() => {
         processing: true,
         info: true,
         stateSave: true,
+        select: true,
         ajax: {
             url: "/api/all-orders",
             dataSrc: function (json) {
@@ -89,7 +90,7 @@ $(document).ready(() => {
                 );
             },
         },
-        order: [0, "dec"],
+        order: [3, "asc"],
         // data: data,
         columns: [
             {
@@ -99,10 +100,31 @@ $(document).ready(() => {
             {
                 data: "address",
                 render: function (data, type, row) {
-                    return "<div class='text-wrap'>" + data + "</div>";
+                    return (
+                        "<div class='text-wrap' style='font-size:0.8rem'>" +
+                        data +
+                        "</div>"
+                    );
                 },
             },
-            { data: "payment_status" },
+            {
+                data: "payment_status",
+                render: function (data, type, row) {
+                    if (data == "Paid") {
+                        return (
+                            '<span class="badge rounded-pill bg-success">' +
+                            data +
+                            "</span>"
+                        );
+                    } else {
+                        return (
+                            '<span class="badge rounded-pill bg-danger">' +
+                            data +
+                            "</span>"
+                        );
+                    }
+                },
+            },
             { data: "total_purchase" },
             // {
             //     data: null,
@@ -123,22 +145,31 @@ $(document).ready(() => {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return (
-                        '<a class="btn bg-white btn-light mx-1px text-95" href="' +
-                        "storage/" +
-                        data.receipt_path +
-                        '"data-title="PDF" target="_blank" ><i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>Export</a>'
-                    );
+                    console.log(data);
+                    if (data.payment_status == "Paid") {
+                        return (
+                            "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status disabled' id='update_status' data-id=" +
+                            data.id +
+                            // <i class="fa-solid fa-box-circle-check"></i>
+                            "><i class='fa fa-solid fa-check' style='font-size:24px; color:green;'></i>Payment Done</a>"
+                        );
+                    } else {
+                        return (
+                            "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status' id='update_status' data-id=" +
+                            data.id +
+                            // <i class="fa-solid fa-box-circle-check"></i>
+                            "><i class='fa fa-solid fa-check' style='font-size:24px; color:red;'></i>Comfirm Payment</a>"
+                        );
+                    }
                 },
             },
             {
                 data: null,
                 render: function (data, type, row) {
                     return (
-                        "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status' id='update_status' data-id=" +
-                        data.id +
-                        // <i class="fa-solid fa-box-circle-check"></i>
-                        "><i class='fa fa-solid fa-check' style='font-size:24px; color:red;'></a></i>"
+                        '<a class="btn bg-white btn-light mx-1px text-95" href="' +
+                        data.receipt_path +
+                        '"data-title="PDF" target="_blank" ><i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>Export</a>'
                     );
                 },
             },
