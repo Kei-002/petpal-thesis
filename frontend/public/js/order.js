@@ -145,9 +145,9 @@ $(document).ready(() => {
         ],
     });
 
-    $("#order_table").on("click", "button #update_status", function (e) {
+    $("#order_table").on("click", "a#update_status", function (e) {
         e.preventDefault();
-        var id = $(this).id();
+        var id = $(this).data("id");
         console.log(id);
         $.ajax({
             type: "POST",
@@ -155,7 +155,6 @@ $(document).ready(() => {
             contentType: false,
             processData: false,
             url: "/api/update-order-status/" + id,
-            data: formData,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
