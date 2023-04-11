@@ -77,6 +77,14 @@ $(document).ready(function () {
             price: price,
             quantity: 1,
         });
+        addQuantityText();
         toastr.success("Product " + name + " added to cart");
     });
+
+    function addQuantityText() {
+        var old_quantity = $("#cartHtml span").text();
+        var new_quantity = Number(old_quantity) + 1;
+        $("#cartHtml span").text(new_quantity);
+        // console.log(new_quantity);
+    }
 });

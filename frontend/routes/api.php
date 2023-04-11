@@ -73,4 +73,8 @@ Route::group(['middleware' => ['check_role:customer']], function () {
     Route::post('/checkout', [OrderController::class, 'checkout']);
     Route::get('/get-owned-pets', [OrderController::class, 'getOwnedPets']);
     Route::resource('consultation', ConsultationController::class);
+    Route::post('/owner-add-pet', [PetController::class, 'customerAddPet']);
+    Route::get('/owner-edit-pet/{pet}', [PetController::class, 'customerEditPet']);
+    Route::post('/owner-update-pet/{pet}', [PetController::class, 'customerUpdatePet']);
+    Route::delete('/owner-delete-pet/{pet}', [PetController::class, 'customerDeletePet']);
 });

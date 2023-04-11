@@ -37,7 +37,7 @@
             //         // console.log(data);
             //         // console.log(data.pets);
             //         $html += ` <select class="form-select pet-select"  aria-label="role-select" name="pet" style="width:7rem;"
-            //             id="pet-select">`
+        //             id="pet-select">`
             //         if (data.pets != null) {
             //             // $edit_owner_list = $("#edit-owner");
             //             $.each(data.pets, function(key, value) {
@@ -48,7 +48,7 @@
             //             });
             //             $html += "</select>"
             //             // $("#add-to-cart").attr("disabled",false);
-                       
+
             //             console.log($html)
             //         } else {
             //             console.log("No Pets");
@@ -58,35 +58,38 @@
             // });
             // @endauth
 
-        $.ajax({
-            url: "/api/get-all-services",
-            type: "GET",
-            processData: false, // Important!
-            contentType: false,
-            dataType: "json",
+            $.ajax({
+                url: "/api/get-all-services",
+                type: "GET",
+                processData: false, // Important!
+                contentType: false,
+                dataType: "json",
 
-            success: function(response) {
-                var services = response.services;
-                console.log(services);
-                // $(".category-list").empty();
-                $("#service-list").empty();
+                success: function(response) {
+                    var services = response.services;
+                    console.log(services);
+                    // $(".category-list").empty();
+                    $("#service-list").empty();
 
 
-                //  $.each($pet_list, function (key, pet) {
-                //     console.log(pet, "test loop");
-                //     //  $(`#service-list #pet-select-${service.id}`).append(`<option value="${pet.id}">${pet.pet_name}</option>`)
-                //     // // $pet_list.append(
-                //     // //     `<option value="${pet.id}">${pet.pet_name}</option>`
-                //     // // );
-                //     // $(` #service-list #pet-select-${service.id}`).attr("hidden", false);
-                // });
-                $.each(services, function(key, service) {
-                    // console.log(category.category_name);
-                    $("#service-list").append(`
+                    //  $.each($pet_list, function (key, pet) {
+                    //     console.log(pet, "test loop");
+                    //     //  $(`#service-list #pet-select-${service.id}`).append(`<option value="${pet.id}">${pet.pet_name}</option>`)
+                    //     // // $pet_list.append(
+                    //     // //     `<option value="${pet.id}">${pet.pet_name}</option>`
+                    //     // // );
+                    //     // $(` #service-list #pet-select-${service.id}`).attr("hidden", false);
+                    // });
+                    $.each(services, function(key, service) {
+                        // console.log(category.category_name);
+                        $("#service-list").append(`
                         <div class="col mb-5">
                             <div class="card h-100">
                                 <!-- Product image-->
-                                <img class="card-img-top" src="${service.img_path}" alt="..." />
+                                <img class="card-img-top" style=" width: 100%;
+                                                                height: 10vw;
+                                                                object-fit: cover;"
+                                src="${service.img_path}" alt="..." />
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
@@ -122,25 +125,25 @@
                         </div>`);
 
 
-                    // $('#select_id').append($('<option>', {
-                    //     value: 1,
-                    //     text: 'One'
-                    // }));
-                    // $.each($pet_list, function (key, pet) {
-                    //     console.log(pet, "test loop");
-                    //     //  $(`#service-list #pet-select-${service.id}`).append(`<option value="${pet.id}">${pet.pet_name}</option>`)
-                    //     // // $pet_list.append(
-                    //     // //     `<option value="${pet.id}">${pet.pet_name}</option>`
-                    //     // // );
-                    //     // $(` #service-list #pet-select-${service.id}`).attr("hidden", false);
-                    // });
+                        // $('#select_id').append($('<option>', {
+                        //     value: 1,
+                        //     text: 'One'
+                        // }));
+                        // $.each($pet_list, function (key, pet) {
+                        //     console.log(pet, "test loop");
+                        //     //  $(`#service-list #pet-select-${service.id}`).append(`<option value="${pet.id}">${pet.pet_name}</option>`)
+                        //     // // $pet_list.append(
+                        //     // //     `<option value="${pet.id}">${pet.pet_name}</option>`
+                        //     // // );
+                        //     // $(` #service-list #pet-select-${service.id}`).attr("hidden", false);
+                        // });
 
-                });
-                // console.log("testoo");
+                    });
+                    // console.log("testoo");
 
-            },
-        });
-       
+                },
+            });
+
         });
     </script>
 

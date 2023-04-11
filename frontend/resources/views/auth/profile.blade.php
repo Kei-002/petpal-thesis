@@ -3,62 +3,9 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
     <style>
-        /* * {
-                    margin: 0;
-                    padding: 0;
-                }
-
-                body {
-                    background-color: #d6e1eb;
-                    margin-top: 10%;
-                }
-
-                .card {
-                    width: 350px;
-                    background-color: #efefef;
-                    border: none;
-                    cursor: pointer;
-                    transition: all 0.5s
-                }
-
-                .btnnn {
-                    height: 130px;
-                    width: 130px;
-                }
-
-                .image img {
-                    transition: all 0.5s
-                }
-
-                .card:hover .image img {
-                    transform: scale(1.3)
-                }
-
-                .name {
-                    font-size: 22px;
-                    font-weight: bold
-                }
-
-                .number {
-                    font-size: 15 px;
-                    font-weight: bold
-                }
-
-                .text span {
-                    font-size: 13px;
-                    color: #545454;
-                    font-weight: 500
-                }
-
-                .join {
-                    font-size: 14px;
-                    color: #a0a0a0;
-                    font-weight: bold
-                }
-
-                .date {
-                    background-color: #ccc
-                } */
+        .img-center {
+            margin: 0 auto;
+        }
 
         body {
             background: -webkit-linear-gradient(left, #3931af, #00c6ff);
@@ -174,6 +121,8 @@
             font-weight: 600;
             color: #0062cc;
         }
+
+       
     </style>
 
     {{-- @if (session('status'))
@@ -200,7 +149,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src="#" alt="" id="user_image"/>
+                        <img src="#" alt="" class="rounded-3"id="user_image" />
                         {{-- <div class="file btn btn-lg btn-primary">
                                     Change Photo
                                     <input type="file" name="file"/>
@@ -210,7 +159,7 @@
                 <div class="col-md-6" style="margin-top: 6%;">
                     <div class="profile-head">
                         <h3>
-                           {{ Auth::user()->name }}
+                            {{ Auth::user()->name }}
                         </h3>
                         <br>
                         <br>
@@ -221,10 +170,10 @@
                                     aria-controls="home" aria-selected="true">About</a>
                             </li>
                             @if (Auth::user()->role == 'customer')
-                            <li class="nav-item">
-                                <a class="nav-link" id="pet-tab" data-toggle="tab" href="#petTab" role="tab"
-                                    aria-controls="petTab" aria-selected="false">Pets</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pet-tab" data-toggle="tab" href="#petTab" role="tab"
+                                        aria-controls="petTab" aria-selected="false">Pets</a>
+                                </li>
                             @endif
                         </ul>
                     </div>
@@ -237,7 +186,7 @@
                     </div>
                     <div>
                         <button type="button" class="btn btn-outline-danger float-right rounded-pill mt-1"
-                            data-bs-toggle="modal" data-bs-target="#petModal">
+                            id="create_pet_modal_button"data-bs-toggle="modal" data-bs-target="#create_pet_modal">
                             Add pet
                         </button>
                     </div>
@@ -279,78 +228,138 @@
 
                         </div>
                     </div>
+                    {{-- Pet Tab Contents --}}
                     <div class="tab-pane fade" id="petTab" role="tabpanel" aria-labelledby="pet-tab">
                         <div class="row mt-3">
-                            <div class="col-md-12">
-                                <table id="pet_table" class="table table-striped table-bordered dt-responsive nowrap"
-                                    cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Pet Image</th>
-                                            <th>Name</th>
-                                            <th>Age</th>
-                                            <th>Joined On</th>
-                                            <th colspan="2">Actions</th>
-                                            <th style="display:none;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="pet_table_body">
-                                    </tbody>
-
-                                </table>
-
+                            <div class="row mt-3 align-items-stretch" id="pet-row">
+                                {{-- Pet Cards go gere --}}
                             </div>
                         </div>
-                        {{-- <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Experience</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>Expert</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Hourly Rate</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>10$/hr</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Total Projects</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>230</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>English Level</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>Expert</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Availability</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>6 months</p>
-                                                </div>
-                                            </div>
-                                    --}}
-                        {{-- @if (Auth::user()->role == 'customer') --}}
 
                     </div>
+
+
+                    {{-- <div class="tab-pane fade" id="testTab" role="tabpanel" aria-labelledby="test-tab">
+                        <div class="row mt-3 align-items-stretch" id="pet-row">
+
+
+                        </div>
+                    </div> --}}
                     {{-- @endif --}}
+
+
                 </div>
             </div>
         </div>
 
     </div>
+
+    {{-- Modal START --}}
+    <div class="row">
+        {{-- Modal Button START --}}
+        <button type="button" class="btn btn-primary" id="create_pet_modal_button"data-bs-toggle="modal"
+            data-bs-target="#create_pet_modal">
+            Add New Pet
+        </button>
+        {{-- Modal Button END --}}
+        <!-- Modal Create Pet Body-->
+        <div class="modal fade" id="create_pet_modal" tabindex="-1" aria-labelledby="create_pet_modal_label"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="create_pet_modal_label">Add New Pet</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="create_pet_form" action="#" method="#" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="form-group" id="addPetForm">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="fname">Pet Name</label>
+                                        <input type="text" class="form-control" name="pet_name" id="pet_name" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="lname">Age</label>
+                                        <input type="text" class="form-control" name="age" id="age"
+                                            required>
+                                    </div>
+                                </div>
+
+                                {{-- <label for="owner">Owner</label>
+                                <select class="form-select owner-select" aria-label="role-select" name="owner"
+                                    id="owner">
+                                </select> --}}
+
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Pet Picture</label>
+                                    <input class="form-control" type="file" id="img_path" name="img_path"
+                                        accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                                id="create_pet_button">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- Modal Create Pet Body END --}}
+
+    </div>
+    {{-- Modal Edit Pet Body --}}
+    <div class="row">
+        <div class="modal fade" id="update_pet_modal" tabindex="-1" aria-labelledby="update_pet_modal_label"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="update_pet_modal_label">Update Pet Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="update_pet_form" action="#" method="#" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <input type="hidden" class="form-control" name="pet_id" id="edit-pet_id">
+                            <div class="form-group" id="update_pet_form">
+                                <div class="row">
+                                    <img src="" style="width: 150px" class="rounded-circle img-center"
+                                        alt="Pet Placeholder Image" id="img_saved" name="img_saved">
+                                    <input class="form-control" type="hidden" id="old_img" name="old_img">
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="fname">Pet Name</label>
+                                        <input type="text" class="form-control" name="pet_name" id="edit-pet_name"
+                                            required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="lname">Age</label>
+                                        <input type="text" class="form-control" name="age" id="edit-age"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Image</label>
+                                    <input class="form-control" type="file" id="img_path" name="img_path"
+                                        accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                                id="update_pet_button">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal Edit Pet Body END --}}
+    {{-- Modal END --}}
     {{-- </form>            --}}
     </div>
 

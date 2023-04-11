@@ -168,4 +168,59 @@ class PetController extends Controller
             'status' => 200,
         ]);
     }
+
+    public function customerEditPet($id)
+    {
+        $pet = Pet::findOrFail($id);
+        // $owners = Customer::all();
+        // $user = User::where("id", $account->user_id)->firstOrFail();
+        // $account = Customer::where("user_id", $user->id)->firstOrFail();
+        return response()->json([
+            'pet' => $pet,
+            // 'owners' => $owners,
+            'status' => 200,
+        ]);
+    }
+
+    public function customerUpdatePet(Request $request, $id)
+    {
+        $input = $request->all();
+
+        $pet = Pet::findOrFail($id);
+        $pet->pet_name = $request->pet_name;
+        $pet->age = $request->age;
+        $pet->img_path = $request->old_img;
+        // Check if the user submitted a new image
+        if ($request->img_path) {
+            $fileName = time() . $request->file('img_path')->getClientOriginalName();
+            $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
+            $input["img_path"] = '/storage/' . $path;
+            $pet->img_path = $input["img_path"];
+        }
+
+        $pet->save();
+        return response()->json([
+            'message' => 'Pet updated successfully',
+            // 'status' => $user,
+            'changes' => $request->all(),
+            'pet' => $pet,
+            // 'test' => $test,
+        ]);
+    }
+
+    public function customerDeletePet($id)
+    {
+        try {
+            $pet = Pet::findOrFail($id);
+            $pet->customer()->dissociate();
+            $pet->delete();
+        } catch (\Exception $error) {
+            return response($error, $status = 400);
+        }
+
+        return response()->json([
+            'message' => 'Pet Deleted Successfully',
+            'status' => 200,
+        ]);
+    }
 }

@@ -60,11 +60,10 @@
                         role="button" aria-expanded="false"><i class="fa-solid fa-circle-user me-1 "></i>
                         {{Auth::user()->name}}</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{url('profile')}}">Profile</a></li>
                         @if(Auth::user()->role !== 'customer')
                         <li><a class="dropdown-item" href="{{url('/dashboard')}}" id="adminLink">Dashboard</a></li>
                         @endif
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
