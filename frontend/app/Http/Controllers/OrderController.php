@@ -262,7 +262,7 @@ class OrderController extends Controller
         $order->payment_status = "Paid";
         $order->save();
         return response()->json([
-            'message' => 'Pet updated successfully',
+            'message' => 'Order Payment updated successfully',
             // 'status' => $user,
             'order' => $order,
         ]);
