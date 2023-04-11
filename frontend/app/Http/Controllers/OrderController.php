@@ -245,7 +245,7 @@ class OrderController extends Controller
         ->join('receiptlines', 'receiptlines.receipt_id', '=', 'receiptinfos.id')
         ->join('transactioninfos', 'receiptlines.item_id', '=', 'transactioninfos.id')
         ->join('customers', 'transactioninfos.customer_id', '=', 'customers.id')
-        ->select('receiptinfos.id', 'receiptinfos.*', 'receiptlines.item_id', 'transactioninfos.payment_status', 'customers.fname', 'customers.lname', 'customers.addressline')
+            ->select('receiptinfos.id', 'total_purchase', 'receipt_path', 'receiptlines.item_id', 'transactioninfos.payment_status', 'customers.fname', 'customers.lname', 'customers.addressline')
         ->where('receiptlines.is_order', '=', false)
             ->get();
         return response()->json([
@@ -262,7 +262,20 @@ class OrderController extends Controller
         $order->payment_status = "Paid";
         $order->save();
         return response()->json([
-            'message' => 'Order Payment updated successfully',
+            'message' => 'Payment updated successfully',
+            // 'status' => $user,
+            'order' => $order,
+        ]);
+    }
+
+    public function updateTransactionStatus($id)
+    {
+        // $orders = Order::with('orderlines')->get();
+        $order = Transaction::findOrFail($id);
+        $order->payment_status = "Paid";
+        $order->save();
+        return response()->json([
+            'message' => 'Payment updated successfully',
             // 'status' => $user,
             'order' => $order,
         ]);

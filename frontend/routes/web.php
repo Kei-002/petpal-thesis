@@ -53,6 +53,7 @@ Route::group(['middleware' => ['check_role_web:employee,admin']], function () {
     });
     Route::view('/product-list', 'tables.product');
     Route::view('/order-list', 'tables.order');
+    Route::view('/transaction-list', 'tables.transaction');
 });
 
 // Route::view('/401', 'errors.401');

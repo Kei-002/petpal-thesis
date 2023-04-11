@@ -59,6 +59,7 @@ Route::group(['middleware' => ['check_role:employee,admin']], function () {
 Route::get('/all-orders', [OrderController::class, 'getAllOrders']);
 Route::get('/all-transactions', [OrderController::class, 'getAllTransactions']);
 Route::post('/update-order-status/{order}', [OrderController::class, 'updateOrderStatus']);
+Route::post('/update-transaction-status/{transaction}', [OrderController::class, 'updateTransactionStatus']);
 // Public Routes
 Route::resource('category', CategoryController::class);
 Route::get('/get-all-products', [OrderController::class, 'getAllProducts']);
