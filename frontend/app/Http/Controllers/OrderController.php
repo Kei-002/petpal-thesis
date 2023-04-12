@@ -33,6 +33,11 @@ class OrderController extends Controller
             // ->orderBy('products.category_id')
             ->get();
         $test = $products1->groupBy('category_id')->map->count();
+
+        $button_state = 'disabled';
+        if (Auth::check() && Auth::user()->role == 'customer') {
+            $button_state = '';
+        }
         // ->pluck('total', 'category_id');
         $test2 = Product::select('category_id', DB::raw("count(id) as total"))->with('category')->groupBy('category_id')->get();
         return response()->json([
@@ -40,6 +45,7 @@ class OrderController extends Controller
             'categories' => $categories,
             'category_count' => $category_count,
             'test' => $test2,
+            'button_state' => $button_state
         ]);
     }
 
@@ -172,8 +178,8 @@ class OrderController extends Controller
         return response()->json([
             // 'request' => $order,
             // 'user' => Auth::user(),
-            'customer' => $customer,
-            'orderlines' => $orderlines
+            'customer' => $customer, 'orderlines' => $orderlines,
+            
             // 'categories' => $categories,
             // 'category_count' => $category_count,
             // 'test' => $test2,
@@ -185,12 +191,16 @@ class OrderController extends Controller
         // $data = $request->all();
         $product = Product::where('id', "=",  $id)->with('category')->first();
         // $customer = Customer::find(Auth::id())->first();
-
+        $button_state = 'disabled';
+        if (Auth::check() && Auth::user()->role == 'customer') {
+            $button_state = '';
+        }
         return response()->json([
             // 'request' => $order,
             // 'user' => Auth::user(),
             'product' => $product,
-            'category' => $product->category->category_name
+            'category' => $product->category->category_name,
+            'button_state' => $button_state
             // 'categories' => $categories,
             // 'category_count' => $category_count,
             // 'test' => $test2,

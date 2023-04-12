@@ -4,9 +4,12 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 {{-- Jquery UI --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
     integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+
+{{-- Validation --}}
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 {{-- Fonts --}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -111,6 +114,9 @@
     integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
+{{-- Debounce/Throttle --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.js"
+    integrity="sha512-5ITfxARa+VowWr2W6H+oCSKk1t3q4pqFoiU4or3whS4VkaOF6N+QFNAQFZeMBMM/9CT4TeFiRPFJDuFFNfXkZA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {{-- Cart Class --}}
 <script src="{{ asset('js/cart.js') }}"></script>

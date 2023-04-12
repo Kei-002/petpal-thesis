@@ -29,7 +29,7 @@ class Cart {
     addService(item) {
         // Check if item already exists in cart
         const existingItem = this.services.find(
-            (cartItem) => cartItem.id === item.id
+            (cartItem) => cartItem.uid === item.uid
         );
 
         if (existingItem) {
@@ -58,10 +58,10 @@ class Cart {
     }
 
     removeService(itemId) {
-        const serviceInfo = this.services.find((item) => item.id === itemId);
+        const serviceInfo = this.services.find((item) => item.uid === itemId);
 
         // remove item from array
-        this.services = this.items.filter((item) => item.id !== itemId);
+        this.services = this.services.filter((item) => item.uid !== itemId);
 
         this.totalAmount -= serviceInfo.quantity * serviceInfo.price;
         this.totalQuantity -= serviceInfo.quantity;
@@ -87,7 +87,7 @@ class Cart {
     }
 
     updateService(itemId, petID) {
-        const itemToUpdate = this.services.find((item) => item.id === itemId);
+        const itemToUpdate = this.services.find((item) => item.uid === itemId);
         if (itemToUpdate) {
             itemToUpdate.pet_id = petID;
         }

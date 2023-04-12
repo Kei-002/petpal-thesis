@@ -96,7 +96,9 @@ $(document).ready(function () {
         var price = Number($(this).data("price"));
         var id = Number($(this).data("id"));
         // console.log(id, pet_id);
+        unique_id = Date.now() + Math.random();
         cart.addService({
+            uid: unique_id,
             id: id,
             name: name,
             image: image,
@@ -105,6 +107,7 @@ $(document).ready(function () {
             pet_name: null,
             quantity: 1,
         });
+        console.log(cart.services);
         addQuantityText();
         toastr.success("Service " + name + " added to cart");
     });

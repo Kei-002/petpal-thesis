@@ -52,7 +52,7 @@ $(document).ready(function () {
                             <button type="button" class="btn btn-success btn-lg" id="add-to-cart-btn" data-id="${$product.id}" 
                                         data-name="${$product.product_name}"
                                         data-price="${$product.sell_price}"
-                                        data-image="${$product.img_path}">Add to cart ($${$product.sell_price})</button>
+                                        data-image="${$product.img_path}" ${data.button_state}>Add to cart ($${$product.sell_price})</button>
                         </div>`
             );
 

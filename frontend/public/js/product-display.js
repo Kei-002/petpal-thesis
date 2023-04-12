@@ -50,7 +50,7 @@ $(document).ready(function () {
             $category_count = data.category_count;
 
             $.each($categories, function (key, category) {
-                // console.log(category.category_name);
+                console.log(data);
                 $.each($category_count, function (key, value) {
                     // console.log(value.total);
                     if (value.id == category.id) {
@@ -96,20 +96,19 @@ $(document).ready(function () {
                                         data-name="${product.product_name}"
                                         data-price="${product.sell_price}"
                                         data-image="${product.img_path}"
-                                        >Add to cart</button>
+                                        ${data.button_state}>Add to cart</button>
                                     </div>
                                 </div>
                             </div>
                         </div>`);
             });
-
             // console.log(category_with_count);
         },
     });
 
     $(".product-list").on("click", "button#add-to-cart", function (e) {
         e.preventDefault();
-
+        e.stopPropagation();
         var name = $(this).data("name");
         var image = $(this).data("image");
         var price = Number($(this).data("price"));
@@ -125,7 +124,7 @@ $(document).ready(function () {
         toastr.success("Product " + name + " added to cart");
     });
 
-    $(".product-list").on("click", "div#product", function () {
+    $(".product-list").on("click", " div#product", function (event) {
         var id = $(this).data("id");
         // console.log(id);
         location.href = "/product?id=" + id;

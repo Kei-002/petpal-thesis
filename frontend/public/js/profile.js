@@ -99,7 +99,7 @@ $(document).ready(() => {
                 console.log(key, pet);
                 var color = colors[Math.floor(Math.random() * colors.length)];
                 $("#pet-row").append(`
-                                        <div class="card border-${color} mx-auto mb-3" style="width: 18rem;">
+                                        <div class="card border-${color} mx-auto mb-3" style="width: 18rem;" id="card-pet-${pet.id}">
                                             <img src="${pet.img_path}" style="width: 150px"
                                                 class="card-img-top mt-2 rounded-circle border border-dark img-center " alt="/storage/images/pet-placeholder.png">
                                             <div class="card-body">
@@ -154,9 +154,27 @@ $(document).ready(() => {
             dataType: "json",
             success: function (data) {
                 console.log(data);
+                var pet = data.pet;
                 $("#create_pet_modal").modal("hide");
+                var color = colors[Math.floor(Math.random() * colors.length)];
+                $("#pet-row").append(`
+                                        <div class="card border-${color} mx-auto mb-3" style="width: 18rem;" id="card-pet-${pet.id}">
+                                            <img src="${pet.img_path}" style="width: 150px"
+                                                class="card-img-top mt-2 rounded-circle border border-dark img-center " alt="/storage/images/pet-placeholder.png">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${pet.pet_name}</h5>
+                                                <p class="card-text">Age: ${pet.age}.</p>
+                                            </div>
+                                            <div class="card-footer img-center" style="background-color:rgba(255, 255, 255, 0.03); border-top:none">
+                                                 <a href="#" id="pet_edit" class="btn btn-info card-link" data-id="${pet.id}"><i class="bi bi-pencil-square"></i>  Edit</a>
+                                                    <a href="#" id="pet_delete" class="btn btn-danger card-link" data-id="${pet.id}"><i class="bi bi-trash"></i>  Delete</a>
+                                            </div>
+                                        </div>`);
+
+                // $("#pet-row").load("#pet-row");
                 toastr.success(data.message);
-                location.reload();
+                // $("#pet-row").html(spinner).load(url);
+                // location.reload();
             },
             error: function (error) {
                 console.log(error);
@@ -255,9 +273,9 @@ $(document).ready(() => {
         e.preventDefault();
         // var table = $("#pet_table").DataTable();
         var id = $(this).data("id");
-        // var $row = $(this).closest("tr");
+        // var $card = $(this).parents(".card");
 
-        console.log(id);
+        // console.log(id, $card);
 
         bootbox.confirm({
             message: "Do You Want To Delete This Pet?",
@@ -295,7 +313,11 @@ $(document).ready(() => {
                             console.log(data);
                             // bootbox.alert('success');
                             toastr.success(data.message);
-                            location.reload();
+                            // $("#pet-row").remove($card);
+                            $("#card-pet-" + id).remove();
+                            // $(this).parents(".card").remove();
+                            // id = "card-pet-${pet.id}";
+                            // location.reload();
                         },
                         error: function (error) {
                             console.log(error);
