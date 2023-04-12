@@ -44,7 +44,7 @@
                     <a class="nav-link mx-2 text-uppercase" href="{{url('login')}}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-2 text-uppercase" href="#">Register</a>
+                    <a class="nav-link mx-2 text-uppercase" href="{{url('register')}}">Register</a>
                 </li>
             </ul>
             @endguest

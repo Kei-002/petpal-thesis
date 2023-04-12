@@ -1,6 +1,11 @@
 @extends('layouts.base')
 @section('body')
     <style>
+        body {
+            background: rgb(80, 201, 195);
+            background: linear-gradient(59deg, rgba(80, 201, 195, 1) 0%, rgba(0, 212, 255, 1) 100%);
+        }
+
         #signUpForm {
             max-width: 500px;
             background-color: #ffffff;
@@ -178,10 +183,10 @@
             </div>
             <!-- end step indicators -->
             <div class="step">
-                <p class="text-center mb-4">We will never sell it</p>
+                <p class="text-center mb-4">Enter your information</p>
 
-                <h5 class="text-center mb-1" for="file-input-user"><strong>Upload your image</strong></h5>
-                <div class="mb-3 parent-div">
+                {{-- <h5 class="text-center mb-1" for="file-input-user"><strong>Upload your image</strong></h5> --}}
+                {{-- <div class="mb-3 parent-div">
                     <div class="file-upload">
                         <input type="file" id="file-input-user" name="file-input-user">
                         <label for="file-input">
@@ -189,7 +194,7 @@
                                 class="upload-icon img-center">
                         </label>
                     </div>
-                </div>
+                </div> --}}
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-6">
@@ -218,8 +223,8 @@
             <!-- step two -->
             <div class="step">
                 <p class="text-center mb-4">Add your beloved furbaby! <br> Don't worry! You can add more in your profile</p>
-                <h5 class="text-center mb-1" for="file-input"><strong>Upload an Image</strong></h5>
-                <div class="mb-3 parent-div">
+                {{-- <h5 class="text-center mb-1" for="file-input"><strong>Upload an Image</strong></h5> --}}
+                {{-- <div class="mb-3 parent-div">
                     <div class="file-upload">
                         <input type="file" id="file-input" name="file-input">
                         <label for="file-input">
@@ -227,7 +232,7 @@
                                 class="upload-icon img-center">
                         </label>
                     </div>
-                </div>
+                </div> --}}
                 <div class="mb-3">
                     <input type="text" placeholder="Pet Name" id="pet-name" oninput="this.className = ''"
                         name="pet-name">
@@ -241,13 +246,16 @@
             <div class="step">
                 <p class="text-center mb-4">Create your account</p>
                 <div class="mb-3">
-                    <input type="email" placeholder="Email Address" oninput="this.className = ''" name="email">
+                    <input type="email" placeholder="Email Address" oninput="this.className = ''" name="email"
+                        name="email">
                 </div>
                 <div class="mb-3">
-                    <input type="password" placeholder="Password" oninput="this.className = ''" name="password">
+                    <input type="password" placeholder="Password" oninput="this.className = ''" name="password"
+                        name="password">
                 </div>
                 <div class="mb-3">
-                    <input type="password" placeholder="Confirm Password" oninput="this.className = ''" name="password">
+                    <input type="password" placeholder="Confirm Password" oninput="this.className = ''"
+                        name="password_confirmation" name="password_confirmation">
                 </div>
             </div>
 
@@ -297,13 +305,57 @@
             // Increase or decrease the current tab by 1:
             currentTab = currentTab + n;
             // if you have reached the end of the form...
-            if (currentTab >= x.length) {
-                // ... the form gets submitted:
+            if (currentTab >= Number(x.length)) {
+
                 // document.getElementById("signUpForm").submit();
-                $("#signUpForm").submit(function(event) {
-                    alert("Handler for .submit() called.");
+                // console.log("submitted")
+                if (document.getElementById("nextBtn").innerHTML == "Submit") {
+                    console.log("submitted")
+                    // $("#signUpForm").submit(function(e) {
+                    // alert("Handler for .submit() called.");
+                    console.log("submitted2")
+                    // e.preventDefault();
+                    var data = $("#signUpForm")[0];
+                    console.log(data);
+                    let formData = new FormData(data);
+                    console.log(formData);
+                    for (var pair of formData.entries()) {
+                        console.log(pair[0] + "," + pair[1]);
+                    }
+                    $.ajax({
+                        type: "POST",
+                        // url: "http://localhost:8000/login",
+                        url: "/register",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            console.log(response);
+                            // console.log(data.data.token);
+                            localStorage.setItem("token", response.data.token);
+                            toastr.success("User successfully registered in!");
+                            if (response.data.role != "customer") {
+                                location.href = "/dashboard";
+                                console.log(response.data.role);
+                            } else {
+                                location.href = "/";
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        },
+
+
+                    });
+                    return false;
+                    // console.log()
                     // event.preventDefault();
-                });
+                    // });
+                }
                 return false;
             }
             // Otherwise, display the correct tab:
@@ -317,7 +369,7 @@
             y = x[currentTab].getElementsByTagName("input");
             // A loop that checks every input field in the current tab:
             for (i = 0; i < y.length; i++) {
-               console.log( y[i].value)
+                console.log(y[i].value)
                 // If a field is empty...
                 if (y[i].value == "") {
                     // add an "invalid" class to the field:
@@ -343,20 +395,20 @@
             x[n].className += " active";
         }
 
-        const fileInput = document.getElementById('file-input');
-        const fileUpload = document.querySelector('.file-upload');
+        // const fileInput = document.getElementById('file-input');
+        // const fileUpload = document.querySelector('.file-upload');
 
-        fileInput.addEventListener('change', function() {
-            const file = this.files[0];
-            const reader = new FileReader();
+        // fileInput.addEventListener('change', function() {
+        //     const file = this.files[0];
+        //     const reader = new FileReader();
 
-            reader.addEventListener('load', function() {
-                fileUpload.style.backgroundImage = `url(${this.result})`
-                // fileUpload.style.width = `100%`;
-                // fileUpload.style.height = `10vw`;
-            });
+        //     reader.addEventListener('load', function() {
+        //         fileUpload.style.backgroundImage = `url(${this.result})`
+        //         // fileUpload.style.width = `100%`;
+        //         // fileUpload.style.height = `10vw`;
+        //     });
 
-            reader.readAsDataURL(file);
-        });
+        //     reader.readAsDataURL(file);
+        // });
     </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\Customer;
+use App\Models\Pet;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -44,13 +45,22 @@ class AuthController extends Controller
         $customer = Customer::create([
             'user_id' => $user->id,
             'fname' => $request->fname,
-            'lname' => $request->fname,
-            'addressline' => 'Taguig',
+            'lname' => $request->lname,
+            'addressline' => $request->address,
             'phone' => '12344192111',
         ]);
 
+        $pet = Pet::create([
+            'pet_name' => $user->id,
+            'age' => $request->age,
+            'customer_id' => $customer->id,
+        ]);
+
+        Auth::login($user);
+
         return $this->success([
             'user' => $user,
+            'role' => 'customer',
             'customer' => $customer,
             'token' => $user->createToken('API Token of ' . $user->name)->plainTextToken
         ]);
