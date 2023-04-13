@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('groom_name');
             $table->double('price');
             $table->text('description');
-            $table->text('img_path')->default('/storage/images/default.jpg');
+            $table->text('img_path')->default('/storage/images/general-placeholder.png');
         });
     }
 

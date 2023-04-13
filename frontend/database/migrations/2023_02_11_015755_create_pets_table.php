@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')
                 ->onDelete('cascade');
             $table->text('age');
-            $table->text('img_path')->default('/storage/images/default.jpg');
+            $table->text('img_path')->default('/storage/images/pet-placeholder.png');
             $table->timestamps();
             $table->softDeletes();
         });

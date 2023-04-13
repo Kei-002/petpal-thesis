@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('lname');
             $table->text('addressline');
             $table->text('phone');
-            $table->text('img_path')->default('/storage/images/default.jpg');
+            $table->text('img_path')->default('/storage/images/user-placeholder.png');
             // $table->text('status') -> default('ACTIVE');
             $table->timestamps();
             $table->softDeletes();

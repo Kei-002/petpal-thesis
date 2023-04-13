@@ -22,7 +22,7 @@ return new class extends Migration
             $table->double('cost_price');
             $table->double('sell_price');
             $table->text('description');
-            $table->text('img_path')->default('/storage/images/default.jpg');
+            $table->text('img_path')->default('/storage/images/product-placeholder.png');
             $table->timestamps();
         });
     }
