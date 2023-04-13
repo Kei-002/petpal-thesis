@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\Appointment;
 use App\Models\Customer;
 use App\Models\Order;
@@ -20,12 +21,12 @@ class DashboardController extends Controller
         $order_total = Order::all()->count();
         $transaction_total =
             Transaction::where('payment_status', "Paid")->count();
-        $appointment_total = Appointment::where('appointment_status', "Done")->count();
+        $appointment_total = Appointment::where('appointment_status', "Confirmed")->count();
 
         $order_pending_total = Order::where('payment_status', "!=", "Paid")->count();
         $transaction_pending_total = Transaction::where('payment_status', "!=", "Paid")->count();
 
-        $appointment_pending_total = Appointment::where('appointment_status', '!=', "Done")->count();
+        $appointment_pending_total = Appointment::where([['appointment_status', '!=', "Confirmed"], ['appointment_status', '!=', "Cancelled"]])->count();
 
         return response()->json([
             'data' => ['customer_total' => $customer_total, 'pet_total' => $pet_total, 'order_total' => $order_total, 'transaction_total' => $transaction_total, 'appointment_total' => $appointment_total, 'order_pending_total' => $order_pending_total, 'transaction_pending_total' => $transaction_pending_total, 'appointment_pending_total' =>  $appointment_pending_total],
@@ -59,6 +60,29 @@ class DashboardController extends Controller
 
         return response()->json(
             ['customer_per_month' => $cpm, 'order_per_month' => $opm],
+        );
+    }
+
+    public function makeAnnouncement(Request $request)
+    {
+        $announcement = new Announcement();
+        $announcement->title = $request->title;
+        $announcement->content = $request->content;
+        $announcement->save();
+        return response()->json(
+            [
+                'announcement' => $announcement,
+                'message' => "Announcement Posted!"
+            ]
+
+        );
+    }
+
+    public function getAnnouncements(Request $request)
+    {
+        $announcements = Announcement::orderBy('id', 'desc')->take(3)->get();
+        return response()->json(
+            $announcements
         );
     }
 }
