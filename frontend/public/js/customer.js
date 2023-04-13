@@ -298,57 +298,47 @@ $(document).ready(function () {
     );
 
     // User Update
-     $("#customer_table #customer_table_body").on(
-         "click",
-         "a.customer_edit",
-         function (e) {
-             e.preventDefault();
-             $("#update_customer_modal").modal("show");
-             var id = $(this).data("id");
-             // var id = $(e.relatedTarget).attr("id");
-             console.log(id);
+    $("#update_customer_button").on("click", function (e) {
+        e.preventDefault();
+        var id = $("#edit-customer_id").val();
+        console.log(id);
+        var data = $("#update_customer_form")[0];
+        console.log(data);
 
-             $.ajax({
-                 type: "GET",
-                 enctype: "multipart/form-data",
-                 processData: false, // Important!
-                 contentType: false,
-                 cache: false,
-                 url: "/api/customer/" + id + "/edit",
-                 headers: {
-                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                         "content"
-                     ),
-                 },
-                 beforeSend: function (xhr) {
-                     xhr.setRequestHeader(
-                         "Authorization",
-                         "Bearer " + localStorage.getItem("token")
-                     );
-                 },
-                 dataType: "json",
-                 success: function (data) {
-                     console.log(data);
-                     $user = data.user;
-                     $account = data.account;
-                     // console.log($user);
-                     // console.log($account);
-                     $("#edit-customer_id").val($account.id);
-                     $("#edit-fname").val($account.fname);
-                     $("#edit-lname").val($account.lname);
-                     $("#edit-addressline").val($account.addressline);
-                     $("#edit-phone").val($account.phone);
-                     $("#edit-email").val($user.email);
-
-                     // $("#img_path").html(
-                     //     `<img src="${data.img_path}" width="100" class="img-fluid img-thumbnail">`);
-                     // $("#dispCustomer").attr("src", data.img_path);
-                     // $("#edit-role").val($user.role).change();
-                 },
-                 error: function (error) {
-                     console.log("error", error);
-                 },
-             });
-         }
-     );
+        let formData = new FormData(data);
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + "," + pair[1]);
+        }
+        $.ajax({
+            type: "POST",
+            // cache: false,
+            contentType: false,
+            processData: false,
+            url: "/api/customer-update/" + id,
+            data: formData,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+            dataType: "json",
+            success: function (data) {
+                // console.log(data.img_path);
+                $("#update_customer_modal").modal("hide");
+                $("#customer_table").DataTable().ajax.reload();
+                console.log("data", data);
+                // console.log("message", data.message);
+                // console.log("request", data.request);
+                toastr.success(data.message);
+            },
+            error: function (error) {
+                console.log("error", error);
+                // toastr.error(error);
+            },
+        });
+    });
 });
