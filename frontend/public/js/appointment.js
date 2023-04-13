@@ -148,6 +148,10 @@ $(document).ready(() => {
     //         },
     //     ],
     // });
+
+    $("#update_appointment_modal").on("hidden.bs.modal", function () {
+        $(this).find("form").trigger("reset");
+    });
     var date_options = {
         weekday: "long",
         year: "numeric",
@@ -178,11 +182,6 @@ $(document).ready(() => {
         // data: data,
         columns: [
             { data: "id" },
-            // { data: "id" },
-            // { data: "id" },
-            // { data: "id" },
-            // { data: "id" },
-            // { data: "id" },
             {
                 data: null,
                 render: function (data, type, row) {
@@ -199,20 +198,43 @@ $(document).ready(() => {
             {
                 data: null,
                 render: function (data, type, row) {
+                    switch (data.appointment_status) {
+                        case "Confirmed":
+                            return (
+                                "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status disabled' id='update_status' data-id=" +
+                                data.id +
+                                // <i class="fa-solid fa-box-circle-check"></i>
+                                "><i class='fa fa-solid fa-check' style='font-size:24px; color:green;'></i>Confirmed</a>"
+                            );
+                            break;
+                        case "Cancelled":
+                            // code block
+                            return (
+                                "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status disabled' id='update_status' data-id=" +
+                                data.id +
+                                // <i class="fa-solid fa-box-circle-check"></i>
+                                "><i class='fa fa-calendar-xmark' style='font-size:24px; color:red;'></i>Cancelled</a>"
+                            );
+                            break;
+                        case "Reschedule":
+                            return (
+                                "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status disabled' id='update_status' data-id=" +
+                                data.id +
+                                // <i class="fa-solid fa-box-circle-check"></i>
+                                "><i class='fa fa-calendar-days' style='font-size:24px; color:blue;'></i>Rescheduled</a>"
+                            );
+                            break;
+                        default:
+                            return (
+                                "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status' id='update_status' data-id=" +
+                                data.id +
+                                // <i class="fa-solid fa-box-circle-check"></i>
+                                "><i class='fa fa-solid fa-check' style='font-size:24px; color:red;'></i>Comfirm Appointment</a>"
+                            );
+                    }
+
                     if (data.appointment_status == "Confirmed") {
-                        return (
-                            "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status disabled' id='update_status' data-id=" +
-                            data.id +
-                            // <i class="fa-solid fa-box-circle-check"></i>
-                            "><i class='fa fa-solid fa-check' style='font-size:24px; color:green;'></i>Confirmed</a>"
-                        );
                     } else {
-                        return (
-                            "<a href='#' class='btn bg-white btn-light mx-1px text-95 update_status' id='update_status' data-id=" +
-                            data.id +
-                            // <i class="fa-solid fa-box-circle-check"></i>
-                            "><i class='fa fa-solid fa-check' style='font-size:24px; color:red;'></i>Comfirm Appointment</a>"
-                        );
                     }
                 },
             },
@@ -229,7 +251,7 @@ $(document).ready(() => {
                 data: null,
                 render: function (data, type, row) {
                     return (
-                        "<a href='#' class='appoinment_edit' id='appoinment_edit' data-id=" +
+                        "<a href='#' class='appointment_edit' id='appointment_edit' data-id=" +
                         data.id +
                         "><i class='fa-solid fa-edit' aria-hidden='true' style='font-size:24px; color:blue;'></a></i>"
                     );
@@ -239,7 +261,7 @@ $(document).ready(() => {
                 data: null,
                 render: function (data, type, row) {
                     return (
-                        "<a href='#' class='appoinment_delete' id='appoinment_delete' data-id=" +
+                        "<a href='#' class='appointment_delete' id='appoinment_delete' data-id=" +
                         data.id +
                         "><i class='fa-solid fa-trash-can' aria-hidden='true' style='font-size:24px; color:red;'></a></i>"
                     );
@@ -283,4 +305,147 @@ $(document).ready(() => {
             },
         });
     });
+
+    $("#appointment_table").on("click", "a.appointment_edit", function (e) {
+        e.preventDefault();
+
+        var id = $(this).data("id");
+        // var id = $(e.relatedTarget).attr("id");
+        console.log(id);
+
+        $.ajax({
+            type: "GET",
+            enctype: "multipart/form-data",
+            processData: false, // Important!
+            contentType: false,
+            cache: false,
+            url: "api/consultation/" + id + "/edit",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+            dataType: "json",
+            success: function (data) {
+                $infos = data;
+                console.log($infos.id, $infos);
+                $("#edit-appointment_id").val($infos.id);
+                $("#edit-fname").val($infos.customer.fname);
+                $("#edit-lname").val($infos.customer.lname);
+                $("#edit-appointment_date").val($infos.appointment_date);
+                $("#edit-appointment_status")
+                    .val($infos.appointment_status)
+                    .change();
+                $("#edit-description").val($infos.description);
+                $("#update_appointment_modal").modal("show");
+            },
+            error: function (error) {
+                console.log("error", error);
+            },
+        });
+    });
+
+    $("#appointment_table").on("click", "a.appointment_delete", function (e) {
+        e.preventDefault();
+
+        var id = $(this).data("id");
+        // var id = $(e.relatedTarget).attr("id");
+        console.log(id);
+
+        $.ajax({
+            type: "POST",
+            enctype: "multipart/form-data",
+            processData: false, // Important!
+            contentType: false,
+            cache: false,
+            url: "api/cancel-appointment/" + id,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+            dataType: "json",
+            success: function (data) {
+                $infos = data;
+                console.log($infos.id, $infos);
+                $("#appointment_table").DataTable().ajax.reload();
+                toastr.success(data.message);
+            },
+            error: function (error) {
+                console.log("error", error);
+            },
+        });
+    });
+    // Full Calendar Section
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     var calendarEl = document.getElementById("calendar");
+
+    //     var calendar = new FullCalendar.Calendar(calendarEl, {
+    //         initialView: "dayGridMonth",
+    //         initialDate: "2023-03-07",
+    //         headerToolbar: {
+    //             left: "prev,next today",
+    //             center: "title",
+    //             right: "dayGridMonth,timeGridWeek,timeGridDay",
+    //         },
+    //         events: [
+    //             {
+    //                 title: "All Day Event",
+    //                 start: "2023-03-01",
+    //             },
+    //             {
+    //                 title: "Long Event",
+    //                 start: "2023-03-07",
+    //                 end: "2023-03-10",
+    //             },
+    //             {
+    //                 groupId: "999",
+    //                 title: "Repeating Event",
+    //                 start: "2023-03-09T16:00:00",
+    //             },
+    //             {
+    //                 groupId: "999",
+    //                 title: "Repeating Event",
+    //                 start: "2023-03-16T16:00:00",
+    //             },
+    //             {
+    //                 title: "Conference",
+    //                 start: "2023-03-11",
+    //                 end: "2023-03-13",
+    //             },
+    //             {
+    //                 title: "Meeting",
+    //                 start: "2023-03-12T10:30:00",
+    //                 end: "2023-03-12T12:30:00",
+    //             },
+    //             {
+    //                 title: "Lunch",
+    //                 start: "2023-03-12T12:00:00",
+    //             },
+    //             {
+    //                 title: "Meeting",
+    //                 start: "2023-03-12T14:30:00",
+    //             },
+    //             {
+    //                 title: "Birthday Party",
+    //                 start: "2023-03-13T07:00:00",
+    //             },
+    //             {
+    //                 title: "Click for Google",
+    //                 url: "http://google.com/",
+    //                 start: "2023-03-28",
+    //             },
+    //         ],
+    //     });
+
+    //     calendar.render();
+    // });
 });

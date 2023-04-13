@@ -95,16 +95,17 @@
                 </div>
             </div>
             <div class="four col-md-3">
-                <div class="counter-box blue">
-                    <i class="fa fa-dog"></i>
-                    <span class="counter" id="total-pets">{{-- loading spinner --}}
+                <div class="counter-box colored">
+                    <i class="fa fa-calendar-check"></i>
+                    <span class="counter" id="total-appointments">{{-- loading spinner --}}
                         <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </span>
-                    <p>Total Pets</p>
+                    <p>Total Appointments</p>
                 </div>
             </div>
+
             <div class="four col-md-3">
                 <div class="counter-box colored">
                     <i class="fa  fa-shopping-cart"></i>
@@ -130,14 +131,14 @@
         </div>
         <div class="row mt-2">
             <div class="four col-md-3">
-                <div class="counter-box colored">
-                    <i class="fa fa-calendar-check"></i>
-                    <span class="counter" id="total-appointments">{{-- loading spinner --}}
+                <div class="counter-box blue">
+                    <i class="fa fa-dog"></i>
+                    <span class="counter" id="total-pets">{{-- loading spinner --}}
                         <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </span>
-                    <p>Total Appointments</p>
+                    <p>Total Pets</p>
                 </div>
             </div>
             <div class="four col-md-3">
@@ -176,18 +177,17 @@
         </div>
     </div>
     <div class="container">
-        <div class="row mt-5 ps-2">
+        <div class="row mt-5 ps-2 d-flex justify-content-evenly">
             <div class="border border-primary rounded m-1" style="top:60px; left:20px; width:500px;">
                 <h5 class="mt-3"><strong> Customer Registered Per Month</strong></h5>
                 <canvas id="customer-per-month"></canvas>
             </div>
-            <div class="border border-primary rounded m-1" style="top:60px; left:20px; width:500px;">
+            <div class=" border border-primary rounded m-1" style="top:60px; left:20px; width:500px;">
                 <h5 class="mt-3"><strong> Orders Sales</strong></h5>
                 <canvas id="orders-per-month"></canvas>
             </div>
         </div>
     </div>
-
 
     <script type="text/javascript" charset="utf8" src="{{ asset('js/dashboard-info.js') }}"></script>
 @endsection

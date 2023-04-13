@@ -57,6 +57,7 @@ Route::group(['middleware' => ['check_role:employee,admin']], function () {
     Route::resource('product', ProductController::class);
     Route::post('/product-update/{product}', [ProductController::class, 'updateProduct']);
     Route::get('/get-counter-info', [DashboardController::class, 'getCounterInfo']);
+    Route::post('update-appointment', [ConsultationController::class, 'updateAppointment']);
 });
 
 Route::get('/get-counter-info', [DashboardController::class, 'getCounterInfo']);
@@ -75,6 +76,8 @@ Route::get('/receipt-info/{order}', [OrderController::class, 'getReceipt']);
 
 // Routes for customers only
 Route::resource('consultation', ConsultationController::class);
+Route::post('/cancel-appointment/{appointment}', [ConsultationController::class, 'cancelAppointment']);
+Route::get('calendar-info', [ConsultationController::class, 'getCalendarInfo']);
 Route::post('/appointment-confirm/{appointment}', [ConsultationController::class, 'confirmAppointment']);
 Route::group(['middleware' => ['check_role:customer']], function () {
     Route::post('/checkout', [OrderController::class, 'checkout']);

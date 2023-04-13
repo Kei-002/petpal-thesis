@@ -118,5 +118,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.js"
     integrity="sha512-5ITfxARa+VowWr2W6H+oCSKk1t3q4pqFoiU4or3whS4VkaOF6N+QFNAQFZeMBMM/9CT4TeFiRPFJDuFFNfXkZA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{{-- FullCalendar JS --}}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.5/index.min.js"
+    integrity="sha512-xCMh+IX6X2jqIgak2DBvsP6DNPne/t52lMbAUJSjr3+trFn14zlaryZlBcXbHKw8SbrpS0n3zlqSVmZPITRDSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+
 {{-- Cart Class --}}
 <script src="{{ asset('js/cart.js') }}"></script>
