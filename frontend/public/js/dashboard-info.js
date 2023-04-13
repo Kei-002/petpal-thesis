@@ -124,4 +124,48 @@ $(document).ready(() => {
             });
         },
     });
+
+    $("#create_announcement_button").on("click", function (e) {
+        e.preventDefault();
+        var data = $("#create_announcement_form")[0];
+        console.log(data);
+        let formData = new FormData(data);
+        console.log(formData);
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + "," + pair[1]);
+        }
+
+        // var data = $("#createform").serialize();
+        // console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "/api/make-announcement",
+            data: formData,
+            contentType: false,
+            processData: false,
+
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $("#announcementModal").modal("hide");
+                toastr.success(data.message);
+                // var $tableData = $("#userTable").DataTable();
+                // $("#customer_table").DataTable().ajax.reload();
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    });
+
 });

@@ -172,6 +172,33 @@
             font-size: 14px;
             color: #ffc000;
         }
+
+        .container-m {
+            display: flex;
+            height: 50vh;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 15px;
+            border: none;
+            height: 250px;
+            margin-top: 10px
+        }
+
+        .u-color {
+            color: blue
+        }
+
+        .user-image img {
+            border: 3px solid #00f;
+            padding: 2px
+        }
     </style>
 
     <script>
@@ -213,15 +240,60 @@
                 <p class="lead text-secondary">Let us treat your pet like our own family with best service and special
                     package.</p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                    <a href="{{url("/products")}}" type="button" class="btn btn-primary btn-lg px-4 me-md-2">Shop now!</a>
-                    <a href="{{url("/consultation")}}"type="button" class="btn btn-outline-warning btn-lg px-4">Schedule an Appointment</a>
+                    <a href="{{ url('/products') }}" type="button" class="btn btn-primary btn-lg px-4 me-md-2">Shop
+                        now!</a>
+                    <a href="{{ url('/consultation') }}"type="button" class="btn btn-outline-warning btn-lg px-4">Schedule
+                        an Appointment</a>
                 </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="b-example-divider"></div>
+
+    <div class="container-xl container-m">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class=""> <b>Announcements</b></h2>
+                <div class="row" id="announcement-row">
+                    <div class="col-md-4">
+                        <div class="card"> <i class="fa fa-quote-left u-color"></i>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="user-about"> <span class="font-weight-bold d-block">Khen Vargas</span> <span
+                                        class="u-color">Pet-Pal Admin</span>
+                                    <p class="text-muted">April</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card"> <i class="fa fa-quote-left u-color"></i>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="user-about"> <span class="font-weight-bold d-block">Sophia T.</span> <span
+                                        class="u-color">Designer | Architect</span>
+                                    <div class="d-flex flex-row mt-1"> <i class="fa fa-star u-color"></i> <i
+                                            class="fa fa-star u-color"></i> <i class="fa fa-star u-color"></i> <i
+                                            class="fa fa-star-o u-color"></i> <i class="fa fa-star-o u-color"></i> </div>
+                                </div>
+                                <div class="user-image"> <img src="https://i.imgur.com/o5uMfKo.jpg" class="rounded-circle"
+                                        width="70"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
     <div class="b-example-divider"></div>
-
     {{-- Featured START --}}
 
     <div class="container-xl">
@@ -575,4 +647,81 @@
     </div>
 
     <div class="b-example-divider"></div>
+    <div id="testStar">
+        <span id="stars"></span>
+    </div>
+
+    <script>
+        document.getElementById("stars").innerHTML = getStars(5);
+
+        function getStars(rating) {
+
+            // Round to nearest half
+            rating = Math.round(rating * 2) / 2;
+            let output = [];
+
+            // Append all the filled whole stars
+            for (var i = rating; i >= 1; i--)
+                output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+            // If there is a half a star, append it
+            if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+            // Fill the empty stars
+            for (let i = (5 - rating); i >= 1; i--)
+                output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+            return output.join('');
+
+        }
+
+        $.ajax({
+            url: "/api/get-announcements",
+            type: "GET",
+            processData: false, // Important!
+            contentType: false,
+            dataType: "json",
+            // beforeSend: function (xhr) {
+            //     xhr.setRequestHeader(
+            //         "Authorization",
+            //         "Bearer " + localStorage.getItem("token")
+            //     );
+            // },
+            success: function(response) {
+                console.log(response);
+                $("#announcement-row").empty()
+                $.each(response, (key, data) => {
+                    var d = new Date(data.created_at);
+                     $("#announcement-row").append(`<div class="col-md-4">
+                        <div class="card"> <i class="fa fa-quote-left u-color"></i>
+                            <p>${data.content}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="user-about"> <span class="font-weight-bold d-block">Title: ${data.title}</span> <span
+                                        class="u-color">Pet-Pal Admin</span>
+                                    <p class="text-muted">${d.toLocaleDateString("en-US")}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`)
+
+                    console.log(data)
+                })
+               
+                // $data = response.data;
+                // $("#total-customers").text($data.customer_total);
+                // $("#total-pets").text($data.pet_total);
+                // $("#total-orders").text($data.order_total);
+                // $("#total-transactions").text($data.transaction_total);
+                // $("#total-appointments").text($data.appointment_total);
+                // $("#total-pending-apointments").text(
+                //     $data.appointment_pending_total
+                // );
+                // $("#total-pending-orders").text($data.order_pending_total);
+                // $("#total-pending-transactions").text(
+                //     $data.transaction_pending_total
+                // );
+            },
+        });
+    </script>
 @endsection

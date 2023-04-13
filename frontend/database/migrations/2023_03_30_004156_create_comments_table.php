@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')
                 ->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('user')
+            ->onDelete('cascade');
             $table->float('ratings');
             $table->longText('comment');
             $table->timestamps();

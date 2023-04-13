@@ -125,5 +125,14 @@
     integrity="sha512-xCMh+IX6X2jqIgak2DBvsP6DNPne/t52lMbAUJSjr3+trFn14zlaryZlBcXbHKw8SbrpS0n3zlqSVmZPITRDSQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
+
+{{-- star Rating Raty.js --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/raty/3.1.0/jquery.raty.css"
+    integrity="sha512-eAw/PBoRwV3poi1Cgw4W6dZ/7XyetSWjhSqnCevCghOJ6J+TCcJgt8qcEml8It83K6GQVZbXeFA8d3z8pgo82w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raty/3.1.0/jquery.raty.min.js"
+    integrity="sha512-Isj3SyFm+B8u/cErwzYj2iEgBorGyWqdFVb934Y+jajNg9kiYQQc9pbmiIgq/bDcar9ijmw4W+bd72UK/tzcsA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 {{-- Cart Class --}}
 <script src="{{ asset('js/cart.js') }}"></script>
