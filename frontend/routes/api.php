@@ -79,11 +79,18 @@ Route::resource('consultation', ConsultationController::class);
 Route::post('/cancel-appointment/{appointment}', [ConsultationController::class, 'cancelAppointment']);
 Route::get('calendar-info', [ConsultationController::class, 'getCalendarInfo']);
 Route::post('/appointment-confirm/{appointment}', [ConsultationController::class, 'confirmAppointment']);
+
+
 Route::group(['middleware' => ['check_role:customer']], function () {
     Route::post('/checkout', [OrderController::class, 'checkout']);
     Route::get('/profile', [ProfileController::class, 'getProfile']);
     Route::post('/profile-update/{user}', [ProfileController::class, 'updateProfile']);
+
+    Route::get('/profile-update/{user}', [ProfileController::class, 'updateProfile']);
     Route::get('/get-owned-pets', [OrderController::class, 'getOwnedPets']);
+    Route::get('/get-owned-appointments', [ProfileController::class, 'getOwnedAppointments']);
+    Route::get('/get-owned-orders', [ProfileController::class, 'getOwnedOrders']);
+    Route::get('/get-owned-transactions', [ProfileController::class, 'getOwnedTransactions']);
     // Route::resource('consultation', ConsultationController::class);
     Route::post('/owner-add-pet', [PetController::class, 'customerAddPet']);
     Route::get('/owner-edit-pet/{pet}', [PetController::class, 'customerEditPet']);

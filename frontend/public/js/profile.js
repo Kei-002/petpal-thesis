@@ -1,6 +1,10 @@
 $(document).ready(() => {
     const colors = ["info", "success", "danger", "dark", "primary"];
-
+    var date_options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
     $("#pet_table").DataTable({
         processing: true,
         // columnDefs: [{ width: "20%", targets: 0 }],
@@ -78,7 +82,7 @@ $(document).ready(() => {
 
     // Fetch user info
     $.ajax({
-        url: "/api/get-owned-pets",
+        url: "/api/profile",
         type: "GET",
         processData: false, // Important!
         contentType: false,
@@ -431,5 +435,262 @@ $(document).ready(() => {
                 console.log("error");
             },
         });
+    });
+
+    $("#appointment_table").DataTable({
+        processing: true,
+        info: true,
+        stateSave: true,
+        select: true,
+        ajax: {
+            url: "/api/get-owned-appointments",
+            dataSrc: "",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+        },
+        order: [3, "asc"],
+        // data: data,
+        columns: [
+            {
+                data: "id",
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    var d = new Date(data.appointment_date);
+                    return d.toLocaleDateString("en-US");
+                },
+            },
+            {
+                data: "appointment_status",
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    var d = new Date(data.created_at);
+                    return d.toLocaleDateString("en-US");
+                },
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return (
+                        "<a href='#' class='appointment_edit' id='appointment_edit' data-id=" +
+                        data.id +
+                        "><i class='fa-solid fa-edit' aria-hidden='true' style='font-size:24px; color:blue;'></a></i>"
+                    );
+                },
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return (
+                        "<a href='#' class='appointment_delete' id='appoinment_delete' data-id=" +
+                        data.id +
+                        "><i class='fa-solid fa-trash-can' aria-hidden='true' style='font-size:24px; color:red;'></a></i>"
+                    );
+                },
+            },
+        ],
+    });
+
+    $("#order_table").DataTable({
+        processing: true,
+        info: true,
+        stateSave: true,
+        select: true,
+        ajax: {
+            url: "/api/get-owned-orders",
+            dataSrc: function (json) {
+                (arrayList = []), (obj_c_processed = []);
+                var g = json.orders;
+                var c = json.receipts;
+                for (var i in g) {
+                    var obj = {
+                        id: g[i].id,
+                        customer_name: g[i].customer_name,
+                        address: g[i].address,
+                        total_purchase: g[i].total_purchase,
+                        payment_status: g[i].payment_status,
+                        orderlines: g[i].orderlines,
+                        created_at: g[i].created_at,
+                        receipt_path: g[i].receipt_path,
+                        receipt_id: g[i].receipt_id,
+                    };
+
+                    for (var j in c) {
+                        if (g[i].id == c[j].item_id) {
+                            obj.payment_status = c[j].payment_status;
+                            obj.receipt_path = c[j].receipt_path;
+                            obj.address = c[j].addressline;
+                            obj.total_purchase = c[j].total_purchase;
+                            obj.receipt_id = c[j].id;
+                            obj.customer_name = c[j].fname + " " + c[j].lname;
+                            obj_c_processed[c[j].id] = true;
+                        }
+                    }
+
+                    // obj.circle = obj.circle || 'no';
+                    arrayList.push(obj);
+                }
+
+                for (var j in c) {
+                    if (typeof obj_c_processed[c[j].id] == "undefined") {
+                        arrayList.push({
+                            id: c[j].id,
+                            item_id: c[j].item_id,
+                            customer_name: c[j].fname + " " + c[j].lname,
+                            payment_status: c[j].payment_status,
+                            address: c[j].addressline,
+                            receipt_path: c[j].receipt_path,
+                            created_at: c[j].created_at,
+                        });
+                    }
+                }
+                console.log(arrayList);
+                return arrayList;
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+        },
+        order: [3, "asc"],
+        // data: data,
+        columns: [
+            {
+                data: "id",
+            },
+            {
+                data: "payment_status",
+                render: function (data, type, row) {
+                    if (data == "Paid") {
+                        return (
+                            '<span class="badge rounded-pill bg-success">' +
+                            data +
+                            "</span>"
+                        );
+                    } else {
+                        return (
+                            '<span class="badge rounded-pill bg-danger">' +
+                            data +
+                            "</span>"
+                        );
+                    }
+                },
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    var d = new Date(data.created_at);
+                    return d.toLocaleDateString("en-US", date_options);
+                },
+            },
+            { data: "total_purchase" },
+        ],
+    });
+
+    $("#transaction_table").DataTable({
+        processing: true,
+        info: true,
+        stateSave: true,
+        select: true,
+        ajax: {
+            url: "/api/get-owned-transactions",
+            dataSrc: function (json) {
+                (arrayList = []), (obj_c_processed = []);
+                var g = json.transactions;
+                var c = json.receipts;
+                for (var i in g) {
+                    var obj = {
+                        id: g[i].id,
+                        customer_name: g[i].customer_name,
+                        address: g[i].address,
+                        total_purchase: g[i].total_purchase,
+                        payment_status: g[i].payment_status,
+                        transactionlines: g[i].transactionlines,
+                        created_at: g[i].created_at,
+                        receipt_path: g[i].receipt_path,
+                        receipt_id: g[i].receipt_id,
+                    };
+
+                    for (var j in c) {
+                        if (g[i].id == c[j].item_id) {
+                            obj.payment_status = c[j].payment_status;
+                            obj.receipt_path = c[j].receipt_path;
+                            obj.address = c[j].addressline;
+                            obj.total_purchase = c[j].total_purchase;
+                            obj.receipt_id = c[j].id;
+                            obj.customer_name = c[j].fname + " " + c[j].lname;
+                            obj_c_processed[c[j].id] = true;
+                        }
+                    }
+
+                    // obj.circle = obj.circle || 'no';
+                    arrayList.push(obj);
+                }
+
+                for (var j in c) {
+                    if (typeof obj_c_processed[c[j].id] == "undefined") {
+                        arrayList.push({
+                            id: c[j].id,
+                            item_id: c[j].item_id,
+                            customer_name: c[j].fname + " " + c[j].lname,
+                            payment_status: c[j].payment_status,
+                            address: c[j].addressline,
+                            receipt_path: c[j].receipt_path,
+                            created_at: c[j].created_at,
+                        });
+                    }
+                }
+
+                return arrayList;
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + localStorage.getItem("token")
+                );
+            },
+        },
+        order: [3, "asc"],
+        // data: data,
+        columns: [
+            {
+                data: "id",
+            },
+            {
+                data: "payment_status",
+                render: function (data, type, row) {
+                    if (data == "Paid") {
+                        return (
+                            '<span class="badge rounded-pill bg-success">' +
+                            data +
+                            "</span>"
+                        );
+                    } else {
+                        return (
+                            '<span class="badge rounded-pill bg-danger">' +
+                            data +
+                            "</span>"
+                        );
+                    }
+                },
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    var d = new Date(data.created_at);
+                    return d.toLocaleDateString("en-US", date_options);
+                },
+            },
+            { data: "total_purchase" },
+        ],
     });
 });

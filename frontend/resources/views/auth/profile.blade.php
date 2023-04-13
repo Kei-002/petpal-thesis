@@ -172,6 +172,20 @@
                                     <a class="nav-link active" id="pet-tab" data-toggle="tab" href="#petTab"
                                         role="tab" aria-controls="petTab" aria-selected="false">Pets</a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" id="appointments-tab" data-toggle="tab" href="#appointmentsTab"
+                                        role="tab" aria-controls="appointmentsTab"
+                                        aria-selected="false">Appointments</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" id="orders-tab" data-toggle="tab" href="#ordersTab" role="tab"
+                                        aria-controls="ordersTab" aria-selected="false">Orders</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" id="transactions-tab" data-toggle="tab" href="#transactionsTab"
+                                        role="tab" aria-controls="transactionsTab"
+                                        aria-selected="false">Transactions</a>
+                                </li>
                             @endif
                         </ul>
                     </div>
@@ -237,12 +251,86 @@
                     </div>
 
 
-                    {{-- <div class="tab-pane fade" id="testTab" role="tabpanel" aria-labelledby="test-tab">
+                    <div class="tab-pane fade" id="appointmentsTab" role="tabpanel" aria-labelledby="appointments-tab">
                         <div class="row mt-3 align-items-stretch" id="pet-row">
+                            <p>Appointments here</p>
+                            <div class="col-md-12">
+                                <table id="appointment_table"
+                                    class="table table-striped table-bappointmented dt-responsive nowrap" cellspacing="0"
+                                    width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Apointment ID</th>
+                                            <th>Appoinment Date</th>
+                                            <th>Appointment Status</th>
+                                            <th>Date Initiated</th>
+                                            <th colspan="2">Actions</th>
+                                            <th style="display:none;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="appointment_table_body">
+                                    </tbody>
 
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="ordersTab" role="tabpanel" aria-labelledby="orders-tab">
+                        <div class="row mt-3 align-items-stretch" id="pet-row">
+                            <p>orders here</p>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <table id="order_table"
+                                        class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+                                        width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Payment Status</th>
+                                                <th>Purchase Date</th>
+                                                <th>Total Purchase</th>
+                                                {{-- <th>Receipt</th> --}}
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="order_table_body">
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
 
                         </div>
-                    </div> --}}
+                    </div>
+                    <div class="tab-pane fade" id="transactionsTab" role="tabpanel" aria-labelledby="transactions-tab">
+                        <div class="row mt-3 align-items-stretch" id="pet-row">
+                            <p>transactions here</p>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <table id="transaction_table"
+                                        class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+                                        width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Transcation ID</th>
+                                                <th>Payment Status</th>
+                                                <th>Purchase Date</th>
+                                                <th>Total Purchase</th>
+                                                {{-- <th>Receipt</th> --}}
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="transaction_table_body">
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {{-- @endif --}}
 
 
@@ -251,6 +339,8 @@
         </div>
 
     </div>
+
+
 
     {{-- Modal START --}}
     <div class="row">
@@ -269,7 +359,8 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="fname">Pet Name</label>
-                                        <input type="text" class="form-control" name="pet_name" id="pet_name" required>
+                                        <input type="text" class="form-control" name="pet_name" id="pet_name"
+                                            required>
                                     </div>
                                     <div class="col-6">
                                         <label for="lname">Age</label>

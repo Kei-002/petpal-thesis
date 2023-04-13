@@ -80,8 +80,6 @@ class OrderController extends Controller
             $item_cart = array();
             $service_cart = array();
             DB::beginTransaction();
-
-
             // Get customer 
             $customer = Customer::where('user_id', Auth::id())->first();
 
@@ -93,7 +91,7 @@ class OrderController extends Controller
 
             // Check if item object is not empty
             if ($request->get('items') != []) {
-                $order = Order::create(['customer_id' => Auth::id()]);
+                $order = Order::create(['customer_id' => $customer->id]);
 
                 $receiptline = new Receiptline();
                 $receiptline->receipt_id = $receipt->id;
@@ -113,7 +111,7 @@ class OrderController extends Controller
             }
 
             if ($request->get('services') != []) {
-                $transaction = Transaction::create(['customer_id' => Auth::id()]);
+                $transaction = Transaction::create(['customer_id' => $customer->id]);
 
                 $receiptline = new Receiptline();
                 $receiptline->receipt_id = $receipt->id;
