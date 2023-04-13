@@ -142,9 +142,39 @@ class CustomerController extends Controller
     {
         // $data = $request->all();
         // dd($request);
+        $input = $request->all();
         $account = Customer::findOrFail($id);
         $user = User::where("id", $account->user_id)->firstOrFail();
 
+        $img_path = "none";
+        if ($request->hasFile('img_path')) {
+            $fileName = time() . $request->file('img_path')->getClientOriginalName();
+            $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
+            $input["img_path"] = '/storage/' . $path;
+            $account->img_path = $input["img_path"];
+        }
+
+        // if ($request->hasFile('img_path')) {
+        //     $file = $request->file('update_img_customer');
+        //     $file->move(public_path('storage/images'), $file->getClientOriginalName());
+
+        //     $user = User::where('id', $id)->update([
+        //         'lname' => $request['update_lname_customer'],
+        //         'fname' => $request['update_fname_customer'],
+        //         'address' => $request['update_address_customer'],
+        //         'email' => $request['update_email_customer'],
+        //         'role' => 'customer',
+        //         'img' => 'storage/images/' . $file->getClientOriginalName(),
+        //     ]);
+        // } else {
+        //     $user = User::where('id', $id)->update([
+        //         'lname' => $request['update_lname_customer'],
+        //         'fname' => $request['update_fname_customer'],
+        //         'address' => $request['update_address_customer'],
+        //         'email' => $request['update_email_customer'],
+        //         'role' => 'customer',
+        //     ]);
+        // }
         // $user = User::find($id);
         // $account = Customer::where("user_id", $id)->firstOrFail();
 
@@ -165,6 +195,7 @@ class CustomerController extends Controller
             'changes' => $request->all(),
             'user' => $user,
             'account' => $account,
+            'img_path' => $img_path
         ]);
     }
 

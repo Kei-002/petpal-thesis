@@ -115,12 +115,21 @@ class ProductController extends Controller
         // dd($request);
         $product = Product::findOrFail($id);
         $category = Category::where("id", $request->category)->first();
+
+
+        if ($request->hasFile('img_path')) {
+            $fileName = time() . $request->file('img_path')->getClientOriginalName();
+            $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
+            $input["img_path"] = '/storage/' . $path;
+            $product->img_path = $input["img_path"];
+        }
         $product->product_name = $request->product_name;
         $product->cost_price = $request->cost_price;
         $product->sell_price = $request->sell_price;
         $product->description = $request->description;
         $product->category()->associate($category);
         $product->save();
+        
         return response()->json([
             'message' => 'Product updated successfully',
             // 'status' => $user,

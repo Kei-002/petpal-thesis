@@ -108,6 +108,14 @@ class PetController extends Controller
     {
         $pet = Pet::findOrFail($id);
         $owner = Customer::where("id", $request->owner)->first();
+        $img_path = "none";
+        if ($request->hasFile('img_path')) {
+            $fileName = time() . $request->file('img_path')->getClientOriginalName();
+            $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
+            $input["img_path"] = '/storage/' . $path;
+            $pet->img_path = $input["img_path"];
+        }
+
         $pet->pet_name = $request->pet_name;
         $pet->age = $request->age;
         $pet->customer()->associate($owner);
@@ -191,6 +199,8 @@ class PetController extends Controller
         $pet->age = $request->age;
         $pet->img_path = $request->old_img;
         // Check if the user submitted a new image
+
+        
         if ($request->img_path) {
             $fileName = time() . $request->file('img_path')->getClientOriginalName();
             $path = $request->file('img_path')->storeAs('images', $fileName, 'public');

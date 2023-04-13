@@ -109,6 +109,13 @@ class GroomServiceController extends Controller
         $service->groom_name = $request->groom_name;
         $service->price = $request->price;
         $service->description = $request->description;
+        $img_path = "none";
+        if ($request->hasFile('img_path')) {
+            $fileName = time() . $request->file('img_path')->getClientOriginalName();
+            $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
+            $input["img_path"] = '/storage/' . $path;
+            $service->img_path = $input["img_path"];
+        }
 
         $service->save();
         return response()->json([

@@ -149,6 +149,14 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->save();
 
+
+        if ($request->hasFile('img_path')) {
+            $fileName = time() . $request->file('img_path')->getClientOriginalName();
+            $path = $request->file('img_path')->storeAs('images', $fileName, 'public');
+            $input["img_path"] = '/storage/' . $path;
+            $account->img_path = $input["img_path"];
+        }
+
         $account->fname = $request->fname;
         $account->lname = $request->lname;
         $account->addressline = $request->addressline;
