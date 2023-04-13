@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Category');
     }
+
+    public function stock()
+    {
+        return $this->hasOne('App\Models\Stock');
+    }
 }

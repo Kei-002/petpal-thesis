@@ -58,9 +58,11 @@ Route::group(['middleware' => ['check_role:employee,admin']], function () {
     Route::post('/product-update/{product}', [ProductController::class, 'updateProduct']);
     Route::get('/get-counter-info', [DashboardController::class, 'getCounterInfo']);
     Route::post('update-appointment', [ConsultationController::class, 'updateAppointment']);
+    Route::post('make-announcement', [DashboardController::class, 'makeAnnouncement']);
 });
 
 Route::get('/get-counter-info', [DashboardController::class, 'getCounterInfo']);
+Route::get('/get-announcements', [DashboardController::class, 'getAnnouncements']);
 Route::get('/get-chart-info', [DashboardController::class, 'getChartInfo']);
 Route::get('/all-orders', [OrderController::class, 'getAllOrders']);
 Route::get('/all-transactions', [OrderController::class, 'getAllTransactions']);
